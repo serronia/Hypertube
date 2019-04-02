@@ -1,0 +1,22 @@
+{
+  "name": "hypertube_server",
+  "version": "1.0.0",
+  "description": "Streaming website server",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm install && nodemon src/index.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Drakauf/Hypertube.git"
+  },
+  "author": "shthevak",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-logging": "^1.1.1",
+    "express-session": "^1.15.6",
+    "nodemon": "^1.14.7"
+  }
+}
