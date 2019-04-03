@@ -1,20 +1,11 @@
-version: "2"
+version: '2'
 services:
-    mongo:
-        image: mongo
-        volumes:
-            - ./mongo:/mongo/db
-        ports:
-            - "27017:27017"
-    server:
+    back:
         build:
-            context: ./server/
+            context: ./back/
         command: npm start
         volumes:
-            - ./server/:/usr/server
-            - /user/server/node_modules
+            - ./back/:/usr/back
         ports:
             - "8080:8080"
-        depends_on:
-            - mongo
         env_file: ./.env

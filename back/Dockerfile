@@ -1,9 +1,9 @@
 FROM node:latest
 
-WORKDIR /usr/server
+WORKDIR /usr/back
 
 COPY package.json ./
-RUN npm install -qy
+RUN npm install
 
 COPY . .
 
