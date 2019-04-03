@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var findOrCreate = require('mongoose-findorcreate');
+const mongoose = require('mongoose');
+const findOrCreate = require('mongoose-findorcreate');
+const {sha512, genRanString} = require('../util/password');
 
 var UserSchema = new mongoose.Schema({
     username: {
@@ -25,8 +26,7 @@ var UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        min: String
+        default: sha512(),
     },
     picture: {
         type: String,

@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const User = require('./model/User');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
 
-const userSchema = new mongoose.Schema({
+/*const userSchema = new mongoose.Schema({
 	nom: String,
 	prenom: String,
 	age: Number
 });
 
 const User = mongoose.model('User', userSchema);
-
+*/
 router.get('/', (req, res) => {
 	console.log('server hit /');
 	res.send('server listening');
@@ -28,6 +29,7 @@ router.get('/users', (req, res) => {
 						else
 							console.log(users);
 						res.status(200).json(users);
+					
 		});
 });
 
