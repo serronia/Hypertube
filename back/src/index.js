@@ -1,15 +1,13 @@
-var express = require('express');
-var session = require('express-session');
-var app = express();
-var port = process.env.P_BACK;
+const express = require('express');
+const app = express();
+const session = require('express-session');
+const port = process.env.P_BACK;
+const http = require('http').Server(app);
 
-var http = require('http').Server(app);
+const routes = require('./routes');
 
-app.use('/', function(req, res) {
-		console.log("server hitted");
-});
+app.use('/', routes);
 
 http.listen(port, function(){
 		  console.log('server listening on port : ' + port);
 });
-

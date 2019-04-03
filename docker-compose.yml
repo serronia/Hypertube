@@ -9,3 +9,9 @@ services:
         ports:
             - "8080:8080"
         env_file: ./.env
+        links:
+            - database
+    database:
+        image: mongo
+        ports:
+            - "27017:27017"
