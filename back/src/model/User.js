@@ -4,7 +4,9 @@ var findOrCreate = require('mongoose-findorcreate');
 var UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        lowercase: true
+        lowercase: true,
+        min: String,
+        max: String
     },
     firstname: {
         type: String,
@@ -23,7 +25,8 @@ var UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        min: String
     },
     picture: {
         type: String,
