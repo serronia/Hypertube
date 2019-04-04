@@ -37,9 +37,25 @@ router.post('/create', function(req, res, next) {
     });
     user.save().then((result) => {
         mail.sendMail(email, "Creation Success", "Verification", html);
-        res.status(200).json({message: "User added Success"});
+        res.status(201).json({message: "User added Success"});
     })
     .catch(err => {
-        res.status(200).json({message: "User Not added"});
+        res.status(201).json({message: "User Not added"});
     })
 });
+
+router.get('/login',
+  passport.authenticate('local', { failureRedirect: '/user/fail'}),
+  function(req, res) {
+    res.status(201).jsonp({"msg": "OK"})
+});
+
+router.get('/fail', (req, res) => {
+  res.status(200).jsonp( { "msg": "Fail" } );
+})
+
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+  req.logout();
+  res.redirect(req.protocol + '://' + req.get('host').split(':')[0] + ':8080');
+})

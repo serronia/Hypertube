@@ -30,6 +30,11 @@ var UserSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
+    },
+    ssoid: {
+        intra: {
+            type: String
+        }
     }
 });
 mongoose.plugin(findOrCreate);
