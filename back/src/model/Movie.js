@@ -6,7 +6,7 @@ const moviesSchema = new mongoose.Schema({
         required: true
     },
     year: {
-        type: Number,
+        type: Date,
         required: true
     },
     genre: {

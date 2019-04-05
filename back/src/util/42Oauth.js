@@ -3,9 +3,10 @@ const router		      = express.Router();
 const User            = require('../model/User');
 const FortyTwoStrategy  = require('passport-42').Strategy;
 const passport        = require('passport');
+const FortyTwoConst = require('../certificates/42.json')
 
-const FORTYTWO_APP_ID = FORTYTWO_APP_ID;
-const FORTYTWO_APP_SECRET = FORTYTWO_APP_SECRET;
+const FORTYTWO_APP_ID = '7f41faded62b4fbbe0b2cc08a72029cc05c590f8cb56edc954382350ee0a4536';
+const FORTYTWO_APP_SECRET = '846a2c3199eaf6314c1c7ec88079fa4872e86631442d760278b058c86229ffff';
 
 passport.use(new FortyTwoStrategy({
   clientID: FORTYTWO_APP_ID,
