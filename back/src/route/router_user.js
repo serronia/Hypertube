@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./model/User');
+const User = require('../model/User');
 const passport = require('passport');
-const mail = require('./util/mail');
+// const mail = require('./util/mail');
 const LocalStrategy = require('passport-local');
 
 const bcrypt = require('bcrypt');

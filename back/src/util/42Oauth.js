@@ -3,7 +3,7 @@ const router		      = express.Router();
 const User            = require('../model/User');
 const FortyTwoStrategy  = require('passport-42').Strategy;
 const passport        = require('passport');
-const FortyTwoConst = require('../certificates/42.json')
+
 
 const FORTYTWO_APP_ID = '7f41faded62b4fbbe0b2cc08a72029cc05c590f8cb56edc954382350ee0a4536';
 const FORTYTWO_APP_SECRET = '846a2c3199eaf6314c1c7ec88079fa4872e86631442d760278b058c86229ffff';
@@ -14,7 +14,7 @@ passport.use(new FortyTwoStrategy({
   callbackURL: "http://localhost:8080/auth/42/callback"
 },
 function(accessToken, refreshToken, profile, cb) {
-  User.findOne( { ssoid: { intra: profile._json.id.toString() } } ).then(res => {
+  User.findOrCreate( { ssoid: { intra: profile._json.id.toString() } } ).then(res => {
     if (res) {
       return cb(null, res);
     } else {

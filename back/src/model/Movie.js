@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const findOrCreate = require('mongoose-findorcreate');
 
 const moviesSchema = new mongoose.Schema({
     title: {
@@ -43,12 +44,16 @@ const moviesSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    file_path: {
+    movie_path: {
         type: String
+    },
+    subtitles: {
+        TitName: String,
+        TitPath: String
     }
 })
 
 const Movies = mongoose.model('Movies', moviesSchema);
-
+moviesSchema.plugin(findOrCreate);
 
 module.exports = Movies;

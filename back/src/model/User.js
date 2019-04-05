@@ -26,7 +26,7 @@ var UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        default: sha512(),
+        //default: sha512(),
     },
     picture: {
         type: String,
