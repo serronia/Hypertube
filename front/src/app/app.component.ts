@@ -7,9 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 title = ' Angular ';
-public lastUpdate = new Date();
 
 constructor() {
-setInterval(() => { this.lastUpdate = new Date();}, 1);
 }
 }
