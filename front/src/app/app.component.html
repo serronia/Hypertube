@@ -16,5 +16,9 @@
   <li>
     <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
   </li>
+  <p> Jour : {{ lastUpdate | date : 'dd'}} [{{ lastUpdate | date : 'E'}} {{ lastUpdate | date : 'EEEE'}} {{ lastUpdate | date : 'EEEEE'}}] </p>
+  <p> Mois : {{ lastUpdate | date : 'MM'}} [{{ lastUpdate | date : 'MMM'}}  {{ lastUpdate | date : 'MMMM'}}  {{ lastUpdate | date : 'MMMMM'}}]</p>
+  <p> Annee : {{ lastUpdate | date : 'y'}}</p>
+  <p> Heure : {{ lastUpdate | date : 'HH'}}h {{ lastUpdate | date : 'mm:ss'}}</p>
 </ul>
 

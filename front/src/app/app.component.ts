@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-client';
+title = ' Angular ';
+public lastUpdate = new Date();
+
+constructor() {
+setInterval(() => { this.lastUpdate = new Date();}, 1);
+}
 }
