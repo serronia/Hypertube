@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-			  "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -133,5 +133,17 @@
       }
     }
   },
-  "defaultProject": "angular-client"
+  "defaultProject": "angular-client",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss",
+      "spec": false
+    },
+    "@schematics/angular:modules": {
+      "spec": false
+    },
+    "@schematics/angular:class": {
+      "spec": false
+    }
+  }
 }
