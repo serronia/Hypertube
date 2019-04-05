@@ -10,6 +10,23 @@ export class PrincipalComponent implements OnInit {
 
   @Input() contenu: string;
   
+  film = [
+    {
+      name: 'spiderman',
+      year: '2018',
+      duree : 200
+    },
+    {
+      name: 'superman',
+      year: '2016',
+      duree : 180
+    },
+    {
+      name: 'avatar',
+      year: '2009',
+      duree : 220
+    }
+  ];
   constructor() { }
 
   ngOnInit() {

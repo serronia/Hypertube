@@ -1,3 +1,7 @@
 <div class="principale">
     {{ contenu }}
+    <app-film  *ngFor="let filmm of film"
+          [title]="filmm.name"
+          [year]="filmm.year"
+          [duration]="filmm.duree"></app-film >
 </div>
