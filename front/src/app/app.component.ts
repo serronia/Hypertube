@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title : string = 'Hypertube';
+public lastUpdate = new Date();
+
+constructor() {
+setInterval(() => { this.lastUpdate = new Date();}, 1);
+}
 }
