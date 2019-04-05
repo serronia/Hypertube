@@ -52,10 +52,12 @@ router.get('/login',
 
 router.get('/fail', (req, res) => {
   res.status(200).jsonp( { "msg": "Fail" } );
-})
+});
 
 router.get('/logout', (req, res) => {
   req.session.destroy();
   req.logout();
   res.redirect(req.protocol + '://' + req.get('host').split(':')[0] + ':8080');
-})
+});
+
+module.exports = router;
