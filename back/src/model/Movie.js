@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
 const moviesSchema = new mongoose.Schema({
+    Magnet: {
+        type: String
+    },
     Movie_ID: {
         type: String,
         required: true
