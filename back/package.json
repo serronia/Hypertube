@@ -27,6 +27,6 @@
     "sha512": "latest",
     "bcrypt": "latest",
     "cors": "latest",
-    "webtorrent": "latest"
+    "torrent-stream": "latest"
   }
 }
