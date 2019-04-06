@@ -13,6 +13,9 @@ const routes = require('./route/routes');
 const IntraRoute = require('./util/42Oauth');
 const userRoute = require('./route/router_user');
 
+const torrentRoute = require('./route/router-torrent');
+
+
 const url = 'mongodb://localhost:27017/Hypertube';
 
 app.use('/', routes);
@@ -39,6 +42,13 @@ app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Method", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
 	next();
 })
+
+/**parti Torrent */
+
+app.use('/', express.static('public'));
+
+app.use('/torrent/', torrentRoute);
+
 
 http.listen(port, function(){
 		  console.log('server listening on port : ' + port);

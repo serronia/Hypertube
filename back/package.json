@@ -26,6 +26,7 @@
     "nodemailer": "latest",
     "sha512": "latest",
     "bcrypt": "latest",
-    "cors": "latest"
+    "cors": "latest",
+    "webtorrent": "latest"
   }
 }
