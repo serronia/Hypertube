@@ -11,6 +11,7 @@ const cors = require('cors');
 
 const routes = require('./route/routes');
 const IntraRoute = require('./util/42Oauth');
+const GoogleRoute = require('./util/Googleauth');
 const userRoute = require('./route/router_user');
 
 //const torrentRoute = require('./route/router-torrent');
@@ -21,6 +22,7 @@ const url = 'mongodb://localhost:27017/Hypertube';
 app.use('/', routes);
 app.use('/user/', userRoute);
 app.use('/auth/42/', IntraRoute);
+app.use('/auth/google/', GoogleRoute);
 
 app.post('*', function(req, res, next) {
 	res.send('what??', 404);

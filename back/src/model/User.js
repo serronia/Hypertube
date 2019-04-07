@@ -34,6 +34,9 @@ var UserSchema = new mongoose.Schema({
     ssoid: {
         intra: {
             type: String
+        },
+        google: {
+            type: String
         }
     }
 });
