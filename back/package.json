@@ -23,6 +23,7 @@
     "passport": "latest",
     "passport-42": "latest",
     "passport-local": "latest",
+    "passport-google-oauth20": "latest",
     "nodemailer": "latest",
     "sha512": "latest",
     "bcrypt": "latest",

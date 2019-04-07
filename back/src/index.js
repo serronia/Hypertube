@@ -13,7 +13,7 @@ const routes = require('./route/routes');
 const IntraRoute = require('./util/42Oauth');
 const userRoute = require('./route/router_user');
 
-const torrentRoute = require('./route/router-torrent');
+//const torrentRoute = require('./route/router-torrent');
 
 
 const url = 'mongodb://localhost:27017/Hypertube';
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 app.use('/', express.static('public'));
 
-app.use('/torrent/', torrentRoute);
+//app.use('/torrent/', torrentRoute);
 
 
 http.listen(port, function(){
