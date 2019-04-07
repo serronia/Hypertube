@@ -1,10 +1,9 @@
-<nav *ngIf="isAuth">
-	<a routerLink="/" routerLinkActive="active"><i class="fas fa-home"></i></a>
-	<a class="hlink" routerLink="/settings" routerLinkActive="active"><i class="fas fa-user-cog"></i></a>
-	<button (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
+<nav *ngIf="currentUser">
+	<a routerLink="/home" routerLinkActive="active"><i class="fas fa-home"></i></a>
+	<a routerLink="/settings" routerLinkActive="active"><i class="fas fa-user-cog"></i></a>
+	<a (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
 </nav>
-<nav *ngIf="!isAuth">
-	<!--	<a routerLink="/login" routerLinkActive="active"><i class="fas fa-sign-in-alt"></i></a>	-->
-	<button (click)="login()"><i class="fas fa-sign-in-alt"></i></button>
+<nav *ngIf="!currentUser">
+	<a routerLink="/login" routerLinkActive="active"><i class="fas fa-sign-in-alt"></i></a>
 	<a routerLink="/register" routerLinkActive="active">register</a>
 </nav>
