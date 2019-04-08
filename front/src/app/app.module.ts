@@ -1,24 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
 
-import { ChatComponent } from './components/chat/chat.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { PrincipalComponent } from './components/principal/principal.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { PrincipalComponent } from './principal/principal.component';
 import { AppComponent } from './app.component';
-import { FilmComponent } from './components/film/film.component';
+import { FilmComponent } from './film/film.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent,
     HeaderComponent,
     FooterComponent,
     PrincipalComponent,
     FilmComponent
   ],
   imports: [
-  BrowserModule
+  BrowserModule,
+  MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
