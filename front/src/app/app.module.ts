@@ -18,24 +18,21 @@ import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
-  BrowserModule,
-  HttpClientModule,
-  ReactiveFormsModule,
-  AppRouting
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRouting,
+    MatCardModule
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     PrincipalComponent,
-    FilmComponent
-  PageNotFoundComponent,
-  HomeComponent,
-  LoginComponent
-  ],
-  imports: [
-  BrowserModule,
-  MatCardModule
+    FilmComponent,
+    PageNotFoundComponent,
+    HomeComponent,
+    LoginComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

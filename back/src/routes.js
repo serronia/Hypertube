@@ -60,7 +60,7 @@ router.get('/adduser', (req, res) => {
 });
 
 router.post('/testusers', function(req, res){
-	console.log(req.body);
+	//console.log(req.body);
 	if (req.body.username == "shan" && req.body.password == "test")
 	{
 		res.status(200).json({
@@ -75,7 +75,7 @@ router.post('/testusers', function(req, res){
 })
 
 router.get('/testusers', (req, res) => {
-	console.log(req.body);
+	//console.log(req.body);
 	res.status(200).json({
 		id: 1,
 		username: "shan",
