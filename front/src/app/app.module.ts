@@ -14,6 +14,7 @@ import { AppRouting } from './app.routing';
 import { PageNotFoundComponent } from './page_not_found/page_not_found.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PageFilmComponent } from './page-film/page-film.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { LoginComponent } from './login/login.component';
     FilmComponent,
     PageNotFoundComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PageFilmComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

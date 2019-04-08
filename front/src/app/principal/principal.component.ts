@@ -20,7 +20,7 @@ export class PrincipalComponent implements OnInit {
     },
     {
       name: 'superman',
-      year: '2016',
+      year: '2006',
       duree : 180,
       affiche: 'http://fr.web.img4.acsta.net/r_1280_720/medias/nmedia/18/35/78/09/18647167.jpg'
     },
