@@ -80,7 +80,7 @@ router.get('/testusers', (req, res) => {
 		id: 1,
 		username: "shan",
 		password: "test",
-		token: `fake-jwt-token`
+//		token: `fake-jwt-token`
 	});
 })
 
