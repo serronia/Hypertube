@@ -7,6 +7,9 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+app.use(cors());
+
+const routes = require('./routes');
 
 
 const routes = require('./route/routes');
@@ -53,7 +56,7 @@ app.use('/', express.static('public'));
 
 
 http.listen(port, function(){
-		  console.log('server listening on port : ' + port);
+	console.log('server listening on port : ' + port);
 });
 
 module.exports = app;
