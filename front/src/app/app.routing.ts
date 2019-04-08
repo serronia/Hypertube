@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PageNotFoundComponent }    from './page_not_found/page_not_found.component';
 import { HomeComponent }    from './home/home.component';
-import { AuthGuard } from './_guards';
+import { AuthGuard, GuestGuard } from './_guards';
 import { LoginComponent } from './login/login.component'
 
 const appRoutes: Routes = [
@@ -14,7 +14,8 @@ const appRoutes: Routes = [
 	},
 	{
 		path: 'login',
-		component: LoginComponent
+		component: LoginComponent,
+		canActivate: [GuestGuard]
 	},
 	{ 
 		path: '',

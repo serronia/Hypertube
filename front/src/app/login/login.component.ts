@@ -28,9 +28,6 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        // reset login status
-        this.authenticationService.logout();
-
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -52,7 +49,6 @@ export class LoginComponent implements OnInit {
             .subscribe(
 			data => {
 			console.log("login-co ponent data");
-			console.log(data);
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
