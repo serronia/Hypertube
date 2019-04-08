@@ -1,15 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="titre" style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-    <!--<input type="text" class="form-control" [(ngModel)]="title">-->
-  </h1>
+<div class="row">
+	<div class="col-md-10 offset-md-1">
+	<app-header></app-header>
+	</div>
 </div>
-<app-header></app-header>
-<p> Jour : {{ lastUpdate | date : 'dd'}} [{{ lastUpdate | date : 'E'}} {{ lastUpdate | date : 'EEEE'}} {{ lastUpdate | date : 'EEEEE'}}] </p>
-<p> Mois : {{ lastUpdate | date : 'MM'}} [{{ lastUpdate | date : 'MMM'}}  {{ lastUpdate | date : 'MMMM'}}  {{ lastUpdate | date : 'MMMMM'}}]</p>
-<p> Annee : {{ lastUpdate | date : 'y'}}</p>
-<p> Heure : {{ lastUpdate | date : 'HH'}}h {{ lastUpdate | date : 'mm:ss'}}</p>
-<app-principal contenu="Bonjour, Veuillez vous connecter pour voir des films"></app-principal>
-<app-footer></app-footer>
-
+<div class="row">
+	<div class="col-md-10 offset-md-1">
+	<router-outlet></router-outlet>
+	</div>
+</div>

@@ -3,11 +3,16 @@ const app = express();
 const session = require('express-session');
 const port = process.env.P_BACK;
 const http = require('http').Server(app);
+var	  cors = require('cors');
+
+app.use(cors());
 
 const routes = require('./routes');
+
+
 
 app.use('/', routes);
 
 http.listen(port, function(){
-		  console.log('server listening on port : ' + port);
+	console.log('server listening on port : ' + port);
 });

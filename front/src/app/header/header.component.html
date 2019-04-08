@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-xl-12">
+<div style="text-align:center">
+	<h1> Hypertube !</h1>
+</div>
+	</div>
+	<div class="col-md-12">
+<!-- Nav Bar when logged in --> 
+<nav *ngIf="currentUser">
+	<a routerLink="/home" routerLinkActive="active"><i class="fas fa-home"></i></a>
+	<a routerLink="/settings" routerLinkActive="active"><i class="fas fa-user-cog"></i></a>
+	<a (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+</nav>
+<!-- Nav Bar when not logged in --> 
+<nav *ngIf="!currentUser">
+	<a routerLink="/login" routerLinkActive="active"><i class="fas fa-sign-in-alt"></i></a>
+	<a routerLink="/register" routerLinkActive="active">register</a>
+</nav>
+	</div>
+</div>
