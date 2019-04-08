@@ -14,16 +14,16 @@ styleUrls: ['./header.component.scss']
 
 export class HeaderComponent {
 currentUser: User;
-    constructor(
-	        private router: Router,
-			        private authenticationService: AuthenticationService
-					    ) {
-						        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-console.log(this.currentUser);
-								    }
+    constructor(private router: Router,
+				private authenticationService: AuthenticationService) {
+						this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+						console.log("====== header =======");
+						console.log(this.currentUser);
+						console.log("====== header =======");
+						}
 
-									    logout() {
-										        this.authenticationService.logout();
-												        this.router.navigate(['/login']);
-														    }
+	logout() {
+		this.authenticationService.logout();
+		this.router.navigate(['/login']);
+	}
 }
