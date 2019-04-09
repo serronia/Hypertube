@@ -27,13 +27,13 @@ router.get('/', (req, res) => {
 router.get('/users', (req, res) => {
 	console.log("server hit /users");
 	    Usertest.find({}, (err, users) => {
-			        if (err)
-						res.status(500).send(error);
-						if (!users)
-							console.log("users vide");
-						else
-							console.log(users);
-						res.status(200).json(users);
+			if (err)
+				res.status(500).send(error);
+			if (!users)
+				console.log("users vide");
+			else
+				console.log(users);
+			res.status(200).json(users);
 					
 		});
 });
@@ -43,11 +43,12 @@ router.get('/users/:id', (req, res) => {
 	User.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(500).send(error);
-		res.status(200).json(users);
+		else
+			res.status(200).json(users);
 	});
 });
 
-router.get('/adduser', (req, res) => {
+/*router.get('/adduser', (req, res) => {
 	console.log("server hit /adduser");
 	let user = new Usertest({
 		lastname: "thevak",
@@ -60,10 +61,9 @@ router.get('/adduser', (req, res) => {
 			res.status(500).send(error);
 		res.status(201).json({message: 'User created successfully'});
 	});
-});
+});*/
 
 router.post('/testusers', function(req, res){
-	console.log(req.body);
 	if (req.body.username == "shan" && req.body.password == "test")
 	{
 		res.status(200).json({
@@ -78,7 +78,7 @@ router.post('/testusers', function(req, res){
 })
 
 router.get('/testusers', (req, res) => {
-	console.log(req.body);
+	//console.log(req.body);
 	res.status(200).json({
 		id: 1,
 		username: "shan",
