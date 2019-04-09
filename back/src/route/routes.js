@@ -14,7 +14,7 @@ mongoose.connect(database);
 	age: Number
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);*/
 
 router.use(bodyParser.json());
 
