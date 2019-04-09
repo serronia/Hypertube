@@ -2,18 +2,19 @@ const express = require('express');
 const session = require('express-session');
 const router = express.Router();
 const mongoose = require('mongoose');
+const Usertest = require('../model/User');
 const bodyParser = require('body-parser');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
 
-const userSchema = new mongoose.Schema({
+/*const usertestSchema = new mongoose.Schema({
 	nom: String,
 	prenom: String,
 	age: Number
-});
+});*/
 
-const User = mongoose.model('User', userSchema);
+//const Usertest = mongoose.model('User', UserSchema);
 
 router.use(bodyParser.json());
 
@@ -25,15 +26,16 @@ router.get('/', (req, res) => {
 
 router.get('/users', (req, res) => {
 	console.log("server hit /users");
-	User.find({}, (err, users) => {
-		if (err)
-			res.status(500).send(error);
-		if (!users)
-			console.log("users vide");
-		else
-			console.log(users);
-		res.status(200).json(users);
-	});
+	    Usertest.find({}, (err, users) => {
+			        if (err)
+						res.status(500).send(error);
+						if (!users)
+							console.log("users vide");
+						else
+							console.log(users);
+						res.status(200).json(users);
+					
+		});
 });
 
 router.get('/users/:id', (req, res) => {
@@ -47,10 +49,11 @@ router.get('/users/:id', (req, res) => {
 
 router.get('/adduser', (req, res) => {
 	console.log("server hit /adduser");
-	let user = new User({
-		nom: "thevak",
-		prenom: "sh",
-		age: 23
+	let user = new Usertest({
+		lastname: "thevak",
+		firstname: "sh",
+		username: "miou",
+		email: "shthevak@student.le-101.fr"
 	});
 	user.save(error => {
 		if (error)

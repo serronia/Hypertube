@@ -14,11 +14,20 @@
   "author": "shthevak",
   "license": "UNLICENCED",
   "dependencies": {
-    "cors": "2.8.5",
     "express": "^4.16.3",
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",
+    "nodemon": "^1.14.7",
     "mongoose": "^4.7.0",
-    "nodemon": "^1.14.7"
+    "mongoose-findorcreate": "latest",
+    "passport": "latest",
+    "passport-42": "latest",
+    "passport-local": "latest",
+    "passport-google-oauth20": "latest",
+    "nodemailer": "latest",
+    "sha512": "latest",
+    "bcrypt": "latest",
+    "cors": "latest",
+    "torrent-stream": "latest"
   }
 }
