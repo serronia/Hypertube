@@ -15,7 +15,7 @@
   "license": "UNLICENCED",
   "dependencies": {
     "bcrypt": "latest",
-    "cors": "^2.8.5",
+    "cors": "latest",
     "express": "^4.16.3",
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",
@@ -28,9 +28,6 @@
     "passport-google-oauth20": "latest",
     "passport-local": "latest",
     "sha512": "latest",
-    "torrent-stream": "latest"
-    "bcrypt": "latest",
-    "cors": "latest",
     "torrent-stream": "latest",
     "express-validator": "latest"
   }

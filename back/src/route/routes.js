@@ -43,7 +43,8 @@ router.get('/users/:id', (req, res) => {
 	User.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(500).send(error);
-		res.status(200).json(users);
+		else
+			res.status(200).json(users);
 	});
 });
 
@@ -61,23 +62,6 @@ router.get('/users/:id', (req, res) => {
 		res.status(201).json({message: 'User created successfully'});
 	});
 });*/
-
-router.post('/adduser', (req, res) => {
-	console.log("server hit /adduser");
-	let user = new Usertest({
-		lastname: req.body.lastname,
-		firstname: req.body.firstname,
-		username: req.body.username,
-		email: req.body.mail,
-		password : req.body.password
-	});
-	user.save(error => {
-		if (error)
-			res.status(500).send("Format error, please re-read your input");
-		else
-			res.status(201).json({message: 'User created successfully'});
-	});
-});
 
 router.post('/testusers', function(req, res){
 	if (req.body.username == "shan" && req.body.password == "test")

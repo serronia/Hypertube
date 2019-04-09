@@ -4,7 +4,10 @@ const User = require('../model/User');
 const passport = require('passport');
 // const mail = require('./util/mail');
 const LocalStrategy = require('passport-local');
-
+const Check = require('../util/check');
+const mongoose = require('mongoose');
+const database = process.env.C_MONGO;
+mongoose.connect(database);
 const bcrypt = require('bcrypt');
 
 passport.use(new LocalStrategy(
@@ -19,28 +22,55 @@ function(username, password, done) {
     }
 ));
 
-router.post('/create', function(req, res, next) {
+router.post('/create', (req, res) => {
+  console.log("server hit /adduser");
   var firstname = req.body.firstname;
   var lastname = req.body.lastname;
-  var email = req.body.email;
+  var mail = req.body.mail;
   var username = req.body.username;
   var password = req.body.password;
+  var verif = req.body.password2;
+
   let hash = bcrypt.hashSync(password, 10);
+
+  Check.checkUserExists(username, mail).then(resp =>{
+    console.log("body = ", req.body);
+    console.log("exist = ", resp)
+    if(resp)
+    {
+      console.log("ok, n'exist pas");
+      if(password == verif){
+        console.log("pass1 et pass2 egaux");
+        let user = new User({
+          lastname: lastname,
+          firstname: firstname,
+          username: username,
+          email: mail,
+          password : hash
+        });
+        user.save(error => {
+          if (error)
+            res.status(400).send("Format error, please re-read your input");
+          else
+          {
+            //mail.sendMail(email, "Creation Success", "Verification", html);
+            res.status(201).json({message: 'User created successfully'});
+          }
+        });
+      }
+      else
+      {
+        console.log("pass1 et pass2 NOT OK");
+        res.status(400).send("Password and confirmation not identical");
+      }
+    }
+  }).catch(err=>{
+    if(err)
+      console.log("not ok login or mail already exist");
+      res.status(400).send("Username or mail already exist");
+  });
   
-    const user = new User({
-      email: email,
-      password: hash,
-      firstName: firstname,
-      lastName: lastname,
-      username: username
-    });
-    user.save().then((result) => {
-        mail.sendMail(email, "Creation Success", "Verification", html);
-        res.status(201).json({message: "User added Success"});
-    })
-    .catch(err => {
-        res.status(201).json({message: "User Not added"});
-    })
+	/**/
 });
 
 router.get('/login',

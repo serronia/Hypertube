@@ -1,8 +1,8 @@
 const User = require('../model/User');
 
 
-class Check {
-    static checkSuscribe(req) {
+module.exports ={
+    checkSuscribe(req) {
         return new Promise((resolve,reject) => {
             req.checkbody('username', 'Login: 3 to 30 character needed').matches(/^[a-z0-9]{2,50}$/i).notEmpty();
             req.checkbody('firstname', 'Firstname: 2 to 30 character needed').notEmpty().matches(/^[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]+\.?(([',. -][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]\.?)?[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]*\.?)*[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]?\.?$/i);
@@ -17,13 +17,13 @@ class Check {
                 resolve({ status: 'success'});
             }
         });
-    }
+    },
 
-    static checkUserExists(username, email) {
+    checkUserExists(username, email) {
         return new Promise((resolve, reject) => {
             User.findOne({$or: [{username: username},{email: email }]} , function(err, user) {
                 if (user) {
-                    resolve({ status: 'error', data: [{ msg: 'This username/email already exists'}]});
+                    reject({ status: 'error', data: [{ msg: 'This username/email already exists'}]});
                 } else {
                     resolve({ status: 'success'});
                 }
