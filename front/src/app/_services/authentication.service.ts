@@ -34,6 +34,25 @@ export class AuthenticationService {
             }));
     }
 
+    register(username: string, password: string, password2: string, mail: string) {
+        //test si password = password2
+        //test si mail est bien un mail 
+        //test si exist deja ou pas. 
+
+        return this.http.post<any>(`http://localhost:8080/adduser`, { username, password, mail })
+            .pipe(map(user => {
+                // login successful if there's a jwt token in the response
+                if (user && user.token) {
+                    //console.log("token = ", user.token)
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                }
+				//console.log(user);
+                return user;
+            }));
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

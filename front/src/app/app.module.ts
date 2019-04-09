@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page_not_found/page_not_found.component
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageFilmComponent } from './page-film/page-film.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PageFilmComponent } from './page-film/page-film.component';
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
-    PageFilmComponent
+    PageFilmComponent,
+    RegisterComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
