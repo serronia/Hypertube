@@ -1,0 +1,8 @@
+<div class="principale">
+    <!--{{ contenu }}-->
+    <app-film  *ngFor="let film of films"
+          [title]="film.name"
+          [year]="film.year"
+          [duration]="film.duree"
+          [affiche]=film.affiche></app-film>
+</div>
