@@ -48,11 +48,17 @@ export class LoginComponent implements OnInit {
             .subscribe(
 				data => {
 					console.log("login-co ponent data");
-           			this.router.navigate([this.returnUrl]);
+					if (data)
+					this.router.navigate([this.returnUrl]);
+					else
+					{
+						this.loading = false;
+						this.error = "No token";
+					}
         	    },
             	error => {
 					console.log("login-co ponent error");
-					console.log(error.error);
+					console.log(error);
                     this.error = error.error;
                     this.loading = false;
 			});

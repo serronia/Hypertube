@@ -3,8 +3,6 @@ const session = require('express-session');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');; 
-const fs = require('fs');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -18,8 +16,6 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 router.use(bodyParser.json());
-const RSA_PRIVATE_KEY = fs.readFileSync('./src/jwt.private.key');
-
 
 router.get('/', (req, res) => {
 	console.log('server hit /');
@@ -62,29 +58,36 @@ router.get('/adduser', (req, res) => {
 	});
 });
 
+/********************************************************/
+
+const	Jwthandle = require('./jwt.handeler.js');
+
+router.get('/testtocken', Jwthandle.verify, (req, res) =>{
+	console.log("Valid token");
+	res.status(200).json({test_token: "Working"});
+});
+
+router.post('/testtocken', Jwthandle.verify, (req, res) =>{
+	console.log("Valid token");
+	res.status(200).json({test_token: "Working"});
+});
+
+
 router.post('/testusers', function(req, res){
 	console.log(req.body);
 
-	
-
 	if (req.body.username == "shan" && req.body.password == "test")
 	{
-		const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
-		algorithm: 'HS256',
-		expiresIn: 120,
-		subject: req.body.username
-	});
+		var Token = Jwthandle.sign(req, res);
+		console.log("token -- " + Token);
 		res.status(200).json({
 			id: 1,
 			username: "shan",
-			password: "test",
-			token: jwtBearerToken,
-			expiresIn: 120
-			//			token: `fake-jwt-token`
+			token: Token,
 		});
 	}
 	else
-		res.status(401).send('Username or password is incorrect');
+		res.status(400).send('Username or password is incorrect');
 });
 
 router.get('/testusers', (req, res) => {
@@ -96,5 +99,5 @@ router.get('/testusers', (req, res) => {
 		//		token: `fake-jwt-token`
 	});
 })
-
+/*************************************************************/
 module.exports = router;

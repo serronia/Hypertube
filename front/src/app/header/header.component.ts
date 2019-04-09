@@ -24,6 +24,11 @@ currentUser: User;
 
 	logout() {
 		this.authenticationService.logout();
-		this.router.navigate(['/login']);
+//		this.router.navigate(['/login']);
+	}
+
+	testtok(){
+		this.authenticationService.testtok(this.currentUser)
+		.subscribe(data => {console.log(data);}, error => {console.log(error)});
 	}
 }
