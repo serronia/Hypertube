@@ -2,7 +2,7 @@ const User = require('../model/User');
 
 
 class Check {
-    static checkSuscribe(req) {
+    static checkSuscribeInputs(req) {
         return new Promise((resolve,reject) => {
             req.checkbody('username', 'Login: 3 to 30 character needed').matches(/^[a-z0-9]{2,50}$/i).notEmpty();
             req.checkbody('firstname', 'Firstname: 2 to 30 character needed').notEmpty().matches(/^[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]+\.?(([',. -][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]\.?)?[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]*\.?)*[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]?\.?$/i);
@@ -31,18 +31,22 @@ class Check {
         });
     }
 
-    /*static checkMailExists(email) {
+    static checkIsactive(username)
+    {
         return new Promise((resolve, reject) => {
-            User.findOne({email: email }, function(err, user) {
-                if (user) {
-                    resolve({ status: 'error', data: [{ msg: 'This email already exists'}]});
+            User.findOne({username: username} , function(err, user) {
+                if (user.active === false) {
+                    resolve({ status: 'error', data: [{ msg: 'This username/email already exists'}]});
                 } else {
                     resolve({ status: 'success'});
                 }
             })
         })
+    }
 
-    }*/
+    
 
-    //static checkPasswordExists(password);
+    //static checkUser(password);
 }
+
+module.exports = Check;

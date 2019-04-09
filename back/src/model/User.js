@@ -30,6 +30,10 @@ var UserSchema = new mongoose.Schema({
     picture: {
         type: String,
     },
+    actif: {
+        type: Boolean,
+        default: false
+    },
     ssoid: {
         intra: {
             type: String
