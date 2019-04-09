@@ -6,8 +6,7 @@ var UserSchema = new mongoose.Schema({
     username: {
         type: String,
         lowercase: true,
-        min: String,
-        max: String
+        unique: true
     },
     firstname: {
         type: String,
@@ -26,7 +25,6 @@ var UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        //default: sha512(),
     },
     picture: {
         type: String,

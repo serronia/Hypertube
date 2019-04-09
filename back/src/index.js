@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
-const session = require('express-session');
+//const session = require('express-session');
+const expressValidator = require('express-validator');
 const port = process.env.P_BACK;
 const http = require('http').Server(app);
 const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+app.use(expressValidator());
 app.use(cors());
 
 //const routes = require('./routes');
@@ -54,6 +56,8 @@ app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Method", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
 	next();
 })
+
+/**Check User Back */
 
 /**parti Torrent */
 
