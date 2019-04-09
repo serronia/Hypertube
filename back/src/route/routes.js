@@ -32,8 +32,7 @@ router.get('/users', (req, res) => {
 			if (!users)
 				console.log("users vide");
 			else
-				console.log(users);
-			res.status(200).json(users);
+				res.status(200).json(users);
 					
 		});
 });
@@ -78,7 +77,6 @@ router.post('/testusers', function(req, res){
 })
 
 router.get('/testusers', (req, res) => {
-	//console.log(req.body);
 	res.status(200).json({
 		id: 1,
 		username: "shan",
