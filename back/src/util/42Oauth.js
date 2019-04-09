@@ -11,7 +11,7 @@ const FORTYTWO_APP_SECRET = '846a2c3199eaf6314c1c7ec88079fa4872e86631442d760278b
 passport.use(new FortyTwoStrategy({
   clientID: FORTYTWO_APP_ID,
   clientSecret: FORTYTWO_APP_SECRET,
-  callbackURL: "http://localhost:8080/auth/login/42/"
+  callbackURL: "http://localhost:8080/auth/42"
 },
 function(accessToken, refreshToken, profile, cb) {
   User.findOrCreate( { ssoid: { intra: profile._json.id.toString() } } ).then(res => {
@@ -36,13 +36,13 @@ function(accessToken, refreshToken, profile, cb) {
 ));
 
 
-router.get('/', passport.authenticate('42', { failureRedirect: 'http://localhost:8080/login'}));
+router.get('/', passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login'}));
 
 router.get('/callback',
-  passport.authenticate('42', { failureRedirect: 'http://localhost:8080/login' }),
+  passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://localhost:8080/');
+    res.redirect('http://localhost:4200');
 });
 
 module.exports = router;

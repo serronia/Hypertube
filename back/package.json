@@ -14,7 +14,6 @@
   "author": "shthevak",
   "license": "UNLICENCED",
   "dependencies": {
-    "cors": "2.8.5",
     "express": "^4.16.3",
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",

@@ -13,14 +13,14 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:8080/auth/login/google/"
 },
 function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate( { ssoid: { google: profile._json.id.toString() } } ).then(res => {
+    User.findOrCreate( { ssoid: { google: profile._json.id } } ).then(res => {
       if (res) {
         return cb(null, res);
       } else {
         var u = new User({
           firstName: profile._json.first_name,
           lastName: profile._json.last_name,
-          ssoid: { google: profile._json.id.toString() },
+          ssoid: { google: profile._json.id },
           username: profile._json.login + " " + profile._json.pool_month + " " + profile._json.pool_year,
           email: profile._json.email
         });
@@ -40,10 +40,10 @@ function(accessToken, refreshToken, profile, cb) {
       'https://www.googleapis.com/auth/plus.profile.emails.read'] }
       ));
   
-  router.get('/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:8080/login' }),
+  router.get('/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:4200/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('http://localhost:8080/');
+      res.redirect('http://localhost:4200/home');
   });
   
   module.exports = router;

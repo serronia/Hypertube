@@ -9,7 +9,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-const routes = require('./routes');
+//const routes = require('./routes');
 
 
 const routes = require('./route/routes');
@@ -21,6 +21,13 @@ const userRoute = require('./route/router_user');
 
 
 const url = 'mongodb://localhost:27017/Hypertube';
+
+mongoose.set('useCreateIndex', true)
+mongoose.connect(url, { useNewUrlParser: true }).then(() => {
+  console.log("Database connected")
+}).catch(err => {
+  console.error("Connecting to error =>" + err);
+})
 
 app.use('/', routes);
 app.use('/user/', userRoute);
