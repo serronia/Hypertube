@@ -28,6 +28,7 @@
     "sha512": "latest",
     "bcrypt": "latest",
     "cors": "latest",
-    "torrent-stream": "latest"
+    "torrent-stream": "latest",
+    "express-validator": "latest"
   }
 }

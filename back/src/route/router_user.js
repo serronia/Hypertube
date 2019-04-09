@@ -26,11 +26,10 @@ router.post('/create', function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
   let hash = bcrypt.hashSync(password, 10);
-  let verification = bcrypt.hashSync(hash + Math.floor(Math.random() * 2048), 10);
+  
     const user = new User({
       email: email,
       password: hash,
-      verification_key: verification,
       firstName: firstname,
       lastName: lastname,
       username: username

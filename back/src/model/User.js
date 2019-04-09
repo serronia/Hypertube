@@ -6,8 +6,7 @@ var UserSchema = new mongoose.Schema({
     username: {
         type: String,
         lowercase: true,
-        min: String,
-        max: String
+        unique: true
     },
     firstname: {
         type: String,
@@ -20,13 +19,13 @@ var UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        match: /[^@]+@[^@]+/,
-        lowercase: true,
-        required: true
+        match: /^[a-z0-9._%+-]{1,64}@[a-z0-9._-]+\.[a-z]{2,255}$/i,
+        required: true,
+        unique: true
+
     },
     password: {
         type: String,
-        //default: sha512(),
     },
     picture: {
         type: String,
