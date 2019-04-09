@@ -41,7 +41,7 @@ class Check {
                     resolve({ status: 'success'});
                 }
             })
-        })
+        });
     }
 
     
