@@ -27,13 +27,13 @@ router.get('/', (req, res) => {
 router.get('/users', (req, res) => {
 	console.log("server hit /users");
 	    Usertest.find({}, (err, users) => {
-			        if (err)
-						res.status(500).send(error);
-						if (!users)
-							console.log("users vide");
-						else
-							console.log(users);
-						res.status(200).json(users);
+			if (err)
+				res.status(500).send(error);
+			if (!users)
+				console.log("users vide");
+			else
+				console.log(users);
+			res.status(200).json(users);
 					
 		});
 });
@@ -47,7 +47,7 @@ router.get('/users/:id', (req, res) => {
 	});
 });
 
-router.get('/adduser', (req, res) => {
+/*router.get('/adduser', (req, res) => {
 	console.log("server hit /adduser");
 	let user = new Usertest({
 		lastname: "thevak",
@@ -60,10 +60,26 @@ router.get('/adduser', (req, res) => {
 			res.status(500).send(error);
 		res.status(201).json({message: 'User created successfully'});
 	});
+});*/
+
+router.post('/adduser', (req, res) => {
+	console.log("server hit /adduser");
+	let user = new Usertest({
+		lastname: req.body.lastname,
+		firstname: req.body.firstname,
+		username: req.body.username,
+		email: req.body.mail,
+		password : req.body.password
+	});
+	user.save(error => {
+		if (error)
+			res.status(500).send("Format error, please re-read your input");
+		else
+			res.status(201).json({message: 'User created successfully'});
+	});
 });
 
 router.post('/testusers', function(req, res){
-	//console.log(req.body);
 	if (req.body.username == "shan" && req.body.password == "test")
 	{
 		res.status(200).json({

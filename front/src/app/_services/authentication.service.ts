@@ -34,12 +34,12 @@ export class AuthenticationService {
             }));
     }
 
-    register(username: string, password: string, password2: string, mail: string) {
+    register(username: string, firstname: string, lastname: string,password: string, password2: string, mail: string) {
         //test si password = password2
         //test si mail est bien un mail 
         //test si exist deja ou pas. 
-
-        return this.http.post<any>(`http://localhost:8080/adduser`, { username, password, mail })
+        
+        return this.http.post<any>(`http://localhost:8080/adduser`, { username, firstname, lastname, password, mail })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
