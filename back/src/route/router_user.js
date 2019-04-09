@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
         res.status(200).json({
           id: user.id,
           username: username,
-          token: `fake-jwt-token`
+          token: `fake-jwt-token`/*insert real token HERE*/
         });
       }
       else{
