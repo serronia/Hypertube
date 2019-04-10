@@ -29,6 +29,8 @@
     "passport-local": "latest",
     "sha512": "latest",
     "torrent-stream": "latest",
-    "express-validator": "latest"
+    "express-validator": "latest",
+    "request": "latest",
+    "cookie-session": "latest"
   }
 }

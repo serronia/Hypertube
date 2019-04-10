@@ -5,42 +5,34 @@ const {sha512, genRanString} = require('../util/password');
 var UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        lowercase: true,
+
         unique: true
     },
     firstname: {
-        type: String,
-        lowercase: true        
+        type: String
+      
     },
     lastname: {
-        type: String, 
-        lowercase: true
+        type: String
               
-    },
+    },/*
     email: {
         type: String,
         match: /[^@]+@[^@]+\.[\w]{1,4}/,
-        lowercase: true,
         required: true
     },
     password: {
         type: String,
-    },
-    picture: {
-        type: String,
-    },
-    actif: {
+    },*/
+    googleId: String
+    /*actif: {
         type: Boolean,
         default: false
     },
     ssoid: {
-        intra: {
-            type: String
-        },
-        google: {
-            type: String
-        }
-    }
+        intraId: String,
+        googleId: String
+    }*/
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);

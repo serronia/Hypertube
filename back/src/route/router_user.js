@@ -100,7 +100,9 @@ router.post('/create', (req, res) => {
   });
 });
 
-router.get('/login',
+//router.get('/modify', (req, res))
+
+/*router.get('/login',
   passport.authenticate('local', { failureRedirect: '/user/fail'}),
   function(req, res) {
     res.status(201).jsonp({"msg": "OK"})
@@ -114,6 +116,6 @@ router.get('/logout', (req, res) => {
   req.session.destroy();
   req.logout();
   res.redirect(req.protocol + '://' + req.get('host').split(':')[0] + ':8080');
-});
+});*/
 
 module.exports = router;

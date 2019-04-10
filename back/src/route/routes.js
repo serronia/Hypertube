@@ -41,7 +41,7 @@ router.get('/users/:id', (req, res) => {
 	console.log('tapping ' + req.params.id); 
 	User.findById(req.params.id, (err, users) => {
 		if (err) 
-			res.status(500).send(error);
+			res.status(400).send(error);
 		else
 			res.status(200).json(users);
 	});
