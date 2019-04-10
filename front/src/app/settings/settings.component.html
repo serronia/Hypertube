@@ -1,0 +1,15 @@
+<h2>My account</h2>
+<div class="contain_normal col-lg-8 col-md-6 col-sm-12">
+  <p id="Nom">Lastname = <span class="infos">Dutrou</span></p>
+  <p id="Prenom">Firsname = <span class="infos">Jean-michel</span></p>
+  <p id="Username">Username = <span class="infos">DarkName420</span></p>
+  <p id="mail">Mail = <span class="infos">DarkName420@exemple.com</span></p>
+  <p id="password">Password = <span class="infos"></span></p>
+</div>
+<div class="image col-lg-4 col-md-6 col-sm-12">
+  <img id="_image" src="https://images.pexels.com/photos/220320/pexels-photo-220320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"/>
+  <form [formGroup]="modif_photo" (ngSubmit)="onSubmit()">
+    <input type="file" name="filetoupload" required>
+    <input type="submit" name="submit" value="OK" />
+  </form>
+</div> 

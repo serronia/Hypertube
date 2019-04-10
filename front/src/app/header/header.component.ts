@@ -17,10 +17,10 @@ currentUser: User;
     constructor(private router: Router,
 				private authenticationService: AuthenticationService) {
 						this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-						console.log("====== header =======");
+						/*console.log("====== header =======");
 						console.log(this.currentUser);
 						console.log(localStorage);
-						console.log("====== header =======");
+						console.log("====== header =======");*/
 						}
 
 	logout() {

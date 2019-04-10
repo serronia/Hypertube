@@ -7,6 +7,7 @@ import { AuthGuard, GuestGuard } from './_guards';
 import { LoginComponent } from './login/login.component';
 import { PageFilmComponent } from './page-film/page-film.component';
 import { RegisterComponent } from './register/register.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const appRoutes: Routes = [
 	{
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
 		path: 'register',
 		component: RegisterComponent,
 		canActivate: [GuestGuard]
+	},
+	{ 
+		path: 'settings',
+		component: SettingsComponent
 	},
 	{ 
 		path: '',
