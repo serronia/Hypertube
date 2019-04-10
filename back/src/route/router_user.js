@@ -28,9 +28,10 @@ function(username, password, done) {
 /**************************************************************/
 router.get('/drop_user', (req, res) => {
 	console.log("server hit /drop_user");
-  User.remove({}, function (err) {
-    if (err) { throw err; }
-    console.log('table user supprimée');
+	  User.remove({}, function (err) {
+    	if (err) { throw err; }
+		   	 console.log('table user supprimée');
+		res.status(200).json("all users deleted");
   });
 });
 /*************************************************************/
@@ -45,9 +46,9 @@ router.post('/login', (req, res) => {
       const user_bdd = user.data._doc;
       if(bcrypt.compareSync(password, user_bdd.password)) 
       {
-		var Token = Jwthandle.sign(req, res);  
+		var Token = Jwthandle.sign(req, res);
         res.status(200).json({
-          id: user.id,
+          id: user_bdd._id,
           username: username,
           token: Token
         });
@@ -59,7 +60,6 @@ router.post('/login', (req, res) => {
       res.status(400).send('User don\'t exist');
   })
 });
-
 
 router.post('/create', (req, res) => {
   console.log("server hit /adduser");
