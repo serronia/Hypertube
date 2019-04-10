@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
-const {sha512, genRanString} = require('../util/password');
+
 
 var UserSchema = new mongoose.Schema({
     username: {
@@ -15,24 +15,17 @@ var UserSchema = new mongoose.Schema({
     lastname: {
         type: String
               
-    },/*
+    },
     email: {
         type: String,
-        match: /[^@]+@[^@]+\.[\w]{1,4}/,
         required: true
     },
     password: {
         type: String,
-    },*/
-    googleId: String
-    /*actif: {
-        type: Boolean,
-        default: false
     },
-    ssoid: {
-        intraId: String,
-        googleId: String
-    }*/
+    googleID: { type: String },
+    fortytwoID: { type: String },
+    profile_picture: { type: String }
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);
