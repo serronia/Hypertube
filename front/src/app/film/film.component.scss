@@ -1,0 +1,27 @@
+.mat-card {
+    background: #000000b8;
+    color: rgba(255, 255, 255, 0.87);
+}
+.affiche{
+    background-size: contain;
+    background-repeat: no-repeat;
+    min-height: 200px;
+    max-height: 400px;
+    height: -webkit-fill-available;
+    background-position: center;
+}
+.mat-card-content{
+    display: none;
+}
+
+.example-card:hover .mat-card-content{
+    background: #000000;
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 20px;
+    border-top: white solid;
+    right: 0;
+}

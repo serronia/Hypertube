@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent }    from './page_not_found/page_not_found.component';
 import { HomeComponent }    from './home/home.component';
 import { AuthGuard, GuestGuard } from './_guards';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+import { PageFilmComponent } from './page-film/page-film.component';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
 	{
@@ -17,10 +19,19 @@ const appRoutes: Routes = [
 		component: LoginComponent,
 		canActivate: [GuestGuard]
 	},
+	{
+		path: 'register',
+		component: RegisterComponent,
+		canActivate: [GuestGuard]
+	},
 	{ 
 		path: '',
 		redirectTo: 'home',
 		pathMatch: 'full'
+	},
+	{ 
+		path: 'film',
+		component: PageFilmComponent
 	},
 	{
 		path: '**',

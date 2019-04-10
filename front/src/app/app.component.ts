@@ -12,6 +12,8 @@ import { User } from './_models';
 
 export class AppComponent {
    currentUser: User;
+  title : string = 'Hypertube';
+  public lastUpdate = new Date();
 
     constructor(
         private router: Router,
