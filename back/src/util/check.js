@@ -29,9 +29,9 @@ module.exports ={
                 }
             })
         });
-    }
+    },
 
-    static checkIsactive(username)
+    checkIsactive(username)
     {
         return new Promise((resolve, reject) => {
             User.findOne({username: username} , function(err, user) {
@@ -47,6 +47,4 @@ module.exports ={
     
 
     //static checkUser(password);
-}
-
-module.exports = Check;
+};
