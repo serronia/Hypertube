@@ -3,6 +3,7 @@ const session = require('express-session');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+var api = require('./api_req');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -83,5 +84,11 @@ router.get('/testusers', (req, res) => {
 //		token: `fake-jwt-token`
 	});
 })
+
+router.get('/api', (req, res) => {
+	console.log("api_rep hit");
+//	res.send("l\'api va s\'afficher la =>");
+	api.api_req(req, res);
+	})
 
 module.exports = router;
