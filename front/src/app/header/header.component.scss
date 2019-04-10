@@ -4,7 +4,6 @@ h1{
 
 nav {
 	text-align: left;
-//	margin-right: 10%;
 }
 nav a{
     padding: 5px 10px;
@@ -20,4 +19,8 @@ nav a{
 nav a:hover {
 	color: #000000;
 	background-color: rgb(255, 255, 255);
+}
+
+nav a.active {
+	color: #0779b1;
 }

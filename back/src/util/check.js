@@ -31,6 +31,18 @@ module.exports ={
         });
     },
 
+    getPassw(username) {
+        return new Promise((resolve, reject) => {
+            User.findOne({username: username} , function(err, user) {
+                if (user) {
+                    resolve({ status: 'success', data: user});
+                } else {
+                    reject({ status: 'erreur'});
+                }
+            })
+        });
+    }
+
     checkIsactive(username)
     {
         return new Promise((resolve, reject) => {

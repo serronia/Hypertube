@@ -22,6 +22,40 @@ function(username, password, done) {
     }
 ));
 
+router.get('/drop_user', (req, res) => {
+	console.log("server hit /drop_user");
+  User.remove({}, function (err) {
+    if (err) { throw err; }
+    console.log('table user supprimée');
+  });
+});
+
+
+router.post('/login', (req, res) => {
+  console.log("server hit user/login");
+  var username = req.body.username;
+  var password = req.body.password;
+  Check.getPassw(username)
+  .then(
+    user =>{
+      const user_bdd = user.data._doc;
+      if(bcrypt.compareSync(password, user_bdd.password)) 
+      {
+        res.status(200).json({
+          id: user.id,
+          username: username,
+          token: `fake-jwt-token`/*insert real token HERE*/
+        });
+      }
+      else{
+        res.status(400).send('Username or password is incorrect');
+      }
+    }).catch(err=>{
+      res.status(400).send('User don\'t exist');
+  })
+});
+
+
 router.post('/create', (req, res) => {
   console.log("server hit /adduser");
   var firstname = req.body.firstname;
@@ -34,13 +68,10 @@ router.post('/create', (req, res) => {
   let hash = bcrypt.hashSync(password, 10);
 
   Check.checkUserExists(username, mail).then(resp =>{
-    console.log("body = ", req.body);
-    console.log("exist = ", resp)
     if(resp)
     {
       console.log("ok, n'exist pas");
       if(password == verif){
-        console.log("pass1 et pass2 egaux");
         let user = new User({
           lastname: lastname,
           firstname: firstname,
@@ -60,17 +91,13 @@ router.post('/create', (req, res) => {
       }
       else
       {
-        console.log("pass1 et pass2 NOT OK");
         res.status(400).send("Password and confirmation not identical");
       }
     }
   }).catch(err=>{
     if(err)
-      console.log("not ok login or mail already exist");
       res.status(400).send("Username or mail already exist");
   });
-  
-	/**/
 });
 
 router.get('/login',

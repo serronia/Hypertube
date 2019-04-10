@@ -20,11 +20,11 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`http://localhost:8080/testusers`, { username, password })
+        return this.http.post<any>(`http://localhost:8080/user/login`, { username, password })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
-                    //console.log("token = ", user.token)
+                    // console.log("token = ", user.token)
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
@@ -34,20 +34,12 @@ export class AuthenticationService {
             }));
     }
 
+
     register(username: string, firstname: string, lastname: string,password: string, password2: string, mail: string) {
        
         return this.http.post<any>(`http://localhost:8080/user/create`, { username, firstname, lastname, password, password2, mail })
             .pipe(map(res => {
-                console.log("res = ", res)
-                // login successful if there's a jwt token in the response
-                /*if (user && user.token) {
-                    //console.log("token = ", user.token)
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.currentUserSubject.next(user);
-                }
-				//console.log(user);
-                return user;*/
+                console.log("res = ", res);
             }));
     }
 
