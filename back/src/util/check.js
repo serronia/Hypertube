@@ -42,19 +42,4 @@ module.exports ={
             })
         });
     }
-
-    /*static checkMailExists(email) {
-        return new Promise((resolve, reject) => {
-            User.findOne({email: email }, function(err, user) {
-                if (user) {
-                    resolve({ status: 'error', data: [{ msg: 'This email already exists'}]});
-                } else {
-                    resolve({ status: 'success'});
-                }
-            })
-        })
-
-    }*/
-
-    //static checkPasswordExists(password);
 }

@@ -19,6 +19,7 @@ currentUser: User;
 						this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 						console.log("====== header =======");
 						console.log(this.currentUser);
+						console.log(localStorage);
 						console.log("====== header =======");
 						}
 

@@ -20,10 +20,11 @@ router.use(bodyParser.json());
 
 
 router.get('/', (req, res) => {
-	console.log('server hit /');
 	res.send('server listening');
 });
 
+
+/********************************************/
 router.get('/users', (req, res) => {
 	console.log("server hit /users");
 	    Usertest.find({}, (err, users) => {
@@ -46,43 +47,5 @@ router.get('/users/:id', (req, res) => {
 			res.status(200).json(users);
 	});
 });
-
-/*router.get('/adduser', (req, res) => {
-	console.log("server hit /adduser");
-	let user = new Usertest({
-		lastname: "thevak",
-		firstname: "sh",
-		username: "miou",
-		email: "shthevak@student.le-101.fr"
-	});
-	user.save(error => {
-		if (error)
-			res.status(500).send(error);
-		res.status(201).json({message: 'User created successfully'});
-	});
-});*/
-
-router.post('/testusers', function(req, res){
-	if (req.body.username == "shan" && req.body.password == "test")
-	{
-		res.status(200).json({
-			id: 1,
-			username: "shan",
-			password: "test",
-			token: `fake-jwt-token`
-		});
-	}
-	else
-		res.status(400).send('Username or password is incorrect');
-})
-
-router.get('/testusers', (req, res) => {
-	res.status(200).json({
-		id: 1,
-		username: "shan",
-		password: "test",
-//		token: `fake-jwt-token`
-	});
-})
-
+/*************************************************/
 module.exports = router;

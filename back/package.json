@@ -22,10 +22,9 @@
     "mongoose": "^4.7.0",
     "nodemon": "^1.14.7",
     "jsonwebtoken": "8.5.1",
-    "file-system": "2.2.2"
+    "file-system": "2.2.2",
     "mongoose-findorcreate": "latest",
     "nodemailer": "latest",
-    "nodemon": "^1.14.7",
     "passport": "^0.4.0",
     "passport-42": "latest",
     "passport-google-oauth20": "latest",
