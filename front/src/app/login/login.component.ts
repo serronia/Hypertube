@@ -62,7 +62,10 @@ export class LoginComponent implements OnInit {
 	            	error => {
 						console.log("login-co ponent error");
 						console.log(error);
-	                    this.error = error.error;
+						if (error.status == 400)
+	                   		this.error = error.error;
+						else
+							this.error = error.statusText; 
 	                    this.loading = false;
 				});
 		}
