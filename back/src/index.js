@@ -49,16 +49,6 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {});
 
-app.use(cors({origin: ["http://localhost:8080"], credentials: true}));
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
-	res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept ");
-	res.setHeader("Access-Control-Allow-Method", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-	next();
-})
-
-/**Check User Back */
-
 /**parti Torrent */
 
 app.use('/', express.static('public'));

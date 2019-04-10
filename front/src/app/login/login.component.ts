@@ -45,20 +45,30 @@ export class LoginComponent implements OnInit {
         }
 
 		this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .subscribe(
-            data => 
-            {
-                console.log("login-co ponent data = ", data);
-                this.router.navigate([this.returnUrl]);
-                
-            },
-            error => {
-                console.log("login-co ponent error = ", error);
-                console.log(error.error);
-                this.error = error.error;
-                this.loading = false;
-            });
+		if (!this.authenticationService.isLoggedIn())
+		{
+	        this.authenticationService.login(this.f.username.value, this.f.password.value)
+   	         .subscribe(
+					data => {
+						console.log("login-co ponent data");
+						if (data)
+						this.router.navigate([this.returnUrl]);
+						else
+						{
+							this.loading = false;
+							this.error = "No token";
+						}
+	        	    },
+	            	error => {
+						console.log("login-co ponent error");
+						console.log(error);
+						if (error.status == 400)
+	                   		this.error = error.error;
+						else
+							this.error = error.statusText; 
+	                    this.loading = false;
+				});
+		}
     }
 }
 

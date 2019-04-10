@@ -14,9 +14,9 @@ import { AppRouting } from './app.routing';
 import { PageNotFoundComponent } from './page_not_found/page_not_found.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { JwtInterceptor } from './_services';
 import { PageFilmComponent } from './page-film/page-film.component';
 import { RegisterComponent } from './register/register.component';
-
 
 @NgModule({
   imports: [
@@ -38,7 +38,9 @@ import { RegisterComponent } from './register/register.component';
     PageFilmComponent,
     RegisterComponent
   ],
-  providers: [],
+  providers: [
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
