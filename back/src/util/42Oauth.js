@@ -60,6 +60,7 @@ router.get('/redirect',
   passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login' }),
   (req, res) => {
     // Successful authentication, redirect home.
+    //comments: utiliser router_user->if(bcrypt.compareSync(password, user_bdd.password)){}
     res.redirect('http://localhost:4200/home');
 });
 

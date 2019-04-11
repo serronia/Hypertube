@@ -4,7 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Usertest = require('../model/User');
 const bodyParser = require('body-parser');
-const authRouter = require('./authroute');
+
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -18,7 +18,7 @@ mongoose.connect(database);
 //const Usertest = mongoose.model('User', UserSchema);
 
 router.use(bodyParser.json());
-router.use('/auth', authRouter);
+
 
 
 router.get('/', (req, res) => {

@@ -3,7 +3,7 @@ const router		      = express.Router();
 const User            = require('../model/User');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const currentUser = require('../util/check');
+
 
 
 const GOOGLE_APP_ID = '669911811352-bdsbd20jmanch9e915t6ig1atn7c6lu2.apps.googleusercontent.com';
