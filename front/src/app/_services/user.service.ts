@@ -18,4 +18,44 @@ export class UserService {
                 console.log("res = ", res);
             }));
     }
+
+    getUser(id: string){
+        return this.http.get<any>(`http://localhost:8080/users/`+id, {})
+            .pipe(map(res => {
+                console.log("res get usser = ", res);
+                return res;
+            }));
+    }
+
+    modifyInfo(firstname: string, lastname: string, mail: string) {
+        var user = JSON.parse(localStorage.getItem("currentUser"));
+        var id = user.id;
+        return this.http.post<any>(`http://localhost:8080/user/modify_info`, {firstname, lastname, mail, id })
+            .pipe(map(res => {
+                console.log("res modify Info  = ", res);
+                return res;
+            }));
+    }
+
+    modifyLog(username: string, password: string, password2: string) {
+        var user = JSON.parse(localStorage.getItem("currentUser"));
+        var id = user.id;
+        return this.http.post<any>(`http://localhost:8080/user/modify_log`, {username, password, password2, id})
+            .pipe(map(res => {
+                console.log("res modify Info  = ", res);
+                return res;
+            }));
+    }
+
+    modifyAvatar(path: string){
+        var user = JSON.parse(localStorage.getItem("currentUser"));
+        var id = user.id;
+        console.log("path = ");
+        console.log(path);
+        return this.http.post<any>(`http://localhost:8080/user/modify_avatar`, {path, id})
+            .pipe(map(res => {
+                console.log("res modify Avatar  = ", res);
+                return res;
+            }));
+    }
 }

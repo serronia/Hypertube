@@ -40,7 +40,7 @@ router.get('/users', (req, res) => {
 
 router.get('/users/:id', (req, res) => {
 	console.log('tapping ' + req.params.id); 
-	User.findById(req.params.id, (err, users) => {
+	Usertest.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(500).send(error);
 		else

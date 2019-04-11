@@ -8,7 +8,6 @@ export class HomeComponent implements OnInit {
     @Input() contenu: string;
     public lastUpdate = new Date();
 
-  
     films = [
       {
         name: 'spiderman',

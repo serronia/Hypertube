@@ -27,7 +27,8 @@ const appRoutes: Routes = [
 	},
 	{ 
 		path: 'settings',
-		component: SettingsComponent
+		component: SettingsComponent,
+		canActivate: [AuthGuard]
 	},
 	{ 
 		path: '',
@@ -35,7 +36,7 @@ const appRoutes: Routes = [
 		pathMatch: 'full'
 	},
 	{ 
-		path: 'film',
+		path: 'film/:name',
 		component: PageFilmComponent
 	},
 	{
