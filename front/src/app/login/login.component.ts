@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from '../_services';
 
@@ -20,8 +21,11 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
-    ) { }
+		private authenticationService: AuthenticationService,
+		private title: Title
+		) { 
+		 this.title.setTitle("Hypertube - Login");
+		}
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({

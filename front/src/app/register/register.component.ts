@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 import { UserService } from '../_services';
 import { AuthenticationService } from '../_services';
@@ -22,9 +23,11 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private userService : UserService)
-    {}
-
+	private userService : UserService,
+	private title: Title)
+	{
+	this.title.setTitle("Hypertube - Register");
+	}
   ngOnInit() {
     this.registerfrom = this.formBuilder.group({
       username: ['', Validators.required],
