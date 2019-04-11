@@ -29,6 +29,10 @@ var UserSchema = new mongoose.Schema({
     picture: {
         type: String,
     },
+    language: {
+        type: String,
+        default: "English"
+    },
     ssoid: {
         intra: {
             type: String

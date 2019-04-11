@@ -19,6 +19,7 @@ export class FormInfoComponent implements OnInit {
   @Input() lastname: string;
   @Input() firstname: string;
   @Input() mail: string;
+  @Input() language: string;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -28,6 +29,7 @@ export class FormInfoComponent implements OnInit {
     this.ModifyForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
+      language :['', Validators.required],
       mail: ['', Validators.required]
     });
   }
@@ -43,7 +45,7 @@ export class FormInfoComponent implements OnInit {
       }
 
 		this.loading = true;
-    this.userService.modifyInfo(this.f.firstname.value, this.f.lastname.value, this.f.mail.value)
+    this.userService.modifyInfo(this.f.firstname.value, this.f.lastname.value, this.f.mail.value, this.f.language.value)
       .subscribe(
       data => 
       {

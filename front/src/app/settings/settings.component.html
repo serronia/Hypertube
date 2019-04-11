@@ -9,13 +9,14 @@
       <p id="Prenom">Firsname = <span class="infos">{{firstname}}</span></p>
       <p id="Username">Username = <span class="infos">{{username}}</span></p>
       <p id="mail">Mail = <span class="infos">{{mail}}</span></p>
+      <p id="language">Favourite language = <span class="infos">{{language}}</span></p>
     </mat-tab>
   
     <mat-tab>
       <ng-template mat-tab-label>
         <p style="color: white">Modify Infos</p>
       </ng-template>
-        <form-info [lastname]="lastname" [firstname]="firstname" [mail]="mail"></form-info>
+        <form-info [lastname]="lastname" [firstname]="firstname" [mail]="mail" [language]="language"></form-info>
     </mat-tab>
 
     <mat-tab>

@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   @Input() firstname: string;
   @Input() username: string;
   @Input() mail: string;
+  @Input() language: string;
   @Input() avatar: SafeUrl;
 
   constructor(private formBuilder: FormBuilder,
@@ -35,6 +36,7 @@ export class SettingsComponent implements OnInit {
         this.firstname = data.firstname;
         this.lastname = data.lastname;
         this.mail = data.email;
+        this.language = data.language;
         this.avatar = this.sanitization.bypassSecurityTrustUrl(data.picture);
     },
     error => {

@@ -114,10 +114,11 @@ router.post('/modify_info', (req, res) => {
   var firstname = req.body.firstname;
   var lastname = req.body.lastname;
   var mail = req.body.mail;
+  var language = req.body.language;
 
   User.findOneAndUpdate(
     {_id: post_id},
-    {$set: {firstname: firstname, lastname: lastname, email: mail }},{returnNewDocument : true}, 
+    {$set: {firstname: firstname, lastname: lastname, email: mail, language:language }},{returnNewDocument : true}, 
     function(err, doc){
       if(err){
           console.log("Something wrong when updating record!");
