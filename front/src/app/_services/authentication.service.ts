@@ -26,8 +26,21 @@ export class AuthenticationService {
         return this.http.post<any>(`http://localhost:8080/user/login`, { username, password })
             .pipe(map(user => {
 			
-				// login successful if there's a jwt token in the response
 				if (user && user.token) {
+					localStorage.setItem('currentUser', JSON.stringify(user));
+					const expiresAt = moment().add(604800,'second');
+					localStorage.setItem("TokenExpires", JSON.stringify(expiresAt.valueOf()) );
+                    this.currentUserSubject.next(user);
+                	return user;
+				}
+            }));
+    }
+
+	verifi_tok(id: string, username: string, token: string)
+	{
+	return this.http.post<any>(`http://localhost:8080/user/token`, { username, token })
+		.pipe(map(user => {
+		if (user && user.token) {
 				console.log("==============================");
 				console.log(user);
 				console.log("==============================");
@@ -43,8 +56,8 @@ export class AuthenticationService {
                     this.currentUserSubject.next(user);
                 	return user;
 				}
-            }));
-    }
+		}));
+		}
 
 	// function to get expiration date
 	getExpiration() {

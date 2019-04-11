@@ -19,3 +19,21 @@ input:focus{
     background-color: #caace854;
     color: aliceblue;
 }
+
+.OmniAuth {
+    margin-bottom: 10px;
+}
+
+.OmniAuth > a {
+    margin-top: 10px;
+    width: 120px;
+    margin-left: 50px;
+}
+
+.OmniAuth > .black-42 {
+    background-color: white;
+}
+
+.OmniAuth > .white-google {
+    background-color: whitesmoke;
+}

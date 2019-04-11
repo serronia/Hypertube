@@ -16,7 +16,6 @@ module.exports = {
 
 verify: function (req,res, next){
 	var token = req.headers["authorization"];
-console.log(token);
  	  var verif_opt = {
       issuer: "back",
       subject: "back",

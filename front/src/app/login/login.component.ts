@@ -33,8 +33,20 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        // get return url from route parameters or default to '/'
+		// get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+	
+		const id = this.route.snapshot.queryParams['id'] || '';
+		const username = this.route.snapshot.queryParams['username'] || '';
+		const token = this.route.snapshot.queryParams['token'] || '';
+		if (id && username && token)
+			this.authenticationService.verifi_tok(id, username, token)
+			.subscribe(data => { console.log(data);
+				this.router.navigate([this.returnUrl]);
+			},
+			error => {
+				this.router.navigate(['/login']);
+			});
     }
 
     // convenience getter for easy access to form fields
@@ -56,7 +68,7 @@ export class LoginComponent implements OnInit {
 					data => {
 						console.log("login-co ponent data");
 						if (data)
-						this.router.navigate([this.returnUrl]);
+							this.router.navigate([this.returnUrl]);
 						else
 						{
 							this.loading = false;
