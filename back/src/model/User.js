@@ -8,31 +8,16 @@ var UserSchema = new mongoose.Schema({
 
         unique: true
     },
-    firstname: {
-        type: String
-      
-    },
-    lastname: {
-        type: String
-              
-    },/*
+    firstname: String,
+    lastname: String,
     email: {
-        type: String,
-        match: /[^@]+@[^@]+\.[\w]{1,4}/,
-        required: true
+        type: String
     },
     password: {
         type: String,
-    },*/
-    googleId: String
-    /*actif: {
-        type: Boolean,
-        default: false
     },
-    ssoid: {
-        intraId: String,
-        googleId: String
-    }*/
+    googleId: String,
+    fortytwoId: String
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);
