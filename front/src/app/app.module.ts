@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { PrincipalComponent } from './principal/principal.component';
 import { AppComponent } from './app.component';
 import { FilmComponent } from './film/film.component';
 import { AppRouting } from './app.routing';
@@ -14,9 +13,10 @@ import { AppRouting } from './app.routing';
 import { PageNotFoundComponent } from './page_not_found/page_not_found.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { JwtInterceptor } from './_services';
 import { PageFilmComponent } from './page-film/page-film.component';
 import { RegisterComponent } from './register/register.component';
-
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   imports: [
@@ -30,15 +30,17 @@ import { RegisterComponent } from './register/register.component';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    PrincipalComponent,
     FilmComponent,
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
     PageFilmComponent,
-    RegisterComponent
+    RegisterComponent,
+    SettingsComponent
   ],
-  providers: [],
+  providers: [
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

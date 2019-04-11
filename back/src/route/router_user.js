@@ -7,8 +7,11 @@ const LocalStrategy = require('passport-local');
 const Check = require('../util/check');
 const mongoose = require('mongoose');
 const database = process.env.C_MONGO;
-mongoose.connect(database);
 const bcrypt = require('bcrypt');
+
+const	Jwthandle = require('../util/jwt.handeler.js');
+
+mongoose.connect(database);
 
 passport.use(new LocalStrategy(
 function(username, password, done) {
@@ -22,14 +25,16 @@ function(username, password, done) {
     }
 ));
 
+/**************************************************************/
 router.get('/drop_user', (req, res) => {
 	console.log("server hit /drop_user");
-  User.remove({}, function (err) {
-    if (err) { throw err; }
-    console.log('table user supprimée');
+	  User.remove({}, function (err) {
+    	if (err) { throw err; }
+		   	 console.log('table user supprimée');
+		res.status(200).json("all users deleted");
   });
 });
-
+/*************************************************************/
 
 router.post('/login', (req, res) => {
   console.log("server hit user/login");
@@ -41,10 +46,11 @@ router.post('/login', (req, res) => {
       const user_bdd = user.data._doc;
       if(bcrypt.compareSync(password, user_bdd.password)) 
       {
+		var Token = Jwthandle.sign(req, res);
         res.status(200).json({
-          id: user.id,
+          id: user_bdd._id,
           username: username,
-          token: `fake-jwt-token`/*insert real token HERE*/
+          token: Token
         });
       }
       else{
@@ -54,7 +60,6 @@ router.post('/login', (req, res) => {
       res.status(400).send('User don\'t exist');
   })
 });
-
 
 router.post('/create', (req, res) => {
   console.log("server hit /adduser");
@@ -99,23 +104,5 @@ router.post('/create', (req, res) => {
       res.status(400).send("Username or mail already exist");
   });
 });
-
-//router.get('/modify', (req, res))
-
-/*router.get('/login',
-  passport.authenticate('local', { failureRedirect: '/user/fail'}),
-  function(req, res) {
-    res.status(201).jsonp({"msg": "OK"})
-});
-
-router.get('/fail', (req, res) => {
-  res.status(200).jsonp( { "msg": "Fail" } );
-});
-
-router.get('/logout', (req, res) => {
-  req.session.destroy();
-  req.logout();
-  res.redirect(req.protocol + '://' + req.get('host').split(':')[0] + ':8080');
-});*/
 
 module.exports = router;

@@ -42,21 +42,4 @@ module.exports ={
             })
         });
     }
-
-    /*checkIsactive(username)
-    {
-        return new Promise((resolve, reject) => {
-            User.findOne({username: username} , function(err, user) {
-                if (user.active === false) {
-                    resolve({ status: 'error', data: [{ msg: 'This username/email already exists'}]});
-                } else {
-                    resolve({ status: 'success'});
-                }
-            })
-        });
-    }*/
-
-    
-
-    //static checkUser(password);
-};
+}

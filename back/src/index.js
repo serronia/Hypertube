@@ -53,16 +53,7 @@ app.use('/auth/google/', GoogleRoute);
 
 
 
-/*
-app.use(cors({origin: ["http://localhost:4200"], credentials: true}));
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-	res.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept ");
-	res.setHeader("Access-Control-Allow-Method", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-	next();
-});*/
-
-/**Check User Back */
+passport.deserializeUser(function(id, done) {});
 
 /**parti Torrent */
 
