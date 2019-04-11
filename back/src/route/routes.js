@@ -24,6 +24,7 @@ router.use(bodyParser.json());
 router.get('/', (req, res) => {
 	res.send('server listening');
 });
+//router.get('/redirect', router.post('/login'));
 
 
 /********************************************/

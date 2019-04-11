@@ -4,7 +4,9 @@ const User            = require('../model/User');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 
-
+const	Jwthandle = require('../util/jwt.handeler.js');
+const bcrypt = require('bcrypt');
+const Check = require('../util/check');
 
 const GOOGLE_APP_ID = '669911811352-bdsbd20jmanch9e915t6ig1atn7c6lu2.apps.googleusercontent.com';
 const GOOGLE_APP_SECRET = 'CdYCIdfJZ32cP6COig1dcchm';
@@ -19,6 +21,27 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+const saveToSession = (req, res) => {
+	const payload = {
+		_id: req.user._id,
+		username: req.user.username
+	};
+	req.session.user = payload;
+
+  console.log(payload);
+	req.save((err) => {
+    console.log('TOP');
+    if (err) {
+      console.log('TRTQTQTTQTDTD');
+      throw err;
+    }
+    else {
+      console.log('redirect');
+    res.redirect('/');
+    }
+	});
+};
+
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_APP_ID,
   clientSecret: GOOGLE_APP_SECRET,
@@ -29,28 +52,28 @@ passport.use(new GoogleStrategy({
     var Firstname = profile._json.given_name;
   var Lastname = profile._json.family_name;
   var email = profile._json.email;
-  console.log('JSON');
-  console.log(profile._json.given_name)
+  var Username = profile._json.given_name;
+  
     User.findOne( { googleId: profile.id}).then((currentUser) => {
       if (currentUser) {
-        console.log('user already exist', currentUser);
-        router.post('/login');
+        console.log('user already exist');
+        //router.post('/login');
         done(null, currentUser);
       } else {
     user = new User({
-      "username": profile.displayName,
+      "username": Username,
       "firstname": Firstname,
       "lastname": Lastname,
       "email": email,
       googleId: profile.id
     });
-    console.log("user = ", user);
+    //console.log("user = ", user);
     user.save(
       function(err) {
         if (err) console.error(err);
         return done(err, user);}
-    ).then((newUser) => {
-      console.log('new user created' + newUser);
+    ).then((user) => {
+      //console.log('new user created' + newUser);
       done(null, newUser);
     });
     }
@@ -65,11 +88,20 @@ passport.use(new GoogleStrategy({
   
   router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login" }),
   (req, res) => {
-    // Successful authentication, redirect home.
-    console.log('redirect good');
 
+    req.body.username = req.user._doc.username;
+    var Token = Jwthandle.sign(req, res);
+    res.status(200).redirect('http://localhost:4200/home'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
+
+    // Successful authentication, redirect home.
+    //console.log('redirect good');
+    //router.post('/user/login');
+    /*const token = Jwthandle;
+    res.redirect(`http://localhost:4200/home?token=${token}`);
+    
+          console.log('log home');
     //comments: utiliser router_user->if(bcrypt.compareSync(password, user_bdd.password)){}
-    res.redirect("http://localhost:4200/home")
+    */
 });
   
   module.exports = router;

@@ -46,12 +46,12 @@ router.post('/login', (req, res) => {
       const user_bdd = user.data._doc;
       if(bcrypt.compareSync(password, user_bdd.password)) 
       {
-		var Token = Jwthandle.sign(req, res);
-        res.status(200).json({
-          id: user_bdd._id,
-          username: username,
-          token: Token
-        });
+          var Token = Jwthandle.sign(req, res);
+          res.status(200).json({
+            id: user_bdd._id,
+            username: username,
+            token: Token
+          });
       }
       else{
         res.status(400).send('Username or password is incorrect');

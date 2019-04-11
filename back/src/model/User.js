@@ -17,7 +17,9 @@ var UserSchema = new mongoose.Schema({
         type: String,
     },
     googleId: String,
-    fortytwoId: String
+    fortytwoId: String,
+    githubId: String,
+    Token: String
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);

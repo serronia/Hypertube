@@ -29,6 +29,7 @@
     "passport-42": "latest",
     "passport-google-oauth20": "latest",
     "passport-local": "latest",
+    "passport-github": "latest",
     "sha512": "latest",
     "torrent-stream": "latest",
     "express-validator": "latest",
