@@ -10,5 +10,6 @@ styleUrls: ['./page_not_found.component.scss']
 export class PageNotFoundComponent{
 constructor(private title: Title ) { 
 	this.title.setTitle("404 Hypertube");
-}
+	}
+
 }

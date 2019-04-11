@@ -1,4 +1,6 @@
-h1{
+.header_title {
+	text-align: center;
+	font-size: 5vh;
 	color: aliceblue;
 }
 
@@ -6,6 +8,7 @@ nav {
 	text-align: left;
 }
 nav a{
+	transition: transform .3s ease-out;
     padding: 5px 10px;
     text-decoration: none;
     margin-right: 10px;
@@ -17,6 +20,7 @@ nav a{
 }
 
 nav a:hover {
+	transform: translate(0, -5px);
 	color: #000000;
 	background-color: rgb(255, 255, 255);
 }
