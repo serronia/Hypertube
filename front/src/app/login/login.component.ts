@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 		const errolog = this.route.snapshot.queryParams['error'] || '';
 		if (id && username && token)
 			this.authenticationService.verifi_tok(id, username, token)
-			.subscribe(data => { console.log(data);
+			.subscribe(data => {
 				this.router.navigate([this.returnUrl]);
 			},
 			error => {
@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit {
 	        this.authenticationService.login(this.f.username.value, this.f.password.value)
    	         .subscribe(
 					data => {
-						console.log("login-co ponent data");
 						if (data)
 							this.router.navigate([this.returnUrl]);
 						else
@@ -83,8 +82,6 @@ export class LoginComponent implements OnInit {
 						}
 	        	    },
 	            	error => {
-						console.log("login-co ponent error");
-						console.log(error);
 						if (error.status == 400)
 	                   		this.error = error.error;
 						else

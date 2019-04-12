@@ -16,9 +16,9 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then((user) => {
-    done(null, user);
-  });
+	User.findById(id).then((user) => {
+		done(null, user);
+	});
 });
 
 const saveToSession = (req, res) => {
@@ -27,36 +27,30 @@ const saveToSession = (req, res) => {
 		username: req.user.username
 	};
 	req.session.user = payload;
-
-  console.log(payload);
 	req.save((err) => {
-    console.log('TOP');
-    if (err) {
-      console.log('TRTQTQTTQTDTD');
-      throw err;
-    }
-    else {
-      console.log('redirect');
-    res.redirect('/');
-    }
+		if (err) {
+			throw err;
+		}
+		else {
+			res.redirect('/');
+		}
 	});
 };
 
 passport.use(new GoogleStrategy({
-  clientID: GOOGLE_APP_ID,
-  clientSecret: GOOGLE_APP_SECRET,
-  callbackURL: "http://localhost:8080/auth/google/redirect"
-}, (accessToken, refreshToken, profile, done) => {
-    console.log('passport callback');
-    console.log(profile);
-    var Firstname = profile._json.given_name;
-  var Lastname = profile._json.family_name;
-  var email = profile._json.email;
-  var Username = profile._json.given_name;
-  
-    User.findOne( {$or: [{username: profile._json.given_name}, {email: profile._json.email }, { googleId: profile.id} ]}).then((currentUser) => {
-      if (currentUser) {
-        if (currentUser._doc.googleId == profile.id)
+	clientID: GOOGLE_APP_ID,
+	clientSecret: GOOGLE_APP_SECRET,
+	callbackURL: "http://localhost:8080/auth/google/redirect"
+},
+(accessToken, refreshToken, profile, done) => {
+	var Firstname = profile._json.given_name;
+	var Lastname = profile._json.family_name;
+	var email = profile._json.email;
+	var Username = profile._json.given_name;
+
+	User.findOne( {$or: [{username: profile._json.given_name}, {email: profile._json.email }, { googleId: profile.id} ]}).then((currentUser) => {
+		if (currentUser) {
+			if (currentUser._doc.googleId == profile.id)
 			{
 				User.findOneAndUpdate(
 						{ fortytwoId: profile.id },
@@ -72,41 +66,39 @@ passport.use(new GoogleStrategy({
 			}
 			else
 				return done(null, null);;
-      } else {
-    user = new User({
-      "username": Username,
-      "firstname": Firstname,
-      "lastname": Lastname,
-      "email": email,
-      googleId: profile.id
-    });
-    //console.log("user = ", user);
-    user.save(
-      function(err) {
-        if (err) console.error(err);
-        return done(err, user);}
-    ).then((user) => {
-      //console.log('new user created' + newUser);
-      done(null, newUser);
-    });
-    }
-  }
-     )})) ;
-  
-  
-  
-  router.get('/', passport.authenticate('google', { 
-      scope: ['profile', 'email']}
-      ));
-  
-  router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login?error=3" }),
-  (req, res) => {
+		} else {
+			user = new User({
+				"username": Username,
+				"firstname": Firstname,
+				"lastname": Lastname,
+				"email": email,
+				googleId: profile.id
+			});
+			user.save(
+					function(err) {
+						if (err) console.error(err);
+						return done(err, user);}
+					).then((user) => {
+				done(null, newUser);
+			});
+		}
+	}
+	)}
+)) ;
 
-    req.body.username = req.user._doc.username;
-		var Token = Jwthandle.sign(req, res);
-		delete(req.body.username);
-		res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
-    
+
+
+router.get('/', passport.authenticate('google', { 
+		scope: ['profile', 'email']}
+		));
+
+router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login?error=3" }),
+			(req, res) => {
+				req.body.username = req.user._doc.username;
+				var Token = Jwthandle.sign(req, res);
+				delete(req.body.username);
+				res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
+
 });
-  
-  module.exports = router;
+
+module.exports = router;

@@ -57,13 +57,10 @@ export class RegisterComponent implements OnInit {
       .subscribe(
       data => 
       {
-          console.log("register ok = ", data);
           this.router.navigate([this.returnUrl]);
           
       },
       error => {
-          console.log("register error = ", error);
-          console.log(error.error);
           this.error = error.error;
           this.loading = false;
       });

@@ -15,7 +15,6 @@ export class SettingsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log("localStorage = ",localStorage);
     this.modif_photo = this.formBuilder.group({
       filetoupload: ['', Validators.required]
   });
