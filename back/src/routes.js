@@ -91,4 +91,10 @@ router.get('/api', (req, res) => {
 	api.api_req(req, res);
 	})
 
+router.get('/api_by_id', (req, res) => {
+	console.log("api_rep hit");
+//	res.send("l\'api va s\'afficher la =>");
+	api.api_by_id(req, res, 7491);
+	})
+
 module.exports = router;
