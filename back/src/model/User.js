@@ -33,12 +33,11 @@ var UserSchema = new mongoose.Schema({
         google: {
             type: String
         }
-    }
+    },
     googleId: String,
     fortytwoId: String,
     githubId: String,
-    Token: String,
-	avatar: String
+    Token: String
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);

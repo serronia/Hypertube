@@ -25,6 +25,7 @@
 		</form>
 	</div>
 </div>
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <div class="row OmniAuth">
 	<div class="col-md-4 offset-md-4">
 		<a href="http://localhost:8080/auth/42/"><img src='assets/logo_101_black.png'></a>

@@ -33,7 +33,7 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRouting,
-	KonamiModule
+	  KonamiModule,
     MatCardModule,
     MatTabsModule,
     MatButtonToggleModule,
