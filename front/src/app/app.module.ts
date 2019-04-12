@@ -26,6 +26,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { FormInfoComponent } from './form-info/form-info.component';
 import { FormLogsComponent } from './form-logs/form-logs.component';
 import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     MatTabsModule,
     MatButtonToggleModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InfiniteScrollModule
   ],
   declarations: [
     AppComponent,

@@ -41,10 +41,10 @@ router.get('/users/:id', (req, res) => {
 
 
 
-router.get('/api', (req, res) => {
+router.get('/api/:k', (req, res) => {
 	console.log("api_rep hit");
 //	res.send("l\'api va s\'afficher la =>");
-	api.api_req(req, res);
+	api.api_req(req, res, req.params.k);
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {

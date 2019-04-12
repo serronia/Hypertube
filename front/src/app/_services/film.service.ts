@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 export class FilmService {
     constructor(private http: HttpClient) { }
 
-    getFilm() {
-        return this.http.get('http://localhost:8080/api');
+    getFilm(k :number) {
+        return this.http.get('http://localhost:8080/api/'+k);
     }
     getDetailFilm(id: number) {
         console.log("dans get detail film")

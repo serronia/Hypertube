@@ -3,12 +3,10 @@ const router = express.Router();
 const fetch = require('node-fetch');
 
 module.exports = {
-    api_req: function (req, res) {
+    api_req: function (req, res, k) {
         let i = 0;
-        let j = 20; //nombre de film par page
-        let k = 1;  //numero de la page
+        let j = 10; //nombre de film par page
         var tab = new Array();
-        //var str = [];
         console.log("api_rep hit on api function");
         fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=6&limit=" + j + "&quality=1080p&page=" + k)
             .then((res) => res.json())
@@ -30,7 +28,7 @@ module.exports = {
     },
 
     api_by_id: function (req, res, id) {
-        fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id)
+        fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id+"&with_cast=true")
             .then((res) => res.json())
             .then(async data => {
                     str = JSON.stringify({ name: data.data.movie.title,
@@ -42,6 +40,7 @@ module.exports = {
                             langue:  data.data.movie.language,
                             description:  data.data.movie.description_full,
                             background_image:  data.data.movie.background_image,
+                            cast : data.data.movie.cast,
                             id:  data.data.movie.id});
                     str=JSON.parse(str);
                 res.status(200).json(str);

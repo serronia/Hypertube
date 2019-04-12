@@ -18,12 +18,11 @@ export class PageFilmComponent implements OnInit {
   description: string;
   background: SafeStyle;
   note: number;
+  cast = new Array();
 
 
 
   constructor(private filmService : FilmService, private route: ActivatedRoute,private sanitization:DomSanitizer) {
-    //this.affiche = this.sanitization.bypassSecurityTrustUrl(this.affiche);
-    //this.background = this.sanitization.bypassSecurityTrustStyle(`url(${this.background})`);
    } 
 
   ngOnInit() {
@@ -42,6 +41,8 @@ export class PageFilmComponent implements OnInit {
           this.description = data.description;
           this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data.background_image})`);
           this.note = data.rating;
+          this.cast = data.cast;
+
       },
       error => {
           console.log("get film error = ", error);
