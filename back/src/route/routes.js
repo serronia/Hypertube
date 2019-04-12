@@ -39,7 +39,7 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id', (req, res) => {
-	User.findById(req.params.id, (err, users) => {
+	Usertest.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(400).send(error);
 		else

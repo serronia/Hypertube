@@ -34,11 +34,18 @@
 	transition: .3s ease-in-out;
 }
 
+#vu{
+    padding-right: 10px;
+}
+
 .example-card:hover {
     background: #000000b8;
-    color: rgba(255, 20, 255, 0.87);
 	-webkit-transform: scale(1.3);
 	transform: scale(1.1);
+}
+
+.example-card:hover #vu{
+    color: rgba(255, 20, 255, 0.87);
 }
 
 

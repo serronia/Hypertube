@@ -11,16 +11,33 @@ var UserSchema = new mongoose.Schema({
     firstname: String,
     lastname: String,
     email: {
-        type: String
+        type: String,
+        match: /[^@]+@[^@]+\.[\w]{1,255}/,
+        lowercase: true,
+        required: true
     },
     password: {
         type: String,
     },
+    picture: {
+        type: String,
+    },
+    language: {
+        type: String,
+        default: "English"
+    },
+    ssoid: {
+        intra: {
+            type: String
+        },
+        google: {
+            type: String
+        }
+    },
     googleId: String,
     fortytwoId: String,
     githubId: String,
-    Token: String,
-	avatar: String
+    Token: String
 });
 mongoose.plugin(findOrCreate);
 mongoose.model('User', UserSchema);

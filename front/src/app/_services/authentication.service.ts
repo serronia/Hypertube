@@ -41,18 +41,12 @@ export class AuthenticationService {
 	return this.http.post<any>(`http://localhost:8080/user/token`, { username, token })
 		.pipe(map(user => {
 		if (user && user.token) {
-				console.log("==============================");
-				console.log(user);
-				console.log("==============================");
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
 					localStorage.setItem('currentUser', JSON.stringify(user));
 					
 					//setting expiration login expiration time [604800 == 1 Week]
 					const expiresAt = moment().add(604800,'second');
 					localStorage.setItem("TokenExpires", JSON.stringify(expiresAt.valueOf()) );
-					console.log("===== Authentication Local storage =====");
-					console.log(localStorage);
-					console.log("===== Authentication Local storage =====");
                     this.currentUserSubject.next(user);
                 	return user;
 				}
@@ -70,17 +64,8 @@ export class AuthenticationService {
 	public isLoggedIn() {
         return moment().isBefore(this.getExpiration());
     }
-
-	testtok(currentUser) {
-	console.log("=========== testtok ==============");
-	console.log(currentUser);
-	console.log("=========== testtok ==============");
-
-	const Param = new HttpParams().set("username", currentUser.username);
-	return this.http.post<any>('http://localhost:8080/testtocken', {params: Param});
-	}
-
-    logout() {
+	
+	logout() {
         // remove user from local storage to log user out
 		localStorage.removeItem('currentUser');
 		localStorage.removeItem('TokenExpires');
