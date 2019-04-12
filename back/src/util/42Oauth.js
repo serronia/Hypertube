@@ -35,7 +35,7 @@ passport.use(new FortyTwoStrategy({
 								   firstname: profile._json.first_name,
 								   username: profile._json.login,
 								   email: profile._json.email,
-								   avatar: profile._json.image_url
+								   picture: profile._json.image_url
 							   }
 						});
 				return done(null, currentUser);
@@ -49,7 +49,7 @@ passport.use(new FortyTwoStrategy({
 				fortytwoId: profile.id,
 				username: profile._json.login ,
 				email: profile._json.email,
-				avatar: profile._json.image_url
+				picture: profile._json.image_url
 			})
 			.save().then(newUser => {
 				return done(null, newUser);

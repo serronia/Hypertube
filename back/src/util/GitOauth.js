@@ -31,13 +31,15 @@ passport.use(new GithubStrategy({
 		if (currentUser ) {
 			if (currentUser._doc.githubId == profile.id)
 			{
+			
 				User.findOneAndUpdate(
 						{ githubId: profile.id },
 						{$set: {
 								   lastname: profile._json.name,
+								   firstname: profile._json.name,
 								   username: profile._json.login,
 								   email: profile._json.email,
-								   avatar: profile._json.avatar_url
+								   picture: profile._json.avatar_url
 							   }
 						});
 				return done(null, currentUser);
@@ -47,10 +49,11 @@ passport.use(new GithubStrategy({
 		} else {
 			new User({
 				lastname: profile._json.name,
+				firstname: profile._json.name,
 				githubId: profile.id,
 				username: profile._json.login ,
 				email: profile._json.email,
-				avatar: profile._json.avatar_url
+				picture: profile._json.avatar_url
 			})
 			.save().then(newUser => {
 				return done(null, newUser);

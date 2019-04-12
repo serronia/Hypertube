@@ -3,6 +3,7 @@ const router = express.Router();
 const fetch = require('node-fetch');
 
 module.exports = {
+    /**cote  client */
     api_req: function (req, res) {
         let i = 0;
         let j = 20; //nombre de film par page
@@ -29,19 +30,21 @@ module.exports = {
             })
 
     },
-
+/**cote back */
     api_by_id: function (req, res, id) {
         var tab = new Array();
-        fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id)
+        fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id+"&with_cast=true")
             .then((res) => res.json())
             .then(async data => {
                 //        console.log(data.data.movie.title);
-                //        console.log(data.data.movie);
+                        console.log(data.data.movie);
                 //console.log(data.data.movies[i].torrents[1].quality);
                 console.log("titre =>", data.data.movie.title);
                 console.log("annee =>", data.data.movie.year);
                 //         console.log("genre =>", data.data.movie.genres);
                 console.log("langue =>", data.data.movie.language);
+                console.log("Acteur =>", data.data.movie.cast[0].name);
+                console.log("character name =>", data.data.movie.cast[0].character_name);
                 console.log("affiche =>", data.data.movie.large_cover_image);
                 console.log("description =>", data.data.movie.description_full);
                 console.log("background_image =>", data.data.movie.background_image);

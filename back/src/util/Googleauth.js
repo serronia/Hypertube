@@ -59,7 +59,7 @@ passport.use(new GoogleStrategy({
 								   firstname: Firstname,
 								   username: profile._json.given_name,
 								   email: profile._json.email,
-								   avatar: profile._json.picture
+								   picture: profile._json.picture
 							   }
 						});
 				return done(null, currentUser);
@@ -72,7 +72,8 @@ passport.use(new GoogleStrategy({
 				"firstname": Firstname,
 				"lastname": Lastname,
 				"email": email,
-				googleId: profile.id
+        googleId: profile.id,
+        picture: profile._json.picture
 			});
 			user.save(
 					function(err) {
