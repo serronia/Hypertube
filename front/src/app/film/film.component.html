@@ -1,14 +1,14 @@
 <mat-card class="example-card col-lg-3 col-md-4 col-sm-12 col-xs-12">
   <mat-card-header class="example-card col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <mat-card-title>{{ title }}</mat-card-title>
-    <div class="vu_or_not"><i class="far fa-eye"></i></div>
+	  <!--    <mat-card-title>{{ title }}</mat-card-title> -->
+    <div class="vu_or_not"><i class="far fa-eye"></i>{{ title }}</div>
   </mat-card-header>
   <!--<a class="affiche col-md-12" style="background-image: url({{affiche}})"></a>
   <div class="header" *ngIf="affiche" [style.background-image]="'url(' + affiche + ')'">-->
   <a class="affiche col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="affiche" [style.background-image]="affiche"></a>
   <!--<a class="affiche col-md-12"></a>-->
   <mat-card-content class="example-card col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <p>
+	  <p>
           annee : {{ year }}
         </p>
         <p>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { KonamiModule } from 'ngx-konami';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -24,7 +25,8 @@ import { SettingsComponent } from './settings/settings.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRouting,
-    MatCardModule
+	MatCardModule,
+	KonamiModule
   ],
   declarations: [
     AppComponent,

@@ -1,14 +1,15 @@
 .mat-card {
-    background: #000000b8;
-    color: rgba(255, 255, 255, 0.87);
+//    background: #000000b8;
+	   color: rgba(255, 255, 255, 0.87);
+		background: inherit;
 }
 .affiche{
     background-size: contain;
     background-repeat: no-repeat;
-    min-height: 200px;
-    max-height: 400px;
-    height: -webkit-fill-available;
     background-position: center;
+    min-height: 10vh;
+    max-height: 35vh;
+    height: -webkit-fill-available;
 }
 .mat-card-content{
     display: none;
@@ -25,3 +26,19 @@
     border-top: white solid;
     right: 0;
 }
+
+.example-card {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.example-card:hover {
+    background: #000000b8;
+    color: rgba(255, 20, 255, 0.87);
+	-webkit-transform: scale(1.3);
+	transform: scale(1.1);
+}
+
+

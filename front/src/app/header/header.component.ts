@@ -22,14 +22,8 @@ currentUser: User;
 						console.log(localStorage);
 						console.log("====== header =======");*/
 						}
-
 	logout() {
 		this.authenticationService.logout();
 //		this.router.navigate(['/login']);
-	}
-
-	testtok(){
-		this.authenticationService.testtok(this.currentUser)
-		.subscribe(data => {console.log(data);}, error => {console.log(error)});
 	}
 }

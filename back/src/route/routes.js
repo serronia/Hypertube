@@ -29,12 +29,9 @@ router.get('/', (req, res) => {
 
 /********************************************/
 router.get('/users', (req, res) => {
-	console.log("server hit /users");
 	    Usertest.find({}, (err, users) => {
 			if (err)
 				res.status(500).send(error);
-			if (!users)
-				console.log("users vide");
 			else
 				res.status(200).json(users);
 					
@@ -42,7 +39,6 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id', (req, res) => {
-	console.log('tapping ' + req.params.id); 
 	User.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(400).send(error);
