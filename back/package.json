@@ -14,12 +14,27 @@
   "author": "shthevak",
   "license": "UNLICENCED",
   "dependencies": {
-    "cors": "2.8.5",
+    "bcrypt": "latest",
+    "cookie-session": "latest",
+    "cors": "latest",
     "express": "^4.16.3",
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "file-system": "2.2.2",
+    "jsonwebtoken": "8.5.1",
     "mongoose": "^4.7.0",
+    "mongoose-findorcreate": "latest",
     "node-fetch": "^2.3.0",
-    "nodemon": "^1.14.7"
+    "nodemailer": "latest",
+    "nodemon": "^1.14.7",
+    "passport": "^0.4.0",
+    "passport-42": "latest",
+    "passport-github": "latest",
+    "passport-google-oauth20": "latest",
+    "passport-local": "latest",
+    "request": "latest",
+    "sha512": "latest",
+    "torrent-stream": "latest"
   }
 }
