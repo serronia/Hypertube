@@ -16,17 +16,17 @@ export class HomeComponent implements OnInit {
     }
     ngOnInit() {
       this.filmService.getFilm()
-    .subscribe(
-    data => 
-    {
-        for(let da in data)
-        {
-          this.films[this.i] = data[this.i];
-          this.i = this.i+1;
-        }        
-    },
-    error => {
-        console.log("get film error = ", error);
-    });
+      .subscribe(
+      data => 
+      {
+          for(let da in data)
+          {
+            this.films[this.i] = data[this.i];
+            this.i = this.i+1;
+          }        
+      },
+      error => {
+          console.log("get film error = ", error);
+      });
     }
 }

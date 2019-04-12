@@ -47,9 +47,9 @@ router.get('/api', (req, res) => {
 	api.api_req(req, res);
 	})
 
-router.get('/api_by_id', (req, res) => {
-	console.log("api_rep hit");
+router.get('/api_by_id/:p1', (req, res) => {
+	console.log("api_rep hit ------------ id = ", req.params.p1);
 //	res.send("l\'api va s\'afficher la =>");
-	api.api_by_id(req, res, 7491);
+	api.api_by_id(req, res, req.params.p1);
 	})
 module.exports = router;

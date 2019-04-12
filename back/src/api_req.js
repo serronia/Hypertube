@@ -15,10 +15,10 @@ module.exports = {
             .then(async data => {
                 while (i < j) {
                     str = JSON.stringify({ name:   data.data.movies[i].title,
-                        year:  data.data.movies[i].year  ,
+                            year:  data.data.movies[i].year  ,
                             genres:  data.data.movies[i].genres  ,
                             affiche:  data.data.movies[i].large_cover_image  ,
-                            synopsis:  data.data.movies[i].synopsis  ,
+                            synopsis: data.data.movies[i].synopsis.substr(0, 199) + "..."  ,
                             duree:  data.data.movies[i].runtime  ,
                             rating:  data.data.movies[i].rating  ,
                             id:  data.data.movies[i].id});
@@ -30,23 +30,22 @@ module.exports = {
     },
 
     api_by_id: function (req, res, id) {
-        var tab = new Array();
         fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id)
             .then((res) => res.json())
             .then(async data => {
-                //        console.log(data.data.movie.title);
-                //        console.log(data.data.movie);
-                //console.log(data.data.movies[i].torrents[1].quality);
-                console.log("titre =>", data.data.movie.title);
-                console.log("annee =>", data.data.movie.year);
-                //         console.log("genre =>", data.data.movie.genres);
-                console.log("langue =>", data.data.movie.language);
-                console.log("affiche =>", data.data.movie.large_cover_image);
-                console.log("description =>", data.data.movie.description_full);
-                console.log("background_image =>", data.data.movie.background_image);
-                console.log("duree min =>", data.data.movie.runtime);
-                console.log("note =>", data.data.movie.rating);
-                if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
+                    str = JSON.stringify({ name: data.data.movie.title,
+                            year:  data.data.movie.year  ,
+                            genres:  data.data.movie.genres  ,
+                            affiche:  data.data.movie.large_cover_image  ,
+                            duree:  data.data.movie.runtime  ,
+                            rating:  data.data.movie.rating  ,
+                            langue:  data.data.movie.language,
+                            description:  data.data.movie.description_full,
+                            background_image:  data.data.movie.background_image,
+                            id:  data.data.movie.id});
+                    str=JSON.parse(str);
+                res.status(200).json(str);
+                /*if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
                     console.log("qualite =>", data.data.movie.torrents[0].quality);
                     console.log("seeds =>", data.data.movie.torrents[0].seeds);
                     console.log("hash =>", data.data.movie.torrents[0].hash);
@@ -57,7 +56,7 @@ module.exports = {
                     console.log("hash =>", data.data.movie.torrents[1].hash);
                 }
                 tab[0] = "lol";
-                res.send(tab);
+                res.send(tab);*/
             })
 
     },

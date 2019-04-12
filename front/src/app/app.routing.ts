@@ -36,7 +36,7 @@ const appRoutes: Routes = [
 		pathMatch: 'full'
 	},
 	{ 
-		path: 'film/:name',
+		path: 'film/:id',
 		component: PageFilmComponent
 	},
 	{
