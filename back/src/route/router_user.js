@@ -137,40 +137,17 @@ router.post('/modify_info', (req, res) => {
   var lastname = req.body.lastname;
   var mail = req.body.mail;
   var language = req.body.language;
+  var oldmail = req.body.oldmail;
 
-  User.findOneAndUpdate(
-    {_id: post_id},
-    {$set: {firstname: firstname, lastname: lastname, email: mail, language:language }},{returnNewDocument : true}, 
-    function(err, doc){
-      if(err){
-          console.log("Something wrong when updating record!");
-          res.status(400).send("Something wrong when updating record!");
-      }
-      else
-      {
-        console.log("ok user updated !! :)");
-        res.status(201).json({message: 'User modified successfully'});
-      }
-  });
-});
-
-router.post('/modify_log', (req, res) => {
-  console.log("server hit /modify_log");
-  var post_id = req.body.id;
-  var username = req.body.username;
-  var password = req.body.password;
-  var password2 = req.body.password2;
-  console.log("post = ", req.body);
-  let hash = bcrypt.hashSync(password, 10);
-  if (password == password2)
+  if(mail == oldmail)
   {
     User.findOneAndUpdate(
       {_id: post_id},
-      {$set: {username: username, password: hash}},{returnNewDocument : true}, 
+      {$set: {firstname: firstname, lastname: lastname, email: mail, language:language }},{returnNewDocument : true}, 
       function(err, doc){
         if(err){
             console.log("Something wrong when updating record!");
-            res.status(400).send("Something wrong when updating!");
+            res.status(400).send("Something wrong when updating record!");
         }
         else
         {
@@ -179,10 +156,98 @@ router.post('/modify_log', (req, res) => {
         }
     });
   }
+  else{
+    Check.checkUserExists("", mail).then(resp =>{
+      if(resp)
+      {
+        User.findOneAndUpdate(
+          {_id: post_id},
+          {$set: {firstname: firstname, lastname: lastname, email: mail, language:language }},{returnNewDocument : true}, 
+          function(err, doc){
+            if(err){
+                console.log("Something wrong when updating record!");
+                res.status(400).send("Something wrong when updating record!");
+            }
+            else
+            {
+              console.log("ok user updated !! :)");
+              res.status(201).json({message: 'User modified successfully'});
+            }
+        });
+      }
+    }).catch(err=>{
+        if(err)
+          res.status(400).send("Mail already exist");
+      });
+  }
+});
+
+router.post('/modify_log', (req, res) => {
+  console.log("server hit /modify_log");
+  var post_id = req.body.id;
+  var username = req.body.username;
+  var password = req.body.password;
+  var password2 = req.body.password2;
+  var oldusername =req.body.oldusername;
+  console.log("post = ", req.body);
+  let hash = bcrypt.hashSync(password, 10);
+  if(username == oldusername)
+  {
+    if (password == password2)
+    {
+      User.findOneAndUpdate(
+        {_id: post_id},
+        {$set: {username: username, password: hash}},{returnNewDocument : true}, 
+        function(err, doc){
+          if(err){
+              console.log("Something wrong when updating record!");
+              res.status(400).send("Something wrong when updating!");
+          }
+          else
+          {
+            console.log("ok user updated !! :)");
+            res.status(201).json({message: 'User modified successfully'});
+          }
+      });
+    }
+    else
+    {
+      res.status(400).send("Passwords must be identicals");
+    }
+  }
   else
   {
-    res.status(400).send("Passwords must be identicals");
+    Check.checkUserExists(username, "").then(resp =>{
+      if(resp)
+      {
+        if (password == password2)
+        {
+          User.findOneAndUpdate(
+            {_id: post_id},
+            {$set: {username: username, password: hash}},{returnNewDocument : true}, 
+            function(err, doc){
+              if(err){
+                  console.log("Something wrong when updating record!");
+                  res.status(400).send("Something wrong when updating!");
+              }
+              else
+              {
+                console.log("ok user updated !! :)");
+                res.status(201).json({message: 'User modified successfully'});
+              }
+          });
+        }
+        else
+        {
+          res.status(400).send("Passwords must be identicals");
+        }
+      }
+    }).catch(err=>{
+      if(err)
+        res.status(400).send("Username already exist");
+    });
   }
+
 });
 
 router.post('/modify_avatar', (req, res) => {

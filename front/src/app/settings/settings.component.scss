@@ -8,6 +8,7 @@ h2{
 }
 .contain_normal{
     color: white;
+
 }
 .image{
     height: 200px;
@@ -16,6 +17,12 @@ h2{
     height: 200px;
     
 }
-#Nom{
+#ext{
+    text-align: center;
     padding-top:25px;
+    padding-bottom:25px;
+    margin-top:5px;
+    margin-bottom:5px;
+    border-radius: 25px;
+    background-color: #749e7885;
 }
