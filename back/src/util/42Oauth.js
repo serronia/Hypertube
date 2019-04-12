@@ -13,58 +13,58 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then((user) => {
-    done(null, user);
-  });
+	User.findById(id).then((user) => {
+		done(null, user);
+	});
 });
 
-
 passport.use(new FortyTwoStrategy({
-  clientID: FORTYTWO_APP_ID,
-  clientSecret: FORTYTWO_APP_SECRET,
-  callbackURL: "http://localhost:8080/auth/42/redirect"
+	clientID: FORTYTWO_APP_ID,
+	clientSecret: FORTYTWO_APP_SECRET,
+	callbackURL: "http://localhost:8080/auth/42/redirect"
 },
 (accessToken, refreshToken, profile, done) => {
-  var firstname = profile._json.first_name;
-  var lastname = profile._json.last_name;
-  var email = profile._json.email;
-
-  console.log('passport callback');
-  console.log(profile);
-  User.findOne(  { fortytwoId: profile.id} ).then(currentUser => {
-
-    if (currentUser) {
-      console.log('user already exist', currentUser);
-      return done(null, currentUser);
-    } else {
-      new User({
-        firstname: firstname,
-        lastname: lastname,
-        fortytwoId: profile.id,
-        username: profile._json.login ,
-        email: email
-      })
-      .save().then(newUser => {
-        console.log('new user created' + newUser);
-      done(null, newUser);
-      })
-    }
-  });
+	User.findOne({$or: [{username: profile._json.login}, {email: profile._json.email }, { fortytwoId: profile.id} ]}).then(currentUser => {
+		if (currentUser ) {
+			if (currentUser._doc.fortytwoId == profile.id)
+			{
+				User.findOneAndUpdate(
+						{ fortytwoId: profile.id },
+						{$set: {
+								   lastname: profile._json.name,
+								   firstname: profile._json.first_name,
+								   username: profile._json.login,
+								   email: profile._json.email,
+								   avatar: profile._json.image_url
+							   }
+						});
+				return done(null, currentUser);
+			}
+			else
+				return done(null, null);;
+		} else {
+			new User({
+				firstname: profile._json.first_name,
+				lastname: profile._json.last_name,
+				fortytwoId: profile.id,
+				username: profile._json.login ,
+				email: profile._json.email,
+				avatar: profile._json.image_url
+			})
+			.save().then(newUser => {
+				return done(null, newUser);
+			})
+		}
+	});
 }
 ));
 
-
 router.get('/', passport.authenticate('42'));
 
-router.get('/redirect',
-  passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login' }),
-  (req, res) => {
-    req.body.username = req.user._doc.username;
-    var Token = Jwthandle.sign(req, res);
-    res.status(200).redirect('http://localhost:4200/home'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
-    // Successful authentication, redirect home.
-    //comments: utiliser router_user->if(bcrypt.compareSync(password, user_bdd.password)){}
-    //res.redirect('http://localhost:4200/home');
+router.get('/redirect',passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login?error=2' }), (req, res) => {
+		req.body.username = req.user._doc.username;
+		var Token = Jwthandle.sign(req, res);
+		delete(req.body.username);
+		res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
 });
-
 module.exports = router;

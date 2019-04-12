@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     submitted = false;
     returnUrl: string;
     error = '';
-
+	errorauth = '';
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit {
 				this.router.navigate(['/login']);
 		});
 		if (errolog == 1)
-			this.error = "Your github login or mail is already used here";
+			this.errorauth = "Your github login or mail is already used here";
+		if (errolog == 2)
+			this.errorauth = "Your 42 pseudo or mail is already used here";
     }
 
     // convenience getter for easy access to form fields

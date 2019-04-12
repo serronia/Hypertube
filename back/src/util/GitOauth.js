@@ -33,8 +33,8 @@ passport.use(new GithubStrategy({
 			{
 				User.findOneAndUpdate(
 						{ githubId: profile.id },
-						{$set: { lastname: profile._json.name,
-								   githubId: profile.id,
+						{$set: {
+								   lastname: profile._json.name,
 								   username: profile._json.login,
 								   email: profile._json.email,
 								   avatar: profile._json.avatar_url
@@ -57,18 +57,14 @@ passport.use(new GithubStrategy({
 			})
 		}
 	});
-}
-));
-
+}));
 
 router.get('/', passport.authenticate('github'));
 
-router.get('/redirect',
-		passport.authenticate('github', { failureRedirect: 'http://localhost:4200/login?error=1' }),
-		(req, res) => {
-			req.body.username = req.user._doc.username;
-			var Token = Jwthandle.sign(req, res);
-			res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
+router.get('/redirect', passport.authenticate('github', { failureRedirect: 'http://localhost:4200/login?error=1' }), (req, res) => {		
+		req.body.username = req.user._doc.username;
+		var Token = Jwthandle.sign(req, res);
+		delete(req.body.username);
+		res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
 		});
-
 module.exports = router;
