@@ -8,26 +8,25 @@ module.exports = {
         let j = 20; //nombre de film par page
         let k = 1;  //numero de la page
         var tab = new Array();
+        //var str = [];
         console.log("api_rep hit on api function");
-        fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=5&limit=" + j + "&quality=1080p&page=" + k)
+        fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=6&limit=" + j + "&quality=1080p&page=" + k)
             .then((res) => res.json())
             .then(async data => {
                 while (i < j) {
-                //    console.log(data.data.movies[i]);
-                    console.log("titre =>", data.data.movies[i].title);
-                    console.log("annee =>", data.data.movies[i].year);
-                    console.log("genre =>", data.data.movies[i].genres);
-                    console.log("affiche =>", data.data.movies[i].large_cover_image);
-                    console.log("synopsis =>", data.data.movies[i].synopsis);
-                    console.log("duree min =>", data.data.movies[i].runtime);
-                    console.log("note =>", data.data.movies[i].rating);
-                    console.log("ID_film", data.data.movies[i].id);
-                    tab[i] = data.data.movies[i].title;
+                    str = JSON.stringify({ name:   data.data.movies[i].title,
+                        year:  data.data.movies[i].year  ,
+                            genres:  data.data.movies[i].genres  ,
+                            affiche:  data.data.movies[i].large_cover_image  ,
+                            synopsis:  data.data.movies[i].synopsis  ,
+                            duree:  data.data.movies[i].runtime  ,
+                            rating:  data.data.movies[i].rating  ,
+                            id:  data.data.movies[i].id});
+                    tab[i]=JSON.parse(str);
                     i++;
                 }
-                res.send(tab);
+                res.status(200).json(tab);
             })
-
     },
 
     api_by_id: function (req, res, id) {
