@@ -54,11 +54,24 @@ passport.use(new GoogleStrategy({
   var email = profile._json.email;
   var Username = profile._json.given_name;
   
-    User.findOne( { googleId: profile.id}).then((currentUser) => {
+    User.findOne( {$or: [{username: profile._json.given_name}, {email: profile._json.email }, { googleId: profile.id} ]}).then((currentUser) => {
       if (currentUser) {
-        console.log('user already exist');
-        //router.post('/login');
-        done(null, currentUser);
+        if (currentUser._doc.googleId == profile.id)
+			{
+				User.findOneAndUpdate(
+						{ fortytwoId: profile.id },
+						{$set: {
+								   lastname: Lastname,
+								   firstname: Firstname,
+								   username: profile._json.given_name,
+								   email: profile._json.email,
+								   avatar: profile._json.picture
+							   }
+						});
+				return done(null, currentUser);
+			}
+			else
+				return done(null, null);;
       } else {
     user = new User({
       "username": Username,
@@ -86,22 +99,14 @@ passport.use(new GoogleStrategy({
       scope: ['profile', 'email']}
       ));
   
-  router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login" }),
+  router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login?error=3" }),
   (req, res) => {
 
     req.body.username = req.user._doc.username;
-    var Token = Jwthandle.sign(req, res);
-    res.status(200).redirect('http://localhost:4200/home'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
-
-    // Successful authentication, redirect home.
-    //console.log('redirect good');
-    //router.post('/user/login');
-    /*const token = Jwthandle;
-    res.redirect(`http://localhost:4200/home?token=${token}`);
+		var Token = Jwthandle.sign(req, res);
+		delete(req.body.username);
+		res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
     
-          console.log('log home');
-    //comments: utiliser router_user->if(bcrypt.compareSync(password, user_bdd.password)){}
-    */
 });
   
   module.exports = router;
