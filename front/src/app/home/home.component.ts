@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
     public lastUpdate = new Date();
     films = new Array();
     i =0;
-    k=1;
+    k=2;
   
     onScroll() {
       console.log('scrolled!!');
@@ -21,8 +21,6 @@ export class HomeComponent implements OnInit {
         var d=0;
         for(let da in data)
         {
-          //console.log(" -------------------------  i = ---------------------",this.i)
-          console.log("------------         data = --------------", data[d]);
           this.films[this.i] = data[d];
           this.i = this.i+1;
           d++;
@@ -38,7 +36,7 @@ export class HomeComponent implements OnInit {
     setInterval(() => { this.lastUpdate = new Date();}, 1);
     }
     ngOnInit() {
-      this.filmService.getFilm(0)
+      this.filmService.getFilm(1)
       .subscribe(
       data => 
       {
