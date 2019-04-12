@@ -10,6 +10,10 @@ const database = process.env.C_MONGO;
 const bcrypt = require('bcrypt');
 
 const	Jwthandle = require('../util/jwt.handeler.js');
+const fs   = require('fs');
+const jwt   = require('jsonwebtoken');
+
+var privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
 mongoose.connect(database);
 
@@ -27,17 +31,14 @@ function(username, password, done) {
 
 /**************************************************************/
 router.get('/drop_user', (req, res) => {
-	console.log("server hit /drop_user");
 	  User.remove({}, function (err) {
     	if (err) { throw err; }
-		   	 console.log('table user supprimée');
 		res.status(200).json("all users deleted");
   });
 });
 /*************************************************************/
 
 router.post('/login', (req, res) => {
-  console.log("server hit user/login");
   var username = req.body.username;
   var password = req.body.password;
   Check.getPassw(username)
@@ -46,12 +47,12 @@ router.post('/login', (req, res) => {
       const user_bdd = user.data._doc;
       if(bcrypt.compareSync(password, user_bdd.password)) 
       {
-		var Token = Jwthandle.sign(req, res);
-        res.status(200).json({
-          id: user_bdd._id,
-          username: username,
-          token: Token
-        });
+          var Token = Jwthandle.sign(req, res);
+          res.status(200).json({
+            id: user_bdd._id,
+            username: username,
+            token: Token
+          });
       }
       else{
         res.status(400).send('Username or password is incorrect');
@@ -61,8 +62,29 @@ router.post('/login', (req, res) => {
   })
 });
 
+router.post('/token', (req, res) => {
+	var verif_opt = {
+      issuer: "back",
+      subject: "back",
+      audience: req.body.username 
+    };
+	jwt.verify(req.body.token, privateKEY, verif_opt, function(err, decoded) {
+	if (err)
+		res.status(401).json("Token Invalid or Expired");
+	 Check.getPassw(req.body.username)
+	  .then(
+	    user =>{
+	      const user_bdd = user.data._doc;
+	          res.status(200).json({
+	            id: user_bdd._id,
+	            username: req.body.username,
+	            token: req.body.token 
+	          });
+		})
+	});
+});
+
 router.post('/create', (req, res) => {
-  console.log("server hit /adduser");
   var firstname = req.body.firstname;
   var lastname = req.body.lastname;
   var mail = req.body.mail;

@@ -15,7 +15,6 @@ export class UserService {
        
         return this.http.post<any>(`http://localhost:8080/user/create`, { username, firstname, lastname, password, password2, mail })
             .pipe(map(res => {
-                console.log("res = ", res);
             }));
     }
 

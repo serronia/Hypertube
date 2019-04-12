@@ -1,12 +1,14 @@
 const express		      = require('express');
 const router		      = express.Router();
 const User            = require('../model/User');
-const FortyTwoStrategy  = require('passport-42');
+const GithubStrategy  = require('passport-github');
 const passport        = require('passport');
 const	Jwthandle = require('../util/jwt.handeler.js');
 
-const FORTYTWO_APP_ID = '7f41faded62b4fbbe0b2cc08a72029cc05c590f8cb56edc954382350ee0a4536';
-const FORTYTWO_APP_SECRET = '846a2c3199eaf6314c1c7ec88079fa4872e86631442d760278b058c86229ffff';
+
+
+const GITHUB_APP_ID = 'd47ae1de420e380f375e';
+const GITHUB_APP_SECRET = 'b05fa8b220c66358f1021c23c1649a23939f6485';
 
 passport.serializeUser((user, done) => {
 	done(null, user.id);
@@ -18,24 +20,24 @@ passport.deserializeUser((id, done) => {
 	});
 });
 
-passport.use(new FortyTwoStrategy({
-	clientID: FORTYTWO_APP_ID,
-	clientSecret: FORTYTWO_APP_SECRET,
-	callbackURL: "http://localhost:8080/auth/42/redirect"
+
+passport.use(new GithubStrategy({
+	clientID: GITHUB_APP_ID,
+	clientSecret: GITHUB_APP_SECRET,
+	callbackURL: "http://localhost:8080/auth/github/redirect"
 },
 (accessToken, refreshToken, profile, done) => {
-	User.findOne({$or: [{username: profile._json.login}, {email: profile._json.email }, { fortytwoId: profile.id} ]}).then(currentUser => {
+	User.findOne({$or: [{username: profile._json.login}, {email: profile._json.email }, {githubId: profile.id} ]}).then(currentUser => {
 		if (currentUser ) {
-			if (currentUser._doc.fortytwoId == profile.id)
+			if (currentUser._doc.githubId == profile.id)
 			{
 				User.findOneAndUpdate(
-						{ fortytwoId: profile.id },
+						{ githubId: profile.id },
 						{$set: {
 								   lastname: profile._json.name,
-								   firstname: profile._json.first_name,
 								   username: profile._json.login,
 								   email: profile._json.email,
-								   avatar: profile._json.image_url
+								   avatar: profile._json.avatar_url
 							   }
 						});
 				return done(null, currentUser);
@@ -44,27 +46,25 @@ passport.use(new FortyTwoStrategy({
 				return done(null, null);;
 		} else {
 			new User({
-				firstname: profile._json.first_name,
-				lastname: profile._json.last_name,
-				fortytwoId: profile.id,
+				lastname: profile._json.name,
+				githubId: profile.id,
 				username: profile._json.login ,
 				email: profile._json.email,
-				avatar: profile._json.image_url
+				avatar: profile._json.avatar_url
 			})
 			.save().then(newUser => {
 				return done(null, newUser);
 			})
 		}
 	});
-}
-));
+}));
 
-router.get('/', passport.authenticate('42'));
+router.get('/', passport.authenticate('github'));
 
-router.get('/redirect',passport.authenticate('42', { failureRedirect: 'http://localhost:4200/login?error=2' }), (req, res) => {
+router.get('/redirect', passport.authenticate('github', { failureRedirect: 'http://localhost:4200/login?error=1' }), (req, res) => {		
 		req.body.username = req.user._doc.username;
 		var Token = Jwthandle.sign(req, res);
 		delete(req.body.username);
 		res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
-});
+		});
 module.exports = router;

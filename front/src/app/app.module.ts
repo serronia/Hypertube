@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatButtonModule} from '@angular/material/button';
+import { KonamiModule } from 'ngx-konami';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -32,6 +33,7 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRouting,
+	KonamiModule
     MatCardModule,
     MatTabsModule,
     MatButtonToggleModule,
