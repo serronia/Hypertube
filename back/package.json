@@ -20,7 +20,7 @@
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",
     "mongoose": "^4.7.0",
-    "nodemon": "^1.14.7",
+    "node-fetch": "^2.3.0",
     "jsonwebtoken": "8.5.1",
     "file-system": "2.2.2",
     "mongoose-findorcreate": "latest",
@@ -32,5 +32,6 @@
     "sha512": "latest",
     "torrent-stream": "latest",
     "express-validator": "latest"
+    "nodemon": "^1.14.7",
   }
 }
