@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 		const id = this.route.snapshot.queryParams['id'] || '';
 		const username = this.route.snapshot.queryParams['username'] || '';
 		const token = this.route.snapshot.queryParams['token'] || '';
+		const errolog = this.route.snapshot.queryParams['error'] || '';
 		if (id && username && token)
 			this.authenticationService.verifi_tok(id, username, token)
 			.subscribe(data => { console.log(data);
@@ -46,7 +47,9 @@ export class LoginComponent implements OnInit {
 			},
 			error => {
 				this.router.navigate(['/login']);
-			});
+		});
+		if (errolog == 1)
+			this.error = "Your github login or mail is already used here";
     }
 
     // convenience getter for easy access to form fields

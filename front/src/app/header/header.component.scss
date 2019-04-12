@@ -16,7 +16,6 @@ nav a{
     display: inline-block;
     border-radius: 10px;
     color: white;
-    border: solid white 1px;
 }
 
 nav a:hover {
@@ -26,5 +25,5 @@ nav a:hover {
 }
 
 nav a.active {
-	color: #0779b1;
+	background-color: #0779b1;
 }
