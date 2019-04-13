@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer,  SafeHtml,  SafeUrl,  SafeStyle} from '@angular/platform-browser';
 import { FilmService } from '../_services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './page-film.component.html',
@@ -9,6 +10,7 @@ import { FilmService } from '../_services';
 })
 export class PageFilmComponent implements OnInit {
   @Input() id: number;
+  PostCom: FormGroup;
   title: string;
   affiche: SafeUrl;
   year : number;
@@ -19,14 +21,25 @@ export class PageFilmComponent implements OnInit {
   background: SafeStyle;
   note: number;
   cast = new Array();
+  submitted = false;
+  loading = false;
+  error = '';
+  coms = new Array();
+  i = 0;
 
-
-
-  constructor(private filmService : FilmService, private route: ActivatedRoute,private sanitization:DomSanitizer) {
+  constructor(private filmService : FilmService, 
+              private route: ActivatedRoute,
+              private sanitization:DomSanitizer,
+              private formBuilder: FormBuilder) {
    } 
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
+
+    this.PostCom = this.formBuilder.group({
+      com: ['', Validators.required]
+    });
+
     this.filmService.getDetailFilm(this.id)
       .subscribe(
       data => 
@@ -47,6 +60,49 @@ export class PageFilmComponent implements OnInit {
       error => {
           console.log("get film error = ", error);
       });
+
+      this.filmService.getComs(this.id)
+      .subscribe(
+      res => 
+      {
+        this.i =0;
+          for(let da in res.com)
+          {
+            this.coms[this.i] = res.com[this.i];
+            this.i = this.i+1;
+          }      
+      },
+      error => {
+          console.log("get coms error = ", error);
+      });
+      
   }
+
+  get f() { return this.PostCom.controls; }
+
+  onSubmit() {
+
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.PostCom.invalid) {
+        return;
+    }
+    this.loading = true;
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+    this.filmService.addCom(this.id, user.id, this.f.com.value)
+      .subscribe(
+      data => 
+      {
+          console.log("add com ok = ", data);
+          location.reload();
+          
+      },
+      error => {
+          console.log("add com error = ", error);
+          console.log(error.error);
+          this.error = error.error;
+          this.loading = false;
+      });
+    }
 
 }

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../model/User');
+const Com = require('../model/Com');
 const bodyParser = require('body-parser');
 var api = require('../api_req');
 
@@ -24,6 +25,16 @@ router.get('/users', (req, res) => {
 			res.status(500).send(error);
 		else
 			res.status(200).json(users);
+				
+	});
+});
+
+router.get('/coms', (req, res) => {
+	Com.find({}, (err, coms) => {
+		if (err)
+			res.status(500).send(error);
+		else
+			res.status(200).json(coms);
 				
 	});
 });

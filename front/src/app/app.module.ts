@@ -27,6 +27,7 @@ import { FormInfoComponent } from './form-info/form-info.component';
 import { FormLogsComponent } from './form-logs/form-logs.component';
 import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CommentaireComponent } from './commentaire/commentaire.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     SettingsComponent,
     FormInfoComponent,
     FormLogsComponent,
-    ChooseAvatarComponent
+    ChooseAvatarComponent,
+    CommentaireComponent
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

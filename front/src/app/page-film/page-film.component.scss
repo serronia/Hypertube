@@ -28,7 +28,6 @@
     display: flex;
     color: white;
     height: 200px;
-    border: solid white 3px;
     margin: 20px;
     align-items: center;
     justify-content: center;
@@ -38,4 +37,13 @@
     color: white;
     text-align: center;
     text-decoration: underline;
+}
+textarea{
+	background-color: #caace854;
+	color: aliceblue;
+}
+
+textarea:focus{
+	background-color: #caace854;
+	color: aliceblue;
 }
