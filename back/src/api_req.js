@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 module.exports = {
     api_req: function (req, res, k) {
         let i = 0;
-        let j = 10; //nombre de film par page
+        let j = 20; //nombre de film par page
         var tab = new Array();
         console.log("api_rep hit on api function");
         fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=6&limit=" + j + "&quality=1080p&page=" + k)
@@ -16,7 +16,7 @@ module.exports = {
                             year:  data.data.movies[i].year  ,
                             genres:  data.data.movies[i].genres  ,
                             affiche:  data.data.movies[i].large_cover_image  ,
-                            synopsis: data.data.movies[i].synopsis.substr(0, 199) + "..."  ,
+                            synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
                             duree:  data.data.movies[i].runtime  ,
                             rating:  data.data.movies[i].rating  ,
                             id:  data.data.movies[i].id});
