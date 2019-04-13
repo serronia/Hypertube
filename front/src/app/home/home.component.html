@@ -1,5 +1,5 @@
 <h1>Welcome to home</h1>
-<div class="principale" infiniteScroll [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+<div class="principale" infiniteScroll [infiniteScrollDistance]="0.8" [infiniteScrollThrottle]="500" (scrolled)="onScroll()">
     <app-film  *ngFor="let film of films"
           [title]="film.name"
           [year]="film.year"

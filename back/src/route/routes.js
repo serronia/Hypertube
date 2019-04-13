@@ -15,7 +15,6 @@ router.use(bodyParser.json());
 router.get('/', (req, res) => {
 	res.send('server listening');
 });
-//router.get('/redirect', router.post('/login'));
 
 
 /********************************************/
@@ -42,14 +41,10 @@ router.get('/users/:id', (req, res) => {
 
 
 router.get('/api/:k', (req, res) => {
-	console.log("api_rep hit");
-//	res.send("l\'api va s\'afficher la =>");
 	api.api_req(req, res, req.params.k);
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {
-	console.log("api_rep hit ------------ id = ", req.params.p1);
-//	res.send("l\'api va s\'afficher la =>");
 	api.api_by_id(req, res, req.params.p1);
 	})
 module.exports = router;

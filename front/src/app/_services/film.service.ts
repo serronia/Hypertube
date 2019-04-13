@@ -9,7 +9,6 @@ export class FilmService {
         return this.http.get('http://localhost:8080/api/'+k);
     }
     getDetailFilm(id: number) {
-        console.log("dans get detail film")
         return this.http.get('http://localhost:8080/api_by_id/'+id);
     }
 }

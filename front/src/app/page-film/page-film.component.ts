@@ -31,17 +31,17 @@ export class PageFilmComponent implements OnInit {
       .subscribe(
       data => 
       {
-          console.log(data);
-          this.title = data.name;
-          this.affiche = this.sanitization.bypassSecurityTrustUrl(data.affiche);
-          this.year  = data.year;
-          this.duration = data.duree;
-          this.genre = data.genres;
-          this.langue = data.langue;
-          this.description = data.description;
-          this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data.background_image})`);
-          this.note = data.rating;
-          this.cast = data.cast;
+          var data2 = JSON.parse(JSON.stringify(data));
+          this.title = data2.name;
+          this.affiche = this.sanitization.bypassSecurityTrustUrl(data2.affiche);
+          this.year  = data2.year;
+          this.duration = data2.duree;
+          this.genre = data2.genres;
+          this.langue = data2.langue;
+          this.description = data2.description;
+          this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data2.background_image})`);
+          this.note = data2.rating;
+          this.cast = data2.cast;
 
       },
       error => {
