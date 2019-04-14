@@ -7,6 +7,7 @@ const Com = require('../model/Com');
 const bodyParser = require('body-parser');
 var api = require('../api_req');
 var player = require('../util/magnet');
+var reset = require('../util/jwt.handeler');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -50,7 +51,9 @@ router.get('/users/:id', (req, res) => {
 });
 /*************************************************/
 
-
+router.get('/reset_password', (req, res) => {
+	reset.forgotPassword(req, res)
+});
 
 router.get('/api/:k', (req, res) => {
 	api.api_req(req, res, req.params.k);

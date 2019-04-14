@@ -57,4 +57,8 @@ export class UserService {
                 return res;
             }));
     }
+
+    /*modifyPassword(password: string, password2: string) {
+
+    }*/
 }

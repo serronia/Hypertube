@@ -271,5 +271,7 @@ router.post('/modify_avatar', (req, res) => {
   });
 });
 
+/******************Reset Password */
+
 
 module.exports = router;
