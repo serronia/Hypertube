@@ -15,6 +15,7 @@ const IntraRoute = require('./util/42Oauth');
 const GoogleRoute = require('./util/Googleauth');
 const GithubRoute = require('./util/GitOauth');
 const userRoute = require('./route/router_user');
+const filmRoute = require('./route/router_film');
 
 //const torrentRoute = require('./route/router-torrent');
 
@@ -45,6 +46,7 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/user/', userRoute);
+app.use('/film/', filmRoute);
 app.use('/auth/42/', IntraRoute);
 app.use('/auth/google/', GoogleRoute);
 app.use('/auth/github/', GithubRoute);

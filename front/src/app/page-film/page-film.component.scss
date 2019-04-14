@@ -8,10 +8,10 @@
     margin-top: 30px;
     margin-bottom: 20px;
     justify-content: center;
-    background-image: url('http://www.premiere.fr/sites/default/files/styles/scale_crop_1280x720/public/2018-04/man-of-steel-henry-cavill.jpg');
+    //background-image: url('http://www.premiere.fr/sites/default/files/styles/scale_crop_1280x720/public/2018-04/man-of-steel-henry-cavill.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position-y: top;
+    background-size: contain;
+    background-position: center;
 }
 
 .info_film  p{
@@ -28,7 +28,6 @@
     display: flex;
     color: white;
     height: 200px;
-    border: solid white 3px;
     margin: 20px;
     align-items: center;
     justify-content: center;
@@ -38,4 +37,13 @@
     color: white;
     text-align: center;
     text-decoration: underline;
+}
+textarea{
+	background-color: #caace854;
+	color: aliceblue;
+}
+
+textarea:focus{
+	background-color: #caace854;
+	color: aliceblue;
 }

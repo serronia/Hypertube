@@ -45,7 +45,7 @@ export class FormInfoComponent implements OnInit {
       }
 
 		this.loading = true;
-    this.userService.modifyInfo(this.f.firstname.value, this.f.lastname.value, this.f.mail.value, this.f.language.value)
+    this.userService.modifyInfo(this.f.firstname.value, this.f.lastname.value, this.f.mail.value, this.f.language.value, this.mail)
       .subscribe(
       data => 
       {

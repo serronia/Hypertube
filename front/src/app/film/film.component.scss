@@ -1,7 +1,7 @@
 .mat-card {
-//    background: #000000b8;
-	   color: rgba(255, 255, 255, 0.87);
-		background: inherit;
+    color: rgba(255, 255, 255, 0.87);
+    background: inherit;
+        
 }
 .affiche{
     background-size: contain;
@@ -47,5 +47,9 @@
 .example-card:hover #vu{
     color: rgba(255, 20, 255, 0.87);
 }
-
-
+.mat-card-header{
+    max-height: 30px;
+}
+.resume{
+    font-size: smaller;
+}

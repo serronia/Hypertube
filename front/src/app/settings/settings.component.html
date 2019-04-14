@@ -5,6 +5,7 @@
       <ng-template mat-tab-label>
        <p style="color: white">My Account</p>
       </ng-template>
+      <p id="ext" *ngIf="compte_extene">You are logged with your {{ext}} account</p>
       <p id="Nom">Lastname = <span class="infos">{{lastname}}</span></p>
       <p id="Prenom">Firsname = <span class="infos">{{firstname}}</span></p>
       <p id="Username">Username = <span class="infos">{{username}}</span></p>
@@ -12,14 +13,14 @@
       <p id="language">Favourite language = <span class="infos">{{language}}</span></p>
     </mat-tab>
   
-    <mat-tab>
+    <mat-tab *ngIf="!compte_extene">
       <ng-template mat-tab-label>
         <p style="color: white">Modify Infos</p>
       </ng-template>
         <form-info [lastname]="lastname" [firstname]="firstname" [mail]="mail" [language]="language"></form-info>
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab *ngIf="!compte_extene">
       <ng-template mat-tab-label>
         <p style="color: white">Modify Logs</p>
       </ng-template>

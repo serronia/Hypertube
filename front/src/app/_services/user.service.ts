@@ -21,25 +21,25 @@ export class UserService {
     getUser(id: string){
         return this.http.get<any>(`http://localhost:8080/users/`+id, {})
             .pipe(map(res => {
-                console.log("res get usser = ", res);
+                console.log("res get user = ", res);
                 return res;
             }));
     }
 
-    modifyInfo(firstname: string, lastname: string, mail: string, language: string) {
+    modifyInfo(firstname: string, lastname: string, mail: string, language: string, oldmail: string,) {
         var user = JSON.parse(localStorage.getItem("currentUser"));
         var id = user.id;
-        return this.http.post<any>(`http://localhost:8080/user/modify_info`, {firstname, lastname, mail, language, id })
+        return this.http.post<any>(`http://localhost:8080/user/modify_info`, {firstname, lastname, mail, language, oldmail, id })
             .pipe(map(res => {
                 console.log("res modify Info  = ", res);
                 return res;
             }));
     }
 
-    modifyLog(username: string, password: string, password2: string) {
+    modifyLog(username: string, password: string, password2: string, oldusername:string) {
         var user = JSON.parse(localStorage.getItem("currentUser"));
         var id = user.id;
-        return this.http.post<any>(`http://localhost:8080/user/modify_log`, {username, password, password2, id})
+        return this.http.post<any>(`http://localhost:8080/user/modify_log`, {username, password, password2,oldusername, id})
             .pipe(map(res => {
                 console.log("res modify Info  = ", res);
                 return res;
