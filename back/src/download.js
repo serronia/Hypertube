@@ -1,158 +1,91 @@
-const Eschtml = require('htmlspecialchars');
-
-
 const TorrentStream = require('torrent-stream');
+const fs = require('fs');
 
-const Download = torrentStream('magnet:?xt=urn:btih:4c9d18e1cde6dacd39f6443d76ddba8e7e82a06b&dn=Blade+Runner+2049.HDRip.XviD.AC3-EVO&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969');
+// const FfmpegCommand = require('fluent-ffmpeg');
+//
+// const command = new FfmpegCommand();
 
-Download.on('ready', function () {
-    Download.files.forEach(function (file) {
-        console.log('filename:', file.name);
-        let stream = file.createReadStream();
-        // stream is readable stream to containing the file content
-    });
-});
+// var express = require('express'),
+//     ffmpeg = require('../index');
+//
+// var app = express();
+//
+// app.use(express.static(__dirname + '/flowplayer'));
+//
+// app.get('/', function(req, res) {
+//     res.send('index.html');
+// });
+//
+// app.get('/video/:filename', function(req, res) {
+//     res.contentType('flv');
+//     // make sure you set the correct path to your video file storage
+//     var pathToMovie = '/path/to/storage/' + req.params.filename;
+//     var proc = ffmpeg(pathToMovie)
+//     // use the 'flashvideo' preset (located in /lib/presets/flashvideo.js)
+//         .preset('flashvideo')
+//         // setup event handlers
+//         .on('end', function() {
+//             console.log('file has been converted succesfully');
+//         })
+//         .on('error', function(err) {
+//             console.log('an error happened: ' + err.message);
+//         })
+//         // save to stream
+//         .pipe(res, {end:true});
+// });
+//
+// app.listen(4000);
 
+const magnet = 'magnet:?xt=urn:btih:c64f4edabd570549ec40f03a83fb4f3f124b6eac&dn=The.Big.Bang.Theory.S11E11.HDTV.x264-SVA&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
+const opts = {
+    // connections: 100,     // Max amount of peers to be connected to.
+    // uploads: 10,          // Number of upload slots.
+    tmp: 'streams',          // Root folder for the files storage.
+    // Defaults to '/tmp' or temp folder specific to your OS.
+    // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
+    // path: '/tmp/my-file', // Where to save the files. Overrides `tmp`.
+    // verify: true,         // Verify previously stored data before starting
+    // Defaults to true
+    // dht: true,            // Whether or not to use DHT to initialize the swarm.
+    // Defaults to true
+    // tracker: true,        // Whether or not to use trackers from torrent file or magnet link
+    // Defaults to true
+    // trackers: [
+    //     'udp://tracker.openbittorrent.com:80',
+    //     'udp://tracker.ccc.de:80'
+    // ],
+    // Allows to declare additional custom trackers to use
+    // Defaults to empty
+    // storage: myStorage()  // Use a custom storage backend rather than the default disk-backed one
+};
 
-//╔═════════════════════════════════════════════════════════════════╗
-//║ 					    First registration						║
-//╚═════════════════════════════════════════════════════════════════╝
-
-const Register = (userNameNsfw, firstNameNsfw, lastNameNsfw, passwordNsfw, confirmedPassNsfw, emailNsfw) => {
+const downloadTorrent = (magnet) => {
     return new Promise((resolve, reject) => {
-        if (typeof userNameNsfw !== "string" && typeof firstNameNsfw !== "string" && typeof lastNameNsfw !== "string" &&
-            typeof passwordNsfw !== "string" && typeof confirmedPassNsfw !== "string" && typeof emailNsfw !== "string") {
-            reject({1: 'missing variable or invalid type'});
-        } else if (passwordNsfw !== confirmedPassNsfw) {
-            reject({2: 'password and confirmedPass is different'});
-        } else {
+        const Download = TorrentStream(magnet, opts);
+        Download.on('ready', () => {
+            Download.files.forEach(function (file) {
+                console.log('filename:', file.name);
 
-            // var security
-            let userName = Eschtml(userNameNsfw);
-            let firstName = Eschtml(firstNameNsfw);
-            let lastName = Eschtml(lastNameNsfw);
-            let passTmp = Eschtml(passwordNsfw);
-            let email = Eschtml(emailNsfw);
+                const reader = file.createReadStream();
+                // const writer = fs.createWriteStream(filePath);
+            });
+        });
 
-            // regex definition
-            const userNameRgx = /^[a-z0-9]{2,50}$/i;
-            // Minuscule, maj et nombres acceptes, taille de 2 a 50 char
+        Download.on('download', () => {
+            console.log(Download.swarm.downloaded);
+        });
 
-            const nameRgx = /^[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]+\.?(([',. -][a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]\.?)?[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]*\.?)*[a-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšž∂ð]?\.?$/i;
-            // Minuscule, maj, nombres et caracteres avec accents acceptes, taille de 2 a 50 char
-
-            const passRgx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
-            // between 8 and 50 characters, at least one uppercase letter, one lowercase letter, one number
-            // and one special character
-
-            const emailRgx = /^[a-z0-9._%+-]{1,64}@[a-z0-9._-]+\.[a-z]{2,255}$/i;
-            // Minuscule, maj et nombres acceptes, taille de 2 a 255 char
-
-
-            // testing regex
-
-            if (userNameRgx.test(userName) === false) {
-                reject({3: 'invalid userName'});
-            } else if (nameRgx.test(firstName) === false) {
-                reject({4: 'invalid firstName'});
-            } else if (nameRgx.test(lastName) === false) {
-                reject({5: 'invalid lastName'});
-            } else if (passRgx.test(passTmp) === false) {
-                reject({6: 'invalid password'});
-            } else if (emailRgx.test(email) === false) {
-                reject({7: 'invalid email'});
-            } else {
-                Connection.connect(null, (err) => {
-                    if (err) reject(err);
-                    const P1 = new Promise((resolve, reject) => {
-                                               Connection.query("SELECT COUNT(*) AS userCount FROM `users` WHERE `userName` = ?", [userName], (err, result) => {
-                                                   if (err) reject(err);
-                                                   if (result[0].userCount != 0) reject({8: 'userName and/or email already used'});
-                                                   else resolve(true);
-                                               })
-                                           }
-                    );
-                    const P2 = new Promise((resolve, reject) => {
-                                               Connection.query("SELECT COUNT(*) AS emailCount FROM `users` WHERE `email` = ?", [email], (err, result) => {
-                                                   if (err) reject(err);
-                                                   if (result[0].emailCount != 0) reject({9: 'email already used'});
-                                                   else resolve(true);
-                                               })
-                                           }
-                    );
-                    Promise.all([P1, P2])
-                        .then(() => {
-
-                            let pass = bcrypt.hashSync(passTmp, 10);
-                            let validKey = uuidv1();
-
-                            Connection.query("INSERT INTO `users` SET `userName` = ?, `password` =?,`lastName`=?, `firstName`=?,`email`=?,`validKey`=?", [userName, pass, lastName, firstName, email, validKey], (err) => {
-                                if (err) reject(err);
-                                sendmail({
-                                             from: 'kerbault.contact@gmail.com',
-                                             to: email,
-                                             replyTo: 'kerbault.contact@gmail.com',
-                                             subject: 'Welcome on Matcha 💋',
-                                             html: 'Welcome on matcha ' + userName + '<br><br>Please click on the following link to verify your mail :<br>' + validKey
-                                         }, (err) => {
-                                    if (err) reject({10: err});
-                                    resolve({0: true});
-                                })
-                            })
-                        })
-                        .catch(error => {
-                            reject(error);
-                        })
-                })
-            }
-        }
+        Download.on('idle', () => {
+            resolve({200: 'OK'});
+            Download.destroy();
+        });
     })
 };
 
-//╔═════════════════════════════════════════════════════════════════╗
-//║ 					   Mail Verification    					║
-//╚═════════════════════════════════════════════════════════════════╝
+downloadTorrent(magnet)
 
-const VerifyAccount = (validKeyNsfw) => {
-    return new Promise((resolve, reject) => {
-        if (typeof validKeyNsfw !== "string" || validKeyNsfw == '0') {
-            reject({1: 'missing variable or invalid type'});
-        } else {
-            let validKey = Eschtml(validKeyNsfw);
-
-            Connection.connect(null, (err) => {
-                if (err) reject(err);
-                Connection.query("SELECT COUNT(*) AS isValid FROM `users` WHERE `validKey` = ?", [validKey], (err, result) => {
-                    if (err) reject(err);
-                    if (result[0].isValid != 1) reject({2: 'Cannot verify account'});
-                    else {
-                        Connection.query("UPDATE `users` SET `validKey` = '0', `userStatus_ID` = 2 WHERE `validKey` = ?", [validKey], (err) => {
-                            if (err) reject(err);
-                            else resolve({0: true});
-                        })
-                    }
-                })
-            })
-        }
-    })
-};
-
-//╔═════════════════════════════════════════════════════════════════╗
-//║ 					   Extended registration    				║
-//╚═════════════════════════════════════════════════════════════════╝
-
-
-// A UTILISER POUR CALL FONCTION
-
-Register("Angel", "Mitena", "Soulstar",
-         "Test1234?", "Test1234?", "scrap.kevin@gmail.com").then(res => {
-    console.log(res)
-}).catch(err => {
+    .then(res => {
+        console.log(res)
+    }).catch(err => {
     console.log(err)
 });
-
-// VerifyAccount('f1f0ee60-4b01-11e9-99bc-d7cb8e8bba9a').then(res => {
-// 	console.log(res)
-// }).catch(err => {
-// 	console.log(err)
-// });
