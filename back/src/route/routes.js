@@ -59,3 +59,8 @@ router.get('/api_by_id/:p1', (req, res) => {
 	api.api_by_id(req, res, req.params.p1);
 	})
 module.exports = router;
+
+router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
+	console.log(req.query);
+	api.api_research(req, res, req.params.param);
+});

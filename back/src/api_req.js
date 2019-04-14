@@ -57,6 +57,16 @@ module.exports = {
                 tab[0] = "lol";
                 res.send(tab);*/
             })
-
     },
+
+    api_research: function (req, res) {
+        console.log("req.query.page = ", req.query.page)
+        fetch("https://yts.am/api/v2/list_movies.json?query_term="+req.query.search+"&limit=20&page="+req.query.page)
+            .then((res) => res.json())
+            .then(async data => {
+                console.log("data . legnt = ", data.data.movie_count);
+                res.status(200).json(data);
+            })
+    }
+ 
 };
