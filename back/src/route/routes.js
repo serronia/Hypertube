@@ -4,7 +4,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Usertest = require('../model/User');
 const bodyParser = require('body-parser');
-
+var api = require('../api_req');
+var player = require('../util/magnet');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -47,4 +48,21 @@ router.get('/users/:id', (req, res) => {
 	});
 });
 /*************************************************/
+
+router.get('/api', (req, res) => {
+	console.log("api_rep hit");
+//	res.send("l\'api va s\'afficher la =>");
+	api.api_req(req, res);
+	})
+
+router.get('/api_by_id', (req, res) => {
+	console.log("api_rep hit");
+//	res.send("l\'api va s\'afficher la =>");
+	api.api_by_id(req, res, 11370);
+	})
+
+router.get('/magnet', (req, res) => {
+	res.send("l\'api va s\'afficher la =>");
+	player.magnet_creation(req, res, 1);
+})
 module.exports = router;

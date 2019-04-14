@@ -6,7 +6,7 @@ module.exports = {
     api_req: function (req, res) {
         let i = 0;
         let j = 20; //nombre de film par page
-        let k = 1;  //numero de la page
+        let k = 3;  //numero de la page
         var tab = new Array();
         console.log("api_rep hit on api function");
         fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=5&limit=" + j + "&quality=1080p&page=" + k)
@@ -36,7 +36,7 @@ module.exports = {
             .then((res) => res.json())
             .then(async data => {
                 //        console.log(data.data.movie.title);
-                //        console.log(data.data.movie);
+                        console.log(data.data.movie);
                 //console.log(data.data.movies[i].torrents[1].quality);
                 console.log("titre =>", data.data.movie.title);
                 console.log("annee =>", data.data.movie.year);
