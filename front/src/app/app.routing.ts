@@ -7,6 +7,9 @@ import { AuthGuard, GuestGuard } from './_guards';
 import { LoginComponent } from './login/login.component';
 import { PageFilmComponent } from './page-film/page-film.component';
 import { RegisterComponent } from './register/register.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ProfilComponent } from './profil-other/profil-other.component';
+
 
 const appRoutes: Routes = [
 	{
@@ -25,12 +28,22 @@ const appRoutes: Routes = [
 		canActivate: [GuestGuard]
 	},
 	{ 
+		path: 'settings',
+		component: SettingsComponent,
+		canActivate: [AuthGuard]
+	},
+	{ 
+		path: 'profil/:id',
+		component: ProfilComponent,
+		canActivate: [AuthGuard]
+	},
+	{ 
 		path: '',
 		redirectTo: 'home',
 		pathMatch: 'full'
 	},
 	{ 
-		path: 'film',
+		path: 'film/:id',
 		component: PageFilmComponent
 	},
 	{
@@ -41,7 +54,7 @@ const appRoutes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(appRoutes)
+		RouterModule.forRoot(appRoutes,{ enableTracing: false })
 	],
 	declarations: [
 	],

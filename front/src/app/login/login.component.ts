@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from '../_services';
 
@@ -15,13 +16,16 @@ export class LoginComponent implements OnInit {
     submitted = false;
     returnUrl: string;
     error = '';
-
+	errorauth = '';
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
-    ) { }
+		private authenticationService: AuthenticationService,
+		private title: Title
+		) { 
+		 this.title.setTitle("Hypertube - Login");
+		}
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -29,8 +33,27 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        // get return url from route parameters or default to '/'
+		// get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+	
+		const id = this.route.snapshot.queryParams['id'] || '';
+		const username = this.route.snapshot.queryParams['username'] || '';
+		const token = this.route.snapshot.queryParams['token'] || '';
+		const errolog = this.route.snapshot.queryParams['error'] || '';
+		if (id && username && token)
+			this.authenticationService.verifi_tok(id, username, token)
+			.subscribe(data => {
+				this.router.navigate([this.returnUrl]);
+			},
+			error => {
+				this.router.navigate(['/login']);
+		});
+		if (errolog == 1)
+			this.errorauth = "Your github login or mail is already used here";
+		if (errolog == 2)
+			this.errorauth = "Your 42 pseudo or mail is already used here";
+		if (errolog == 3)
+			this.errorauth = "Your Google mail or Name is already used here";
     }
 
     // convenience getter for easy access to form fields
@@ -45,20 +68,27 @@ export class LoginComponent implements OnInit {
         }
 
 		this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .subscribe(
-            data => 
-            {
-                console.log("login-co ponent data = ", data);
-                this.router.navigate([this.returnUrl]);
-                
-            },
-            error => {
-                console.log("login-co ponent error = ", error);
-                console.log(error.error);
-                this.error = error.error;
-                this.loading = false;
-            });
+		if (!this.authenticationService.isLoggedIn())
+		{
+	        this.authenticationService.login(this.f.username.value, this.f.password.value)
+   	         .subscribe(
+					data => {
+						if (data)
+							this.router.navigate([this.returnUrl]);
+						else
+						{
+							this.loading = false;
+							this.error = "No token";
+						}
+	        	    },
+	            	error => {
+						if (error.status == 400)
+	                   		this.error = error.error;
+						else
+							this.error = error.statusText; 
+	                    this.loading = false;
+				});
+		}
     }
 }
 

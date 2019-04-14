@@ -11,6 +11,9 @@ export class FilmComponent implements OnInit {
   @Input() affiche: SafeStyle;
   @Input() year : number;
   @Input() duration: number;
+  @Input() note: number;
+  @Input() resume: string;
+  @Input() id: number;
   //public image:SafeStyle = this.affiche;
 
   constructor(private sanitization:DomSanitizer) {
