@@ -11,6 +11,8 @@ import { DomSanitizer,  SafeHtml,  SafeUrl,  SafeStyle} from '@angular/platform-
 export class SettingsComponent implements OnInit {
   loading = false;
   submitted = false;
+  compte_extene = false;
+  ext="";
 
   @Input() lastname: string;
   @Input() firstname: string;
@@ -38,6 +40,16 @@ export class SettingsComponent implements OnInit {
         this.mail = data.email;
         this.language = data.language;
         this.avatar = this.sanitization.bypassSecurityTrustUrl(data.picture);
+        if (data.googleId || data.fortytwoId || data.githubId)
+        {
+          this.compte_extene = true;
+          if(data.googleId)
+            this.ext= "Google";
+          if(data.fortytwoId)
+            this.ext="intra 42";
+          if(data.githubId)
+            this.ext="Git Hub";
+        }
     },
     error => {
         console.log("get user error = ", error);

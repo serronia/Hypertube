@@ -43,7 +43,7 @@ export class FormLogsComponent implements OnInit {
       }
 
 		this.loading = true;
-    this.userService.modifyLog(this.f.username.value, this.f.password.value, this.f.password2.value)
+    this.userService.modifyLog(this.f.username.value, this.f.password.value, this.f.password2.value, this.username)
       .subscribe(
       data => 
       {

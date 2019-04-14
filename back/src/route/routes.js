@@ -2,44 +2,46 @@ const express = require('express');
 //const session = require('express-session');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Usertest = require('../model/User');
+const User = require('../model/User');
+const Com = require('../model/Com');
 const bodyParser = require('body-parser');
 var api = require('../api_req');
+var player = require('../util/magnet');
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
 
-/*const usertestSchema = new mongoose.Schema({
-	nom: String,
-	prenom: String,
-	age: Number
-});*/
-
-//const Usertest = mongoose.model('User', UserSchema);
-
 router.use(bodyParser.json());
-
 
 
 router.get('/', (req, res) => {
 	res.send('server listening');
 });
-//router.get('/redirect', router.post('/login'));
 
 
 /********************************************/
 router.get('/users', (req, res) => {
-	    Usertest.find({}, (err, users) => {
-			if (err)
-				res.status(500).send(error);
-			else
-				res.status(200).json(users);
-					
-		});
+	User.find({}, (err, users) => {
+		if (err)
+			res.status(500).send(error);
+		else
+			res.status(200).json(users);
+				
+	});
+});
+
+router.get('/coms', (req, res) => {
+	Com.find({}, (err, coms) => {
+		if (err)
+			res.status(500).send(error);
+		else
+			res.status(200).json(coms);
+				
+	});
 });
 
 router.get('/users/:id', (req, res) => {
-	Usertest.findById(req.params.id, (err, users) => {
+	User.findById(req.params.id, (err, users) => {
 		if (err) 
 			res.status(400).send(error);
 		else
@@ -47,16 +49,20 @@ router.get('/users/:id', (req, res) => {
 	});
 });
 /*************************************************/
-router.get('/api', (req, res) => {
-	console.log("api_rep hit");
-//	res.send("l\'api va s\'afficher la =>");
-	api.api_req(req, res);
+
+
+
+router.get('/api/:k', (req, res) => {
+	api.api_req(req, res, req.params.k);
 	})
 
-router.get('/api_by_id', (req, res) => {
-	console.log("api_rep hit");
-//	res.send("l\'api va s\'afficher la =>");
-	api.api_by_id(req, res, 7491);
+router.get('/api_by_id/:p1', (req, res) => {
+	api.api_by_id(req, res, req.params.p1);
 	})
+	
+router.get('/magnet', (req, res) => {
+	res.send("l\'api va s\'afficher la =>");
+	player.magnet_creation(req, res, 1);
+})
 
 module.exports = router;

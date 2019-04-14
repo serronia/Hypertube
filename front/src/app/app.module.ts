@@ -26,6 +26,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { FormInfoComponent } from './form-info/form-info.component';
 import { FormLogsComponent } from './form-logs/form-logs.component';
 import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CommentaireComponent } from './commentaire/commentaire.component';
+import { ProfilComponent } from './profil-other/profil-other.component';
 
 @NgModule({
   imports: [
@@ -38,7 +41,8 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     MatTabsModule,
     MatButtonToggleModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InfiniteScrollModule
   ],
   declarations: [
     AppComponent,
@@ -53,7 +57,9 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     SettingsComponent,
     FormInfoComponent,
     FormLogsComponent,
-    ChooseAvatarComponent
+    ChooseAvatarComponent,
+    CommentaireComponent,
+    ProfilComponent
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

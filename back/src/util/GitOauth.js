@@ -27,11 +27,13 @@ passport.use(new GithubStrategy({
 	callbackURL: "http://localhost:8080/auth/github/redirect"
 },
 (accessToken, refreshToken, profile, done) => {
+	console.log("1");
 	User.findOne({$or: [{username: profile._json.login}, {email: profile._json.email }, {githubId: profile.id} ]}).then(currentUser => {
 		if (currentUser ) {
+			console.log("2a");
 			if (currentUser._doc.githubId == profile.id)
 			{
-			
+				console.log("2a-1");
 				User.findOneAndUpdate(
 						{ githubId: profile.id },
 						{$set: {
@@ -47,6 +49,8 @@ passport.use(new GithubStrategy({
 			else
 				return done(null, null);;
 		} else {
+			console.log("2b");
+			console.log(profile);
 			new User({
 				lastname: profile._json.name,
 				firstname: profile._json.name,
@@ -56,6 +60,7 @@ passport.use(new GithubStrategy({
 				picture: profile._json.avatar_url
 			})
 			.save().then(newUser => {
+				console.log(here);
 				return done(null, newUser);
 			})
 		}

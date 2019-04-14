@@ -1,9 +1,11 @@
 <h1>Welcome to home</h1>
-<div class="principale">
-    <!--{{ contenu }}-->
+<div class="principale" infiniteScroll [infiniteScrollDistance]="0.8" [infiniteScrollThrottle]="500" (scrolled)="onScroll()">
     <app-film  *ngFor="let film of films"
           [title]="film.name"
           [year]="film.year"
           [duration]="film.duree"
-          [affiche]=film.affiche></app-film>
+          [affiche]=film.affiche
+          [resume]=film.synopsis
+          [note]=film.rating
+          [id]=film.id></app-film>
 </div>

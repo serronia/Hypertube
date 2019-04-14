@@ -21,9 +21,6 @@ export class JwtInterceptor implements HttpInterceptor {
 				  });
 		}
 		else if (currentUser && currentUser.token) {
-			console.log("======= JWT Interceptor =======");
-			console.log(currentUser);
-			console.log("======= JWT Interceptor =======");
             request = request.clone({
                 setHeaders: {
                     Authorization: `${currentUser.token}`
