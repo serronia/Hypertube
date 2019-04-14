@@ -59,6 +59,7 @@ router.get('/api/:k', (req, res) => {
 router.get('/api_by_id/:p1', (req, res) => {
 	api.api_by_id(req, res, req.params.p1);
 	})
+	
 router.get('/magnet', (req, res) => {
 	res.send("l\'api va s\'afficher la =>");
 	player.magnet_creation(req, res, 1);
