@@ -47,7 +47,6 @@ export class FilmService {
             const Param = new HttpParams().set("search", search).set("page", nb.toString());
             return this.http.get('http://localhost:8080/research', {params: Param}).pipe(
                 map((data: any) => {
-                //console.log(data);
                 if (data.data.movie_count)
                 {
                     return data.data.movies.map(entry => ({
