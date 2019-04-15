@@ -5,18 +5,54 @@
             <input class="form-control" type="text" name="search" (keyup)="search($event.target.value)"  autocomplete="off" placeholder="&#61442;  Search a movie">
         </div>
     </div>
-    <form *ngIf="recherche" [formGroup]="triForm" class="radio-group col-md-8 offset-md-2" (ngSubmit)="onSubmit()">
-        <label id="label_tri" class="_tri col-md-2">Order by :</label>
-        <mat-radio-group aria-labelledby="label_tri" class="col-md-8" formControlName="tri">
-            <mat-radio-button  class="_tri col-md-3 form-control" value="title">title</mat-radio-button>
-            <mat-radio-button  class="_tri col-md-3 form-control" value="year">year</mat-radio-button>
-            <mat-radio-button  class="_tri col-md-3 form-control" value="rating">rating</mat-radio-button>
-            <mat-radio-button  class="_tri col-md-3 form-control" value="date_added">added date</mat-radio-button>
-        </mat-radio-group>
-        <div class="_tri  form-group col-lg-2">
-                <button [disabled]="loading" class="btn btn-primary">Order by</button>
-            </div>
+    <form *ngIf="recherche" [formGroup]="triForm" (ngSubmit)="onSubmit()">
+        <div class="col-lg-12 col-md-12 radio-group">
+            <label id="label_tri" class="_tri col-md-3">Order by :</label>
+            <mat-radio-group aria-labelledby="label_tri" class="col-md-9" formControlName="tri">
+                <mat-radio-button  class="_tri col-md-3 form-control" value="title">title</mat-radio-button>
+                <mat-radio-button  class="_tri col-md-3 form-control" value="year">year</mat-radio-button>
+                <mat-radio-button  class="_tri col-md-3 form-control" value="rating">rating</mat-radio-button>
+                <mat-radio-button  class="_tri col-md-3 form-control" value="date_added">added date</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="col-lg-12 col-md-12 select-group">
+            <label id="label_filtre" class="col-md-3">Filter by :</label>
+            <mat-form-field>
+                <mat-label>Genre :</mat-label>
+                <mat-select formControlName="filtre">  
+                    <mat-option class="_filtre form-control" value="Action">Action</mat-option>
+                    <mat-option class="_filtre form-control" value="Adventure">Adventure</mat-option>
+                    <mat-option class="_filtre form-control" value="Animation">Animation</mat-option>
+                    <mat-option class="_filtre form-control" value="Biography">Biography</mat-option>
+                    <mat-option class="_filtre form-control" value="Comedy">Comedy</mat-option>
+                    <mat-option class="_filtre form-control" value="Crime">Crime</mat-option>
+                    <mat-option class="_filtre form-control" value="Documentary">Documentary</mat-option>
+                    <mat-option class="_filtre form-control" value="Drama">Drama</mat-option>
+                    <mat-option class="_filtre form-control" value="Family">Family</mat-option>
+                    <mat-option class="_filtre form-control" value="Fantasy">Fantasy</mat-option>
+                    <mat-option class="_filtre form-control" value="History">History</mat-option>
+                    <mat-option class="_filtre form-control" value="Horror">Horror</mat-option>
+                    <mat-option class="_filtre form-control" value="Musical">Musical</mat-option>
+                    <mat-option class="_filtre form-control" value="Mystery">Mystery</mat-option>
+                    <mat-option class="_filtre form-control" value="Romance">Romance</mat-option>
+                    <mat-option class="_filtre form-control" value="Sci-Fi">Sci-Fi</mat-option>
+                    <mat-option class="_filtre form-control" value="Short">Short</mat-option>
+                    <mat-option class="_filtre form-control" value="Sport">Sport</mat-option>
+                    <mat-option class="_filtre form-control" value="Superhero">Superhero</mat-option>
+                    <mat-option class="_filtre form-control" value="Thriller">Thriller</mat-option>
+                    <mat-option class="_filtre form-control" value="War">War</mat-option>
+                    <mat-option class="_filtre form-control" value="Western">Western</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="_tri  form-group col-lg-12">
+            <button [disabled]="loading" class="btn btn-primary">Order/filter by</button>
+        </div>
     </form>
+
+
 </div>
 
 <div class="principale" infiniteScroll [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">

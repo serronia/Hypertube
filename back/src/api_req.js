@@ -69,6 +69,10 @@ module.exports = {
         else{
             requete = requete + "&sort_by=title";
         }
+        if (req.query.genre)
+        {
+            requete = requete + "&genre=" + req.query.genre;
+        }
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {

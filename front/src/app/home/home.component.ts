@@ -21,8 +21,10 @@ export class HomeComponent{
   loading = false;
   error = '';
   tri ="";
+  genre="";
 
   movies$: Observable<HyperMovies[]>;
+  movies2$: Observable<HyperMovies[]>;
   private SearchedMovies= new Subject<string>();
       
   search(research: string)
@@ -43,25 +45,28 @@ export class HomeComponent{
       this.SearchedMovies.next('');
       this.movies$ = this.SearchedMovies.pipe(
         debounceTime(0),
-        //distinctUntilChanged(),
         switchMap(research =>
-          this.filmService.Research(research, this.p, this.tri))
+          this.filmService.Research(research, this.p, this.tri, this.genre))
       );
       this.recherche =false;
-      this.k = 2;
-      this.filmService.getFilm(1)
-      .subscribe(
-      data =>
+      console.log("films.length = ", this.films.length);
+      if (!this.films.length)
       {
-          for(let da in data)
-          {
-            this.films[this.i] = data[this.i];
-            this.i = this.i+1;
-          }       
-      },
-      error => {
-          console.log("get film error = ", error);
-      });
+        this.k = 2;
+        this.filmService.getFilm(1)
+        .subscribe(
+        data =>
+        {
+            for(let da in data)
+            {
+              this.films[this.i] = data[this.i];
+              this.i = this.i+1;
+            }       
+        },
+        error => {
+            console.log("get film error = ", error);
+        });
+      }
     }
     console.log(" fin de search research=", research);
     console.log(" fin de search films =", this.films);
@@ -74,7 +79,8 @@ export class HomeComponent{
   
   ngOnInit() {
     this.triForm = this.formBuilder.group({
-      tri: ['', Validators]
+      tri: ['', Validators],
+      filtre: ['', Validators]      
     });
     console.log("avant on init films =", this.films);
       this.SearchedMovies.next('');
@@ -82,7 +88,7 @@ export class HomeComponent{
         debounceTime(0),
         //distinctUntilChanged(),
         switchMap(research =>
-          this.filmService.Research(research, this.p, this.tri))
+          this.filmService.Research(research, this.p, this.tri, this.genre))
       );
       this.filmService.getFilm(1)
       .subscribe(
@@ -141,8 +147,9 @@ export class HomeComponent{
         return;
     }
 
-    console.log("tri =", this.f.tri.value);
+    console.log("filtre =", this.f.filtre.value);
     this.tri = this.f.tri.value;
+    this.genre = this.f.filtre.value;
     this.search(this.key_word);
   }
 }

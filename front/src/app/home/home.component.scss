@@ -16,10 +16,24 @@ label{
 	padding: 0px;
 	padding-top: 15px;
 }
+._filtre{
+	margin: 0px;
+	padding: 0px;
+	padding-top: 10px;
+	padding-left: 10px;
+}
 
+.select-group{
+	padding-top: 15px;
+}
 .radio-group{
 	display: flex;
 	flex-direction: initial;
+}
+#label_filtre{
+	margin: 0px;
+	padding: 0px;
+	padding-top: 15px;
 }
 mat-radio-button{
 	background-color: #ffffff00;

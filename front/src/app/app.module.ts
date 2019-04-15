@@ -30,6 +30,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatButtonModule,
     BrowserAnimationsModule,
     InfiniteScrollModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
   declarations: [
     AppComponent,

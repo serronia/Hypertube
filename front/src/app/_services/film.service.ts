@@ -39,12 +39,12 @@ export class FilmService {
         }));
     }
 
-    Research(search: string, nb: number, tri: string)
+    Research(search: string, nb: number, tri: string, genre: string)
     {
-        console.log("searching: " + search + " page: " + nb + "tri:"+ tri);
+        console.log("searching: " + search + " page: " + nb + " tri:"+ tri + " genre:"+ genre);
         if (search != "")
         {
-            const Param = new HttpParams().set("search", search).set("tri", tri).set("page", nb.toString());
+            const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("page", nb.toString());
             return this.http.get('http://localhost:8080/research', {params: Param}).pipe(
                 map((data: any) => {
                 if (data.data.movie_count)
