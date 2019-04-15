@@ -7,3 +7,22 @@ h1{
 	text-align: center;
 	height: -webkit-fill-available;
 }
+label{
+	padding-right: 1px;
+	color: white;
+}
+._tri{
+	margin: 0px;
+	padding: 0px;
+	padding-top: 15px;
+}
+
+.radio-group{
+	display: flex;
+	flex-direction: initial;
+}
+mat-radio-button{
+	background-color: #ffffff00;
+	color: white;
+    border: none;
+}

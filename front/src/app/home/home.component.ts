@@ -2,6 +2,7 @@ import { Component, OnInit, Input} from '@angular/core';
 import { FilmService, HyperMovies } from '../_services';
 import { debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
    templateUrl: './home.component.html',
@@ -15,6 +16,11 @@ export class HomeComponent{
   p=1;
   recherche = false;
   key_word = "";
+  triForm: FormGroup;
+  submitted = false;
+  loading = false;
+  error = '';
+  tri ="";
 
   movies$: Observable<HyperMovies[]>;
   private SearchedMovies= new Subject<string>();
@@ -37,9 +43,9 @@ export class HomeComponent{
       this.SearchedMovies.next('');
       this.movies$ = this.SearchedMovies.pipe(
         debounceTime(0),
-        distinctUntilChanged(),
+        //distinctUntilChanged(),
         switchMap(research =>
-          this.filmService.Research(research, this.p))
+          this.filmService.Research(research, this.p, this.tri))
       );
       this.recherche =false;
       this.k = 2;
@@ -62,18 +68,21 @@ export class HomeComponent{
   }
   
 
-  constructor(private filmService : FilmService) {
+  constructor(private filmService : FilmService,private formBuilder: FormBuilder) {
     console.log(" dans le constructeur films =", this.films);
   }
   
   ngOnInit() {
+    this.triForm = this.formBuilder.group({
+      tri: ['', Validators]
+    });
     console.log("avant on init films =", this.films);
       this.SearchedMovies.next('');
       this.movies$ = this.SearchedMovies.pipe(
         debounceTime(0),
-        distinctUntilChanged(),
+        //distinctUntilChanged(),
         switchMap(research =>
-          this.filmService.Research(research, this.p))
+          this.filmService.Research(research, this.p, this.tri))
       );
       this.filmService.getFilm(1)
       .subscribe(
@@ -115,18 +124,26 @@ export class HomeComponent{
       console.log("this.films = ", this.films)
       this.k++;
     }
-    else
+    /*else
     {
-      /*this.SearchedMovies.next(this.key_word);
-      this.movies$ = this.SearchedMovies.pipe(
-        debounceTime(0),
-        distinctUntilChanged(),
-        switchMap(research =>
-          this.filmService.Research(research, this.p))
-      );
-      this.p++;*/
+      this.search(this.key_word);
+      this.p++;
+    }*/
+  }
+
+  get f() { return this.triForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.triForm.invalid) {
+      console.log("snif");
+        return;
     }
+
+    console.log("tri =", this.f.tri.value);
+    this.tri = this.f.tri.value;
+    this.search(this.key_word);
   }
 }
-
 

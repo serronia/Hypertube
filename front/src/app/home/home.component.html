@@ -5,9 +5,20 @@
             <input class="form-control" type="text" name="search" (keyup)="search($event.target.value)"  autocomplete="off" placeholder="&#61442;  Search a movie">
         </div>
     </div>
+    <form *ngIf="recherche" [formGroup]="triForm" class="radio-group col-md-8 offset-md-2" (ngSubmit)="onSubmit()">
+        <label id="label_tri" class="_tri col-md-2">Order by :</label>
+        <mat-radio-group aria-labelledby="label_tri" class="col-md-8" formControlName="tri">
+            <mat-radio-button  class="_tri col-md-3 form-control" value="title">title</mat-radio-button>
+            <mat-radio-button  class="_tri col-md-3 form-control" value="year">year</mat-radio-button>
+            <mat-radio-button  class="_tri col-md-3 form-control" value="rating">rating</mat-radio-button>
+            <mat-radio-button  class="_tri col-md-3 form-control" value="date_added">added date</mat-radio-button>
+        </mat-radio-group>
+        <div class="_tri  form-group col-lg-2">
+                <button [disabled]="loading" class="btn btn-primary">Order by</button>
+            </div>
+    </form>
 </div>
 
-   <!--{{ contenu }}-->
 <div class="principale" infiniteScroll [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
 <app-film  *ngFor="let film of films"
          [title]="film.name"

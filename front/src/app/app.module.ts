@@ -29,6 +29,8 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import { ProfilComponent } from './profil-other/profil-other.component';
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatRadioModule
   ],
   declarations: [
     AppComponent,
