@@ -35,7 +35,7 @@
     "passport-local": "latest",
     "request": "latest",
     "sha512": "latest",
-    "generate-password": "latest"
+    "generate-password": "latest",
     "torrent-stream": "latest",
     "vg": "^0.3.3",
     "videogular2": "^6.4.0"
