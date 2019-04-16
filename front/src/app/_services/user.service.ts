@@ -57,4 +57,18 @@ export class UserService {
                 return res;
             }));
     }
+    
+    ForgetPass(mail: string)
+    {
+        return this.http.post<any>(`http://localhost:8080/user/forgotPassword`, {mail})
+        .pipe(map(res => {
+            console.log("res modify Pass  = ", res);
+            return res;
+        }));
+
+    }
+
+    /*modifyPassword(password: string, password2: string) {
+
+    }*/
 }

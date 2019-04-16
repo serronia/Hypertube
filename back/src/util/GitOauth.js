@@ -38,6 +38,7 @@ passport.use(new GithubStrategy({
 						{ githubId: profile.id },
 						{$set: {
 								   lastname: profile._json.name,
+								   firstname: profile._json.name,
 								   username: profile._json.login,
 								   email: profile._json.email,
 								   picture: profile._json.avatar_url
@@ -52,7 +53,8 @@ passport.use(new GithubStrategy({
 			console.log(profile);
 			new User({
 				lastname: profile._json.name,
-				githubId: profile._json.id,
+				firstname: profile._json.name,
+				githubId: profile.id,
 				username: profile._json.login ,
 				email: profile._json.email,
 				picture: profile._json.avatar_url

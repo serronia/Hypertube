@@ -35,6 +35,7 @@
     "passport-local": "latest",
     "request": "latest",
     "sha512": "latest",
-    "torrent-stream": "latest"
+    "torrent-stream": "latest",
+    "generate-password": "latest"
   }
 }

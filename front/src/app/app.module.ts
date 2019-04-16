@@ -29,6 +29,7 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
+import { ResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { ProfilComponent } from './profil-other/profil-other.component';
     FormLogsComponent,
     ChooseAvatarComponent,
     CommentaireComponent,
-    ProfilComponent
+    ProfilComponent,
+    ResetPasswordComponent
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

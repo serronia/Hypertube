@@ -26,7 +26,7 @@ module.exports = {
                 res.status(200).json(tab);
             })
     },
-
+/**cote back */
     api_by_id: function (req, res, id) {
         fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id+"&with_cast=true")
             .then((res) => res.json())
