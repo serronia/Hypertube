@@ -48,7 +48,7 @@ const appRoutes: Routes = [
 		component: PageFilmComponent
 	},
 	{
-		path: 'reset_password/:username',
+		path: 'reset_password',
 		component: ResetPasswordComponent
 	},
 	{

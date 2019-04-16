@@ -15,6 +15,8 @@ const jwt   = require('jsonwebtoken');
 
 var privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
+const send_mail = require('nodemailer');
+
 mongoose.connect(database);
 
 passport.use(new LocalStrategy(
@@ -61,6 +63,8 @@ router.post('/login', (req, res) => {
       res.status(400).send('User don\'t exist');
   })
 });
+
+
 
 router.post('/token', (req, res) => {
 	var verif_opt = {
@@ -128,6 +132,7 @@ router.post('/create', (req, res) => {
       res.status(400).send("Username or mail already exist");
   });
 });
+
 
 
 router.post('/modify_info', (req, res) => {
@@ -272,6 +277,59 @@ router.post('/modify_avatar', (req, res) => {
 });
 
 /******************Reset Password */
+router.post('/forgotPassword', (req, res) => {
+  var generator = require('generate-password');
+  let email = req.body.mail;
+  var pass = generator.generate({
+      lenght: 8,
+      numbers: true,
+      symbols: true,
+      uppercase: true,
+      strict: true,
+      lowercase: true
+
+  });
+  console.log("req.body =", req.body);
+  if (!email) 
+  {
+      console.log("error");
+      return res.status(400).send('Email not found, please verify');
+  }
+  let hash = bcrypt.hashSync(pass, 10);
+  User.findOneAndUpdate(
+    {email: email},
+    {$set: {password: hash}},{returnNewDocument : true}, 
+    function(err, doc){
+      if(!doc){
+          console.log("Email don't exist please verify");
+          res.status(400).send("Email don't exist please verify");
+      }
+      else
+      {
+        let transport = send_mail.createTransport({
+          service: 'gmail',
+          auth: {
+              user: 'hypertubeprojet@gmail.com',
+              pass: 'Hypertube-101'
+          }
+        });
+        let mailOption = {
+          from: 'Hypertube',
+          to: email,
+          subject: 'Hypertube - Reset Password',
+          text: 'Hello dear user,\nTo login again, please copy the following pasword and paste it when you log in.\nPlease update your password in your profil, once log in.\nTemporary password :   ' + pass
+        };
+        transport.sendMail(mailOption).then(info => {
+            console.log("mail sent")
+          }).catch(err => {
+              console.log(err);
+          });
+        console.log("OK pass updated !! :)");
+        res.status(201).json({message: 'OK pass updated !! :)'});
+        console.log(pass);
+      }
+    });
+});
 
 
 module.exports = router;

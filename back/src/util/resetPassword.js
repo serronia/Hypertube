@@ -1,59 +1,63 @@
-/*const send_mail = require('nodemailer');
+const express = require('express');
+const router = express.Router();
 const User = require('../model/User');
-const	Jwthandle = require('../util/jwt.handeler.js');
 
-var transport = send_mail.createTransport({
-    service: 'gmail',
-    auth: {
-        user: settings.username,
-        pass: settings.password
-    }
-})
-
-function sendEMail(email, subject, message, html) {
-    var mailOption = {
-        from: $mail,
-        to: email,
-        subject: subject,
-        text: message,
-        html: html
-    }
-    transport.sendMail(mailOption);
-}
-
-module.exports =  sendEMail;
+const mongoose = require('mongoose');
+const database = process.env.C_MONGO;
 
 
-module.exports.forgotPassword = function(req, res) {
-    if (!req.body.email) return res.status(400).json(err);
+mongoose.connect(database);
 
-    User.findOne({email: req.body.email}, function(err, result){
-        if (err) return res.status(400).json(err);
-        if (!result) return res.status(200).json('ok');
-        let Token = Jwthandle.sign(req.body.email).toString();
-        result.Token = Token;
-        result.save(function(err) {
-            if (err) return res.status(400).json(err);
-            let transport = send_mail.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'hypertubeprojet101@gmail.com',
-                    pass: 'Hypertube-101'
-                }
-            });
-            let link = "http://localhost:4200/reset_password/" + Token;
-            let mailOption = {
-                from: 'Hypertube',
-                to: req.body.email,
-                subject: 'Hypertube - Reset Password',
-                text: 'To reset your password, please click the following link or copy/paste it to your browser' + link
-            };
-            transport.sendMail(mailOption, (error, info) => {
-                if (error) return res.status(400).json(err);
-                console.log('Email sent: ' + info.response);
-                return res.status(200).json('ok');
-            });
-        });
-
-    });
-};
+forgotPassword: function(req, res) {
+    var generator = require('generate-password');
+   let email = req.body.email;
+   var pass = generator.generate({
+       lenght: 8,
+       numbers: true,
+       symbols: true,
+       uppercase: true
+   });
+   console.log("hello");
+      if (!email) 
+        {
+            console.log("error");
+            return res.status(400);
+        }
+  
+      User.findOne({email: email}, (err, result) => {
+          if (err) 
+            return res.status(400);
+          if (!result) {
+              console.log("result ok");
+            return res.status(200);
+          }
+          result.save(function(err) {
+            
+              if (err) {
+                
+                return res.status(400).json(err);
+            }
+              let transport = send_mail.createTransport({
+                  service: 'gmail',
+                  auth: {
+                      user: 'hypertubeprojet@gmail.com',
+                      pass: 'Hypertube-101'
+                  }
+              });
+              let mailOption = {
+                  from: 'Hypertube',
+                  to: req.body.email,
+                  subject: 'Hypertube - Reset Password',
+                  text: 'Hello dear'+ req.body.username + 'To login again, please copy the following pasword and paste it when you log in\n Please update your password in your profil, once log in.\n' + pass
+              };
+              transport.sendMail(mailOption).then(info => {
+                  console.log("mail sent")
+                }).catch(err => {
+                    console.log(err);
+                });
+              User.update({password: pass});
+              
+          });
+  
+      });
+  }

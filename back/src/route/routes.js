@@ -52,8 +52,11 @@ router.get('/users/:id', (req, res) => {
 /*************************************************/
 
 router.get('/reset_password', (req, res) => {
+	console.log("mail sent");
 	reset.forgotPassword(req, res)
 });
+
+
 
 router.get('/api/:k', (req, res) => {
 	api.api_req(req, res, req.params.k);
