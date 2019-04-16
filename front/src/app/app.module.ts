@@ -30,6 +30,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
 
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
+//import {SingleMediaPlayer} from './single-media-player';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -42,7 +48,11 @@ import { ProfilComponent } from './profil-other/profil-other.component';
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   declarations: [
     AppComponent,
@@ -59,11 +69,15 @@ import { ProfilComponent } from './profil-other/profil-other.component';
     FormLogsComponent,
     ChooseAvatarComponent,
     CommentaireComponent,
-    ProfilComponent
+    ProfilComponent,
+//    SingleMediaPlayer
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+//    SingleMediaPlayer
+]
 })
 export class AppModule { }
