@@ -1,6 +1,7 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
 
+const movieList = require('./model/Movie');
 // const FfmpegCommand = require('fluent-ffmpeg');
 //
 // const command = new FfmpegCommand();
@@ -36,7 +37,7 @@ const fs = require('fs');
 //
 // app.listen(4000);
 
-const magnet = 'magnet:?xt=urn:btih:c64f4edabd570549ec40f03a83fb4f3f124b6eac&dn=The.Big.Bang.Theory.S11E11.HDTV.x264-SVA&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
+const magnet = 'magnet:?xt=urn:btih:1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0&dn=Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
 const opts = {
     // connections: 100,     // Max amount of peers to be connected to.
     // uploads: 10,          // Number of upload slots.
@@ -66,7 +67,9 @@ const downloadTorrent = (magnet) => {
             Download.files.forEach(function (file) {
                 console.log('filename:', file.name);
 
-                const reader = file.createReadStream();
+                const stream = file.createReadStream();
+                resolve({200: stream});
+
                 // const writer = fs.createWriteStream(filePath);
             });
         });
@@ -76,8 +79,9 @@ const downloadTorrent = (magnet) => {
         });
 
         Download.on('idle', () => {
-            resolve({200: 'OK'});
+            // resolve({200: 'OK'});
             Download.destroy();
+            movieList.findOrCreate({})
         });
     })
 };
