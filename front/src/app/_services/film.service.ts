@@ -41,32 +41,41 @@ export class FilmService {
 
     Research(search: string, nb: number, tri: string, genre: string)
     {
+        
         console.log("searching: " + search + " page: " + nb + " tri:"+ tri + " genre:"+ genre);
         if (search != "")
         {
+            
             const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("page", nb.toString());
             return this.http.get('http://localhost:8080/research', {params: Param}).pipe(
                 map((data: any) => {
-                if (data.data.movie_count)
-                {
-                    return data.data.movies.map(entry => ({
-                        name: entry.title,
-                        year: entry.year,
-                        duree: entry.runtime,
-                        affiche: entry.large_cover_image,
-                        synopsis: entry.synopsis.substr(0, 199) + "...",
-                        rating: entry.rating,
-                        id: entry.id
-                        } as HyperMovies)
-                    );
-                }
+                    //console.log("page max = ", data.data.movie_count/20)
+                    console.log("data.data.movie_count = ", data.data.movie_count)
+                    var page_max=1;
+                    if (data.data.movie_count > 20)
+                    {
+                        page_max = data.data.movie_count/20;
+                    }
+                    console.log("page max = ", page_max)
+                    if (data.data.movie_count && nb <= page_max)
+                    {
+                        return data.data.movies.map(entry => ({
+                            name: entry.title,
+                            year: entry.year,
+                            duree: entry.runtime,
+                            affiche: entry.large_cover_image,
+                            synopsis: entry.synopsis.substr(0, 199) + "...",
+                            rating: entry.rating,
+                            id: entry.id
+                            } as HyperMovies)
+                        );
+                    }
                 }),
             );
         }
-        else
-        {
-            return (new Array());
-        }
-
+        // else
+        // {
+        //     return (new Array());
+        // }
     }
 }

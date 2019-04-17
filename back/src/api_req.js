@@ -76,8 +76,14 @@ module.exports = {
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
-                console.log("data . legnt = ", data.data.movie_count);
-                res.status(200).json(data);
+                if(data)
+                {
+                    console.log("data . legnt = ", data.data.movie_count);
+                    res.status(200).json(data);
+                }
+                else{
+                    res.status(400).json({message: 'Err data api'});
+                }
             })
     }
  
