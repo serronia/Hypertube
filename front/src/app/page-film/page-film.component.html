@@ -3,7 +3,7 @@
      
 
       <vg-player >
-          <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" [src]="background" (click)="onclick()" opacity= 100/>
+          <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" (click)="onclick()"/>
               <vg-overlay-play></vg-overlay-play>
               <vg-buffering></vg-buffering>
           
@@ -14,7 +14,7 @@
           
               <vg-controls>
                   <vg-play-pause></vg-play-pause>
-                  <vg-playback-button></vg-playback-button>
+               >
           
                   <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
           
@@ -31,7 +31,7 @@
               </vg-controls>
           
 
-        <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
+        <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
           <source *ngIf="src_video" [src]="src_video" type="video/mp4">
         </video>
       </vg-player>

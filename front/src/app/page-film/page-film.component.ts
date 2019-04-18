@@ -107,9 +107,10 @@ export class PageFilmComponent implements OnInit {
     }
 
     onclick(){
-      console.log("naniiiiiiii");
+      console.log("l'image disparait !");
       document.getElementById("image_before").style.display ='none';
       /*appeleer ta fonction qui telechqrge et qui te donne la src*/
+      
       this.src_video =  this.sanitization.bypassSecurityTrustUrl("/assets/funny.mp4");
     }
 
