@@ -3,6 +3,7 @@ const OS = new OpenSubtitles('OSTestUserAgent');
 OS.search({
     imdbid: 'tt0314979',
     sublanguageid: 'fre',
+    extensions: ['srt', 'vtt'],
     gzip: true
 }).then(subtitles => {
     if (subtitles.fr) {
