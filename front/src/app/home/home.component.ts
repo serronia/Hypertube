@@ -139,6 +139,7 @@ export class HomeComponent{
     }
     else
     { 
+      this.p = 2;
       this.filmService.Research(this.key_word, this.p, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
       .subscribe(
         data =>
