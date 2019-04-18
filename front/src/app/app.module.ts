@@ -31,6 +31,8 @@ import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
+
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import {MatSelectModule} from '@angular/material/select';
     BrowserAnimationsModule,
     InfiniteScrollModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ],
   declarations: [
     AppComponent,

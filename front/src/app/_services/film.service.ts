@@ -17,8 +17,8 @@ export interface HyperMovies
 export class FilmService {
     constructor(private http: HttpClient) { }
 
-    getFilm(nb: number, tri: string, genre: string) {
-        const Param = new HttpParams().set("tri", tri).set("genre", genre).set("page", nb.toString());
+    getFilm(nb: number, tri: string, genre: string, note_min: string, year_min: string, year_max: string) {
+        const Param = new HttpParams().set("tri", tri).set("genre", genre).set("note_min", note_min).set("year_min", year_min).set("year_max", year_max).set("page", nb.toString());
         return this.http.get('http://localhost:8080/api/', {params: Param})
     }
     getDetailFilm(id: number) {
@@ -40,43 +40,13 @@ export class FilmService {
         }));
     }
 
-    Research(search: string, nb: number, tri: string, genre: string)
+    Research(search: string, nb: number, tri: string, genre: string, note_min: string, year_min: string, year_max: string)
     {
-        
-        console.log("searching: " + search + " page: " + nb + " tri:"+ tri + " genre:"+ genre);
+        console.log("searching: " + search + " page: " + nb + " tri:"+ tri + " genre:"+ genre+ " note_min:"+ note_min);
         if (search != "")
         {
-            
-            const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("page", nb.toString());
-            return this.http.get('http://localhost:8080/research', {params: Param})/*.pipe(
-                map((data: any) => {
-                    //console.log("page max = ", data.data.movie_count/20)
-                    console.log("data.data.movie_count = ", data.data.movie_count)
-                    var page_max=1;
-                    if (data.data.movie_count > 20)
-                    {
-                        page_max = data.data.movie_count/20;
-                    }
-                    console.log("page max = ", page_max)
-                    if (data.data.movie_count && nb <= page_max)
-                    {
-                        return data.data.movies.map(entry => ({
-                            name: entry.title,
-                            year: entry.year,
-                            duree: entry.runtime,
-                            affiche: entry.large_cover_image,
-                            synopsis: entry.synopsis.substr(0, 199) + "...",
-                            rating: entry.rating,
-                            id: entry.id
-                            } as HyperMovies)
-                        );
-                    }
-                }),
-            );*/
+            const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("note_min", note_min).set("year_min", year_min).set("year_max", year_max).set("page", nb.toString());
+            return this.http.get('http://localhost:8080/research', {params: Param});
         }
-        // else
-        // {
-        //     return (new Array());
-        // }
     }
 }

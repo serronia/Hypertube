@@ -6,12 +6,12 @@ module.exports = {
     api_req: function (req, res) {
         let i = 0;
         let j = 20; //nombre de film par page
+        let k = 0;
         var tab = new Array();
         console.log("api_rep hit on api function");
         requete = "https://yts.am/api/v2/list_movies.json?sort_by=year&limit=" + j + "&quality=1080p&page=" + req.query.page;
-        
-        if (req.query.note)
-            requete = requete + "&minimum_rating=" + req.query.note;
+        if (req.query.note_min)
+            requete = requete + "&minimum_rating=" + req.query.note_min;
         else
             requete = requete + "&minimum_rating=6";
         
@@ -23,12 +23,15 @@ module.exports = {
         {
             requete = requete + "&genre=" + req.query.genre;
         }
-        console.log("requete = ", requete)
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
+                if((req.query.year_min == 'null') || (req.query.year_min == "")){year_min=0;}else{year_min=req.query.year_min};
+                if((req.query.year_max == 'null') || (req.query.year_min == "")){year_max=10000;}else{year_max=req.query.year_max};
                 while (i < j) {
-                    str = JSON.stringify({ name:   data.data.movies[i].title,
+                    if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <=  year_max))
+                    {
+                        str = JSON.stringify({ name:   data.data.movies[i].title,
                             year:  data.data.movies[i].year  ,
                             genres:  data.data.movies[i].genres  ,
                             affiche:  data.data.movies[i].large_cover_image  ,
@@ -36,10 +39,13 @@ module.exports = {
                             duree:  data.data.movies[i].runtime  ,
                             rating:  data.data.movies[i].rating  ,
                             id:  data.data.movies[i].id});
-                    tab[i]=JSON.parse(str);
+                        tab[k]=JSON.parse(str);
+                        k++;
+                    }
                     i++;
                 }
                 res.status(200).json(tab);
+                
             })
     },
 
@@ -76,9 +82,9 @@ module.exports = {
     },
 
     api_research: function (req, res) {
-        console.log("------------------------------------------------------------------req.query = ", req.query)
         let i = 0;
         let j = 20; //nombre de film par page
+        let k=0;
         var tab = new Array();
         var requete="https://yts.am/api/v2/list_movies.json?query_term="+req.query.search+"&limit=20&page="+req.query.page;
         if (req.query.tri)
@@ -92,20 +98,24 @@ module.exports = {
         {
             requete = requete + "&genre=" + req.query.genre;
         }
+        if (req.query.note_min)
+            requete = requete + "&minimum_rating=" + req.query.note_min;
+        else
+            requete = requete + "&minimum_rating=6";
 
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
-                console.log("data = ", data)
-
+                if((req.query.year_min == 'null') || (req.query.year_min == "")){year_min=0;}else{year_min=req.query.year_min};
+                if((req.query.year_max == 'null') || (req.query.year_min == "")){year_max=10000;}else{year_max=req.query.year_max};
                 if(data.data.movie_count)
                 {
                     if (data.data.movie_count < 20)
                         j = data.data.movie_count;
-                    console.log("--------------------------------------  data.data.movies =   ----------------------------------------------");
-                    //console.log(data.data.movies[0])
                     while (i < j) {
-                        str = JSON.stringify({ name:   data.data.movies[i].title,
+                        if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max))
+                        {
+                            str = JSON.stringify({ name:   data.data.movies[i].title,
                                 year:  data.data.movies[i].year  ,
                                 genres:  data.data.movies[i].genres  ,
                                 affiche:  data.data.movies[i].large_cover_image  ,
@@ -113,10 +123,11 @@ module.exports = {
                                 duree:  data.data.movies[i].runtime  ,
                                 rating:  data.data.movies[i].rating  ,
                                 id:  data.data.movies[i].id});
-                        tab[i]=JSON.parse(str);
+                            tab[k]=JSON.parse(str);
+                            k++;
+                        }
                         i++;
                     }
-                    console.log("tab dans api_research", tab)
                     res.status(200).json(tab);
                 }
             })

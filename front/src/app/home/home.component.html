@@ -18,7 +18,7 @@
 
         <div class="col-lg-12 col-md-12 select-group">
             <label id="label_filtre" class="col-md-3">Filter by :</label>
-            <mat-form-field>
+            <mat-form-field class="col-md-3">
                 <mat-label>Genre :</mat-label>
                 <mat-select formControlName="filtre">  
                     <mat-option class="_filtre form-control">None</mat-option>
@@ -46,6 +46,24 @@
                     <mat-option class="_filtre form-control" value="Western">Western</mat-option>
                 </mat-select>
             </mat-form-field>
+            <div class="slider col-md-2">
+                <mat-label>Min rate :</mat-label>
+                <mat-slider formControlName="note_min" class="note_min form-control"
+                    thumbLabel
+                    [displayWith]="formatLabel"
+                    [step]="0.5"
+                    min="0"
+                    max="9">
+                </mat-slider>
+            </div>
+            <div class="year col-md-2">
+                <mat-label>Min year :</mat-label>
+                <input formControlName="year_min" class="year_min form-control" type="number"  min=1916 matInput maxlength="4">
+            </div>
+            <div class="year col-md-2">
+                <mat-label>Max year :</mat-label>
+                <input formControlName="year_max" class="year_min form-control" type="number" min=1916 matInput maxlength="4">
+            </div>  
         </div>
 
         <div class="_tri  form-group col-lg-12">

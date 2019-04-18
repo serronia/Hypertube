@@ -24,6 +24,9 @@ export class HomeComponent{
   error = '';
   tri ="";
   genre="";
+  note_min="";
+  year_min="";
+  year_max="";
   movies$ = new Array();
 
   
@@ -41,7 +44,7 @@ export class HomeComponent{
 
       if (event.keyCode == 13 || event.keyCode==32 || event=="")
       {
-        this.filmService.Research(research, this.p, this.tri, this.genre).pipe(debounceTime(500))
+        this.filmService.Research(research, this.p, this.tri, this.genre, this.note_min, this.year_min, this.year_max).pipe(debounceTime(500))
         .subscribe(
         data =>
         {
@@ -68,7 +71,7 @@ export class HomeComponent{
       console.log("Dans recherche si pas mot cle films =", this.films); 
       if (!this.films.length)
       {
-        this.filmService.getFilm(this.k, this.tri, this.genre).pipe(debounceTime(500))
+        this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max).pipe(debounceTime(500))
         .subscribe(
         data =>
         {
@@ -93,10 +96,13 @@ export class HomeComponent{
   ngOnInit() {
     this.triForm = this.formBuilder.group({
       tri: ['', Validators],
-      filtre: ['', Validators]      
+      filtre: ['', Validators],
+      note_min: ['', Validators],
+      year_min: ['', Validators],
+      year_max: ['', Validators]
     });
     console.log("avant on init films =", this.films);   
-    this.filmService.getFilm(1, this.tri, this.genre)
+    this.filmService.getFilm(1, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
     .subscribe(
     data =>
     {
@@ -114,7 +120,7 @@ export class HomeComponent{
    onScroll() {
     if (!this.recherche)
     {
-      this.filmService.getFilm(this.k, this.tri, this.genre)
+      this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
       .subscribe(
         data =>
         {
@@ -133,7 +139,7 @@ export class HomeComponent{
     }
     else
     { 
-      this.filmService.Research(this.key_word, this.p, this.tri, this.genre)
+      this.filmService.Research(this.key_word, this.p, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
       .subscribe(
         data =>
         {
@@ -163,15 +169,21 @@ export class HomeComponent{
 
     this.tri = this.f.tri.value;
     this.genre = this.f.filtre.value;
+    this.note_min = this.f.note_min.value;
+    this.year_min = this.f.year_min.value;
+    this.year_max = this.f.year_max.value;
     if (this.genre == undefined)
       this.genre = "";
     this.j = 0;
     if(this.recherche)
+    {
+      this.j=0;
       this.search("", this.key_word);
+    }      
     else
     {
       this.i = 0;
-      this.filmService.getFilm(1, this.tri, this.genre)
+      this.filmService.getFilm(1, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
       .subscribe(
       data =>
       {
