@@ -27,10 +27,12 @@ export class PageFilmComponent implements OnInit {
   coms = new Array();
   i = 0;
   src_video: SafeUrl;
+  src_subtitles: SafeUrl ;
 
   constructor(private filmService : FilmService, 
               private route: ActivatedRoute,
               private sanitization:DomSanitizer,
+             // private subtitlesService: SubtitlesService,
               private formBuilder: FormBuilder) {
    } 
 
