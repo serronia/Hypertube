@@ -2,10 +2,10 @@
 <div class="container">
  	<div class="row">
         <div class="col-md-4 offset-md-4 search-movie">
-            <input class="form-control" type="text" name="search" (keyup)="search($event.target.value)"  autocomplete="off" placeholder="&#61442;  Search a movie">
+            <input class="form-control" type="text" name="search" (keyup)="search($event, $event.target.value)"  autocomplete="off" placeholder="&#61442;  Search a movie">
         </div>
     </div>
-    <form *ngIf="recherche" [formGroup]="triForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="triForm" (ngSubmit)="onSubmit()">
         <div class="col-lg-12 col-md-12 radio-group">
             <label id="label_tri" class="_tri col-md-3">Order by :</label>
             <mat-radio-group aria-labelledby="label_tri" class="col-md-9" formControlName="tri">
@@ -21,6 +21,7 @@
             <mat-form-field>
                 <mat-label>Genre :</mat-label>
                 <mat-select formControlName="filtre">  
+                    <mat-option class="_filtre form-control">None</mat-option>
                     <mat-option class="_filtre form-control" value="Action">Action</mat-option>
                     <mat-option class="_filtre form-control" value="Adventure">Adventure</mat-option>
                     <mat-option class="_filtre form-control" value="Animation">Animation</mat-option>
@@ -64,12 +65,12 @@
          [resume]=film.synopsis
          [note]=film.rating
      	 [id]=film.id></app-film>
-<app-film  *ngFor="let movie of movies$ | async"
+<app-film  *ngFor="let movie of movies$"
          [title]="movie.name"
          [year]="movie.year"
          [duration]="movie.duree"
          [affiche]=movie.affiche
          [resume]=movie.synopsis
          [note]=movie.rating
-         [id]=movie.id></app-film>
+         [id]=movie.id></app-film> <!--</app-film> | async"-->
 </div>

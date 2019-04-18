@@ -17,8 +17,9 @@ export interface HyperMovies
 export class FilmService {
     constructor(private http: HttpClient) { }
 
-    getFilm(k :number) {
-        return this.http.get('http://localhost:8080/api/'+k);
+    getFilm(nb: number, tri: string, genre: string) {
+        const Param = new HttpParams().set("tri", tri).set("genre", genre).set("page", nb.toString());
+        return this.http.get('http://localhost:8080/api/', {params: Param})
     }
     getDetailFilm(id: number) {
         return this.http.get('http://localhost:8080/api_by_id/'+id);
@@ -47,7 +48,7 @@ export class FilmService {
         {
             
             const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("page", nb.toString());
-            return this.http.get('http://localhost:8080/research', {params: Param}).pipe(
+            return this.http.get('http://localhost:8080/research', {params: Param})/*.pipe(
                 map((data: any) => {
                     //console.log("page max = ", data.data.movie_count/20)
                     console.log("data.data.movie_count = ", data.data.movie_count)
@@ -71,7 +72,7 @@ export class FilmService {
                         );
                     }
                 }),
-            );
+            );*/
         }
         // else
         // {

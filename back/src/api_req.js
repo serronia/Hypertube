@@ -3,12 +3,28 @@ const router = express.Router();
 const fetch = require('node-fetch');
 
 module.exports = {
-    api_req: function (req, res, k) {
+    api_req: function (req, res) {
         let i = 0;
         let j = 20; //nombre de film par page
         var tab = new Array();
         console.log("api_rep hit on api function");
-        fetch("https://yts.am/api/v2/list_movies.json?sort_by=year&minimum_rating=6&limit=" + j + "&quality=1080p&page=" + k)
+        requete = "https://yts.am/api/v2/list_movies.json?sort_by=year&limit=" + j + "&quality=1080p&page=" + req.query.page;
+        
+        if (req.query.note)
+            requete = requete + "&minimum_rating=" + req.query.note;
+        else
+            requete = requete + "&minimum_rating=6";
+        
+        if (req.query.tri)
+        {
+            requete = requete + "&sort_by=" + req.query.tri+"&order_by=asc";
+        }
+        if (req.query.genre)
+        {
+            requete = requete + "&genre=" + req.query.genre;
+        }
+        console.log("requete = ", requete)
+        fetch(requete)
             .then((res) => res.json())
             .then(async data => {
                 while (i < j) {
@@ -60,29 +76,48 @@ module.exports = {
     },
 
     api_research: function (req, res) {
-        console.log("req.query = ", req.query)
+        console.log("------------------------------------------------------------------req.query = ", req.query)
+        let i = 0;
+        let j = 20; //nombre de film par page
+        var tab = new Array();
         var requete="https://yts.am/api/v2/list_movies.json?query_term="+req.query.search+"&limit=20&page="+req.query.page;
         if (req.query.tri)
         {
             requete = requete + "&sort_by=" + req.query.tri;
         }
         else{
-            requete = requete + "&sort_by=title";
+            requete = requete + "&sort_by=title"+"&order_by=asc";
         }
         if (req.query.genre)
         {
             requete = requete + "&genre=" + req.query.genre;
         }
+
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
-                if(data)
+                console.log("data = ", data)
+
+                if(data.data.movie_count)
                 {
-                    console.log("data . legnt = ", data.data.movie_count);
-                    res.status(200).json(data);
-                }
-                else{
-                    res.status(400).json({message: 'Err data api'});
+                    if (data.data.movie_count < 20)
+                        j = data.data.movie_count;
+                    console.log("--------------------------------------  data.data.movies =   ----------------------------------------------");
+                    //console.log(data.data.movies[0])
+                    while (i < j) {
+                        str = JSON.stringify({ name:   data.data.movies[i].title,
+                                year:  data.data.movies[i].year  ,
+                                genres:  data.data.movies[i].genres  ,
+                                affiche:  data.data.movies[i].large_cover_image  ,
+                                synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
+                                duree:  data.data.movies[i].runtime  ,
+                                rating:  data.data.movies[i].rating  ,
+                                id:  data.data.movies[i].id});
+                        tab[i]=JSON.parse(str);
+                        i++;
+                    }
+                    console.log("tab dans api_research", tab)
+                    res.status(200).json(tab);
                 }
             })
     }

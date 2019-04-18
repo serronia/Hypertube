@@ -51,8 +51,8 @@ router.get('/users/:id', (req, res) => {
 
 
 
-router.get('/api/:k', (req, res) => {
-	api.api_req(req, res, req.params.k);
+router.get('/api', (req, res) => {
+	api.api_req(req, res, req.params.param);
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {
