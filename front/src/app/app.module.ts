@@ -54,6 +54,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule
+
   ],
   declarations: [
     AppComponent,
@@ -72,6 +73,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     CommentaireComponent,
     ProfilComponent,
     ResetPasswordComponent
+//    SingleMediaPlayer
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

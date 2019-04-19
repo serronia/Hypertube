@@ -55,83 +55,41 @@ const insertFilmDB = (userID, filmID) => {
     })
 };
 
-const downloadTorrent = (magnet, userID, filmID) => {
-    return new Promise((resolve, reject) => {
-        const Download = TorrentStream(magnet, opts);
-
-        Download.on('ready', () => {
-
-            insertFilmDB(userID, filmID)
-                .then(result => {
-                    console.log(result);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-
-            Download.files.forEach(function (file) {
-                console.log('filename:', file.name);
-                let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4')
-                // let stream = file.createReadStream();
-                // let filePath = stream._engine.path + '/' + file.name;
-                // let writer = fs.createWriteStream(filePath);
-                resolve(stream);
-            });
-
-        });
-
-        Download.on('download', () => {
-            console.log(Download.swarm.downloaded);
-        });
-
-        Download.on('idle', () => {
-            Download.destroy();
-        });
-    })
-};
-
-
 Router.get('/', (req, res) => {
+    // const Download = TorrentStream(magnet, opts);
+    //
+    // Download.on('ready', () => {
+    //     insertFilmDB(15, 275)
+    //         .then(result => {
+    //             console.log(result);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    //
+    //     Download.files.forEach(function (file) {
+    //         console.log('filename:', file.name);
+    //         let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4');
+    //         // let stream = file.createReadStream();
+    //         // let filePath = stream._engine.path + '/' + file.name;
+    //         // let writer = fs.createWriteStream(filePath);
+    //         stream.pipe(res);
+    //     });
+    // });
+    //
+    // Download.on('download', () => {
+    //     console.log(Download.swarm.downloaded);
+    // });
+    //
+    // Download.on('idle', () => {
+    //     Download.destroy();
+    // });
 
-    downloadTorrent(magnet, '15', '256')
-        .then(result => {
-            result.pipe(res);
-        }).catch(err => {
-        console.log(err)
-    });
+    let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4');
+    // let stream = file.createReadStream();
+    // let filePath = stream._engine.path + '/' + file.name;
+    // let writer = fs.createWriteStream(filePath);
+    stream.pipe(res);
 });
 
 module.exports = Router;
-
-// const FfmpegCommand = require('fluent-ffmpeg');
-// const command = new FfmpegCommand();
-// var Express = require('Express'),
-//     ffmpeg = require('../index');
-//
-// var app = Express();
-//
-// app.use(Express.static(__dirname + '/flowplayer'));
-//
-// app.get('/', function(req, res) {
-//     res.send('index.html');
-// });
-//
-// app.get('/video/:filename', function(req, res) {
-//     res.contentType('flv');
-//     // make sure you set the correct path to your video file storage
-//     var pathToMovie = '/path/to/storage/' + req.params.filename;
-//     var proc = ffmpeg(pathToMovie)
-//     // use the 'flashvideo' preset (located in /lib/presets/flashvideo.js)
-//         .preset('flashvideo')
-//         // setup event handlers
-//         .on('end', function() {
-//             console.log('file has been converted succesfully');
-//         })
-//         .on('error', function(err) {
-//             console.log('an error happened: ' + err.message);
-//         })
-//         // save to stream
-//         .pipe(res, {end:true});
-// });
-//
-// app.listen(4000);
