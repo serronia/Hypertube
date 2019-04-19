@@ -16,3 +16,7 @@ back/src/\.DS_Store
 back/src/streams/torrent-stream/\.DS_Store
 
 *.mkv
+
+*.mp4
+
+*.torrent
