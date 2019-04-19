@@ -31,6 +31,12 @@ import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
 import { ResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
+//import {SingleMediaPlayer} from './single-media-player';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -43,7 +49,11 @@ import { ResetPasswordComponent } from './form-reset-password/form-reset-passwor
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   declarations: [
     AppComponent,
@@ -61,11 +71,14 @@ import { ResetPasswordComponent } from './form-reset-password/form-reset-passwor
     ChooseAvatarComponent,
     CommentaireComponent,
     ProfilComponent,
-    ResetPasswordComponent
+//    SingleMediaPlayer
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+//    SingleMediaPlayer
+]
 })
 export class AppModule { }

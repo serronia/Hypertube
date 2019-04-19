@@ -36,6 +36,7 @@
     "request": "latest",
     "sha512": "latest",
     "torrent-stream": "latest",
-    "generate-password": "latest"
+    "vg": "^0.3.3",
+    "videogular2": "^6.4.0"
   }
 }

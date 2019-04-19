@@ -1,13 +1,44 @@
 <div class="contener col-lg-12 col-md-12 col-sm-12">
     <h2 id="film-title">{{title}}</h2>
-    <div class="player col-lg-12 col-md-12 col-sm-12" [style.background-image]="background">
-        <p>----------- inserer le player ici -----------------</p>
-        <video width="1300" height="550" controls>
-            <source src="http://localhost:8080/download" type="video/mp4">
-            <!-- <source src="movie.ogg" type="video/ogg"> -->
-            <!-- Your browser does not support the video tag. -->
+     
+
+      <vg-player >
+          <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" (click)="onclick()"/>
+              <vg-overlay-play></vg-overlay-play>
+              <vg-buffering></vg-buffering>
+          
+              <vg-scrub-bar [vgSlider]="false">
+                  <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                  <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+              </vg-scrub-bar>
+          
+              <vg-controls>
+                  <vg-play-pause></vg-play-pause>
+               >
+          
+                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+          
+                  <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+          
+                  <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+          
+                  <vg-track-selector></vg-track-selector>
+                  <vg-mute></vg-mute>
+                  <vg-volume></vg-volume>
+          
+                  <vg-fullscreen></vg-fullscreen>
+              </vg-controls>
+          
+
+        <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
+          <source *ngIf="src_video" [src]="src_video" type="video/mp4">
         </video>
-    </div>
+      </vg-player>
+
+
+
+
     <div class="info_film col-lg-12 col-md-12 col-sm-12">
         <div class="col-lg-9 col-md-6 col-sm-12">
             <p id="title">Title = <span class="infos">{{title}}</span></p>

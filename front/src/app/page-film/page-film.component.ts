@@ -18,7 +18,7 @@ export class PageFilmComponent implements OnInit {
   genre = new Array();
   langue: string;
   description: string;
-  background: SafeStyle;
+  background: SafeUrl;
   note: number;
   cast = new Array();
   submitted = false;
@@ -26,6 +26,7 @@ export class PageFilmComponent implements OnInit {
   error = '';
   coms = new Array();
   i = 0;
+  src_video: SafeUrl;
 
   constructor(private filmService : FilmService, 
               private route: ActivatedRoute,
@@ -52,7 +53,7 @@ export class PageFilmComponent implements OnInit {
           this.genre = data2.genres;
           this.langue = data2.langue;
           this.description = data2.description;
-          this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data2.background_image})`);
+          this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
 
@@ -103,6 +104,14 @@ export class PageFilmComponent implements OnInit {
           this.error = error.error;
           this.loading = false;
       });
+    }
+
+    onclick(){
+      console.log("l'image disparait !");
+      document.getElementById("image_before").style.display ='none';
+      /*appeleer ta fonction qui telechqrge et qui te donne la src*/
+      
+      this.src_video =  this.sanitization.bypassSecurityTrustUrl("/assets/funny.mp4");
     }
 
 }
