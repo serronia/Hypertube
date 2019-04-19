@@ -54,6 +54,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule
+
   ],
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     ChooseAvatarComponent,
     CommentaireComponent,
     ProfilComponent,
+    ResetPasswordComponent
 //    SingleMediaPlayer
   ],
   providers: [
