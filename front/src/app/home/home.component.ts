@@ -27,7 +27,9 @@ export class HomeComponent{
   note_min="";
   year_min="";
   year_max="";
+  itsok = false;
   movies$ = new Array();
+  last_key= "";
 
   
   search(event: any, research: string)
@@ -41,7 +43,7 @@ export class HomeComponent{
       this.k=1;                 //on remet k a 1
       this.key_word = research; //on stock les mots cle
       this.recherche = true;     //on passe en mode recherche
-
+      this.itsok = false;
       if (event.keyCode == 13 || event.keyCode==32 || event=="")
       {
         this.filmService.Research(research, this.p, this.tri, this.genre, this.note_min, this.year_min, this.year_max).pipe(debounceTime(500))
@@ -61,17 +63,33 @@ export class HomeComponent{
     }
     else
     {
+      let ist_ok = false;
       this.j = 0;                   //on remat j a 0
       this.movies$ = new Array();   //on vide movies
       this.p=1;                     //on remet p a 1
       this.recherche =false;        //on desactive le mode recherche
       this.tri ="";                 //on reset pour avoir les suggestions
       this.genre="";                //on reset pour avoir les suggestions
+      if (event.keyCode)
+      {
+        if(this.last_key != event.keyCode)
+        {
+          this.last_key = event.keyCode;
+          ist_ok = true;
+        }
+        else
+          ist_ok = false;
+      }
+      else
+      {
+        ist_ok = true;
+      }
+      
       console.log("films.length = ", this.films.length);
       console.log("Dans recherche si pas mot cle films =", this.films); 
-      if (!this.films.length)
+      if (!this.films.length && ist_ok)
       {
-        this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max).pipe(debounceTime(500))
+        this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
         .subscribe(
         data =>
         {
@@ -79,14 +97,16 @@ export class HomeComponent{
             {
               this.films[this.i] = data[this.i];
               this.i = this.i+1;
-            }       
+            }     
+            this.itsok = true;  
         },
         error => {
             console.log("get film error = ", error);
         });
       }
-      console.log("fin recherche  films =", this.films); 
+      console.log("fin recherche  films =", this.films);
     }
+    
   }
   
 
@@ -184,6 +204,7 @@ export class HomeComponent{
     else
     {
       this.i = 0;
+      this.films = new Array();
       this.filmService.getFilm(1, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
       .subscribe(
       data =>

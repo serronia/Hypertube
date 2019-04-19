@@ -23,27 +23,41 @@ module.exports = {
         {
             requete = requete + "&genre=" + req.query.genre;
         }
+        console.log("requete = ", requete)
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
                 if((req.query.year_min == 'null') || (req.query.year_min == "")){year_min=0;}else{year_min=req.query.year_min};
                 if((req.query.year_max == 'null') || (req.query.year_min == "")){year_max=10000;}else{year_max=req.query.year_max};
-                while (i < j) {
-                    if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <=  year_max))
-                    {
-                        str = JSON.stringify({ name:   data.data.movies[i].title,
-                            year:  data.data.movies[i].year  ,
-                            genres:  data.data.movies[i].genres  ,
-                            affiche:  data.data.movies[i].large_cover_image  ,
-                            synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
-                            duree:  data.data.movies[i].runtime  ,
-                            rating:  data.data.movies[i].rating  ,
-                            id:  data.data.movies[i].id});
-                        tab[k]=JSON.parse(str);
-                        k++;
-                    }
-                    i++;
+                if (data.data.movie_count < 20)
+                {
+                    j = data.data.movie_count;
+                    page_max = 1;
                 }
+                else{
+                    page_max = data.data.movie_count/20;
+                }
+                console.log("page max = ", page_max);
+                if (req.query.page <= page_max)
+                {
+                    while (i < j) {
+                        if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <=  year_max))
+                        {
+                            str = JSON.stringify({ name:   data.data.movies[i].title,
+                                year:  data.data.movies[i].year  ,
+                                genres:  data.data.movies[i].genres  ,
+                                affiche:  data.data.movies[i].large_cover_image  ,
+                                synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
+                                duree:  data.data.movies[i].runtime  ,
+                                rating:  data.data.movies[i].rating  ,
+                                id:  data.data.movies[i].id});
+                            tab[k]=JSON.parse(str);
+                            k++;
+                        }
+                        i++;
+                    }
+                }
+
                 res.status(200).json(tab);
                 
             })
@@ -66,18 +80,6 @@ module.exports = {
                             id:  data.data.movie.id});
                     str=JSON.parse(str);
                 res.status(200).json(str);
-                /*if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
-                    console.log("qualite =>", data.data.movie.torrents[0].quality);
-                    console.log("seeds =>", data.data.movie.torrents[0].seeds);
-                    console.log("hash =>", data.data.movie.torrents[0].hash);
-                }
-                else {
-                    console.log("qualite =>", data.data.movie.torrents[1].quality);
-                    console.log("seeds =>", data.data.movie.torrents[1].seeds);
-                    console.log("hash =>", data.data.movie.torrents[1].hash);
-                }
-                tab[0] = "lol";
-                res.send(tab);*/
             })
     },
 
@@ -100,9 +102,7 @@ module.exports = {
         }
         if (req.query.note_min)
             requete = requete + "&minimum_rating=" + req.query.note_min;
-        else
-            requete = requete + "&minimum_rating=6";
-
+        console.log(requete);        
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
@@ -111,22 +111,32 @@ module.exports = {
                 if(data.data.movie_count)
                 {
                     if (data.data.movie_count < 20)
+                    {
                         j = data.data.movie_count;
-                    while (i < j) {
-                        if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max))
-                        {
-                            str = JSON.stringify({ name:   data.data.movies[i].title,
-                                year:  data.data.movies[i].year  ,
-                                genres:  data.data.movies[i].genres  ,
-                                affiche:  data.data.movies[i].large_cover_image  ,
-                                synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
-                                duree:  data.data.movies[i].runtime  ,
-                                rating:  data.data.movies[i].rating  ,
-                                id:  data.data.movies[i].id});
-                            tab[k]=JSON.parse(str);
-                            k++;
+                        page_max = 1;
+                    }
+                    else{
+                        page_max = data.data.movie_count/20;
+                    }
+                    console.log("page max = ", page_max);
+                    if (req.query.page <= page_max)
+                    {
+                        while (i < j) {
+                            if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max))
+                            {
+                                str = JSON.stringify({ name:   data.data.movies[i].title,
+                                    year:  data.data.movies[i].year  ,
+                                    genres:  data.data.movies[i].genres  ,
+                                    affiche:  data.data.movies[i].large_cover_image  ,
+                                    synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
+                                    duree:  data.data.movies[i].runtime  ,
+                                    rating:  data.data.movies[i].rating  ,
+                                    id:  data.data.movies[i].id});
+                                tab[k]=JSON.parse(str);
+                                k++;
+                            }
+                            i++;
                         }
-                        i++;
                     }
                     res.status(200).json(tab);
                 }

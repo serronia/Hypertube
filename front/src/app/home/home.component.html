@@ -2,7 +2,7 @@
 <div class="container">
  	<div class="row">
         <div class="col-md-4 offset-md-4 search-movie">
-            <input class="form-control" type="text" name="search" (keyup)="search($event, $event.target.value)"  autocomplete="off" placeholder="&#61442;  Search a movie">
+            <input class="form-control" type="text" name="search" (keyup)="search($event, $event.target.value);"  autocomplete="off" placeholder="&#61442;  Search a movie">
         </div>
     </div>
     <form [formGroup]="triForm" (ngSubmit)="onSubmit()">
@@ -90,5 +90,5 @@
          [affiche]=movie.affiche
          [resume]=movie.synopsis
          [note]=movie.rating
-         [id]=movie.id></app-film> <!--</app-film> | async"-->
+         [id]=movie.id></app-film>
 </div>
