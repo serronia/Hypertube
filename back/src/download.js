@@ -1,17 +1,116 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
+const Mongoose = require('Mongoose');
+const MovieList = require('./model/ViewedMovie');
+const Express = require('Express');
+const Router = Express.Router();
 
-const movieList = require('./model/Movie');
+const database = process.env.C_MONGO;
+Mongoose.connect(database);
+
+const magnet = 'magnet:?xt=urn:btih:1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0&dn=Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
+const opts = {
+    tmp: 'streams',          // Root folder for the files storage.
+    // connections: 100,     // Max amount of peers to be connected to.
+    // uploads: 10,          // Number of upload slots.
+    // Defaults to '/tmp' or temp folder specific to your OS.
+    // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
+    // path: '/tmp/my-file', // Where to save the files. Overrides `tmp`.
+    // verify: true,         // Verify previously stored data before starting
+    // Defaults to true
+    // dht: true,            // Whether or not to use DHT to initialize the swarm.
+    // Defaults to true
+    // tracker: true,        // Whether or not to use trackers from torrent file or magnet link
+    // Defaults to true
+    // trackers: [
+    //     'udp://tracker.openbittorrent.com:80',
+    //     'udp://tracker.ccc.de:80'
+    // ],
+    // Allows to declare additional custom trackers to use
+    // Defaults to empty
+    // storage: myStorage()  // Use a custom storage backend rather than the default disk-backed one
+};
+
+const insertFilmDB = (userID, filmID) => {
+    return new Promise((resolve, reject) => {
+        let movie = new MovieList({
+            User_ID: userID,
+            Movie_ID: filmID,
+            Date_vue: Date.now()
+        });
+
+        MovieList.findOne({User_ID: userID, Movie_ID: filmID}).then(doc => {
+            if (doc) {
+                resolve('already exist');
+            } else {
+                movie.save(error => {
+                    if (error) {
+                        reject("viewed movie not saved, error : ", error);
+                    } else {
+                        resolve('viewed movies saved.');
+                    }
+                });
+            }
+        });
+    })
+};
+
+const downloadTorrent = (magnet, userID, filmID) => {
+    return new Promise((resolve, reject) => {
+        const Download = TorrentStream(magnet, opts);
+
+        Download.on('ready', () => {
+
+            insertFilmDB(userID, filmID)
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+            Download.files.forEach(function (file) {
+                console.log('filename:', file.name);
+                let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4')
+                // let stream = file.createReadStream();
+                // let filePath = stream._engine.path + '/' + file.name;
+                // let writer = fs.createWriteStream(filePath);
+                resolve(stream);
+            });
+
+        });
+
+        Download.on('download', () => {
+            console.log(Download.swarm.downloaded);
+        });
+
+        Download.on('idle', () => {
+            Download.destroy();
+        });
+    })
+};
+
+
+Router.get('/', (req, res) => {
+
+    downloadTorrent(magnet, '15', '256')
+        .then(result => {
+            result.pipe(res);
+        }).catch(err => {
+        console.log(err)
+    });
+});
+
+module.exports = Router;
+
 // const FfmpegCommand = require('fluent-ffmpeg');
-//
 // const command = new FfmpegCommand();
-
-// var express = require('express'),
+// var Express = require('Express'),
 //     ffmpeg = require('../index');
 //
-// var app = express();
+// var app = Express();
 //
-// app.use(express.static(__dirname + '/flowplayer'));
+// app.use(Express.static(__dirname + '/flowplayer'));
 //
 // app.get('/', function(req, res) {
 //     res.send('index.html');
@@ -36,60 +135,3 @@ const movieList = require('./model/Movie');
 // });
 //
 // app.listen(4000);
-
-const magnet = 'magnet:?xt=urn:btih:1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0&dn=Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
-const opts = {
-    // connections: 100,     // Max amount of peers to be connected to.
-    // uploads: 10,          // Number of upload slots.
-    tmp: 'streams',          // Root folder for the files storage.
-    // Defaults to '/tmp' or temp folder specific to your OS.
-    // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-    // path: '/tmp/my-file', // Where to save the files. Overrides `tmp`.
-    // verify: true,         // Verify previously stored data before starting
-    // Defaults to true
-    // dht: true,            // Whether or not to use DHT to initialize the swarm.
-    // Defaults to true
-    // tracker: true,        // Whether or not to use trackers from torrent file or magnet link
-    // Defaults to true
-    // trackers: [
-    //     'udp://tracker.openbittorrent.com:80',
-    //     'udp://tracker.ccc.de:80'
-    // ],
-    // Allows to declare additional custom trackers to use
-    // Defaults to empty
-    // storage: myStorage()  // Use a custom storage backend rather than the default disk-backed one
-};
-
-const downloadTorrent = (magnet) => {
-    return new Promise((resolve, reject) => {
-        const Download = TorrentStream(magnet, opts);
-        Download.on('ready', () => {
-            Download.files.forEach(function (file) {
-                console.log('filename:', file.name);
-
-                const stream = file.createReadStream();
-                resolve({200: stream});
-
-                // const writer = fs.createWriteStream(filePath);
-            });
-        });
-
-        Download.on('download', () => {
-            console.log(Download.swarm.downloaded);
-        });
-
-        Download.on('idle', () => {
-            // resolve({200: 'OK'});
-            Download.destroy();
-            movieList.findOrCreate({})
-        });
-    })
-};
-
-downloadTorrent(magnet)
-
-    .then(res => {
-        console.log(res)
-    }).catch(err => {
-    console.log(err)
-});

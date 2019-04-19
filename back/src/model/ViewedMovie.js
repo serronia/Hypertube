@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
 const ViewedMovieSchema = new mongoose.Schema({
-    UserId: {
+    User_ID: {
         type: String,
         required: true
     },
@@ -10,12 +10,12 @@ const ViewedMovieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    DateVue: {
+    Date_vue: {
         type: Date,
         required: true
-    }   
-    
-})
+    }
+
+});
 
 const ViewedMovie = mongoose.model('ViewedMovie', ViewedMovieSchema);
 ViewedMovieSchema.plugin(findOrCreate);
