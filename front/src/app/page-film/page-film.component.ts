@@ -99,7 +99,6 @@ export class PageFilmComponent implements OnInit {
       },
       error => {
           console.log("add com error = ", error);
-          console.log(error.error);
           this.error = error.error;
           this.loading = false;
       });

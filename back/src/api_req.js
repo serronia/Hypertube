@@ -23,7 +23,6 @@ module.exports = {
         {
             requete = requete + "&genre=" + req.query.genre;
         }
-        console.log("requete = ", requete)
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
@@ -37,7 +36,6 @@ module.exports = {
                 else{
                     page_max = data.data.movie_count/20;
                 }
-                console.log("page max = ", page_max);
                 if (req.query.page <= page_max)
                 {
                     while (i < j) {
@@ -101,8 +99,7 @@ module.exports = {
             requete = requete + "&genre=" + req.query.genre;
         }
         if (req.query.note_min)
-            requete = requete + "&minimum_rating=" + req.query.note_min;
-        console.log(requete);        
+            requete = requete + "&minimum_rating=" + req.query.note_min;       
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
@@ -118,7 +115,6 @@ module.exports = {
                     else{
                         page_max = data.data.movie_count/20;
                     }
-                    console.log("page max = ", page_max);
                     if (req.query.page <= page_max)
                     {
                         while (i < j) {

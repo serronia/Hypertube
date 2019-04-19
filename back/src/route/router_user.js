@@ -91,7 +91,8 @@ router.post('/create', (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
   var verif = req.body.password2;
-
+  var avatar = req.body.avatar;
+   
   let hash = bcrypt.hashSync(password, 10);
 
   Check.checkUserExists(username, mail).then(resp =>{
@@ -105,7 +106,7 @@ router.post('/create', (req, res) => {
             username: username,
             email: mail,
             password : hash,
-            picture : "/assets/default.png"
+            picture : avatar
           });
           user.save(error => {
             if (error)
@@ -189,7 +190,6 @@ router.post('/modify_log', (req, res) => {
   var password = req.body.password;
   var password2 = req.body.password2;
   var oldusername =req.body.oldusername;
-  console.log("post = ", req.body);
   let hash = bcrypt.hashSync(password, 10);
   if(username == oldusername)
   {
@@ -254,7 +254,6 @@ router.post('/modify_avatar', (req, res) => {
   console.log("server hit /modify_avatar");
   var post_id = req.body.id;
   var path = req.body.path;
-  console.log("post = ", req.body);
   User.findOneAndUpdate(
     {_id: post_id},
     {$set: {picture: path}},{returnNewDocument : true}, 

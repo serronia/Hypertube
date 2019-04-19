@@ -84,9 +84,7 @@ export class HomeComponent{
       {
         ist_ok = true;
       }
-      
-      console.log("films.length = ", this.films.length);
-      console.log("Dans recherche si pas mot cle films =", this.films); 
+  
       if (!this.films.length && ist_ok)
       {
         this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
@@ -104,7 +102,6 @@ export class HomeComponent{
             console.log("get film error = ", error);
         });
       }
-      console.log("fin recherche  films =", this.films);
     }
     
   }
@@ -120,8 +117,7 @@ export class HomeComponent{
       note_min: ['', Validators],
       year_min: ['', Validators],
       year_max: ['', Validators]
-    });
-    console.log("avant on init films =", this.films);   
+    }); 
     this.filmService.getFilm(1, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
     .subscribe(
     data =>

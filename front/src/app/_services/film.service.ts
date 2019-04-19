@@ -42,7 +42,6 @@ export class FilmService {
 
     Research(search: string, nb: number, tri: string, genre: string, note_min: string, year_min: string, year_max: string)
     {
-        console.log("searching: " + search + " page: " + nb + " tri:"+ tri + " genre:"+ genre+ " note_min:"+ note_min);
         if (search != "")
         {
             const Param = new HttpParams().set("search", search).set("tri", tri).set("genre", genre).set("note_min", note_min).set("year_min", year_min).set("year_max", year_max).set("page", nb.toString());
