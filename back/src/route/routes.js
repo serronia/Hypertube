@@ -6,6 +6,7 @@ const User = require('../model/User');
 const Com = require('../model/Com');
 const bodyParser = require('body-parser');
 var api = require('../api_req');
+var flux = require('../util/start_film')
 var player = require('../util/magnet');
 
 const database = process.env.C_MONGO;
@@ -63,6 +64,11 @@ router.get('/api_by_id/:p1', (req, res) => {
 router.get('/magnet', (req, res) => {
 	res.send("l\'api va s\'afficher la =>");
 	player.magnet_creation(req, res, 1);
+})
+router.get('/api_getfilm_id/:id_movie', (req, res) => {
+	//res.send("l\'api va s\'afficher la =>"+ req.params.id_movie);
+	console.log("coucou je suis bien sur la bonne route");
+	flux.flux_video(req, res, req.params.id_movie);
 })
 
 module.exports = router;
