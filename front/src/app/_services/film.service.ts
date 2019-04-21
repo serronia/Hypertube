@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpParams} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -26,5 +26,10 @@ export class FilmService {
         .pipe(map(res => {
             return res;
         }));
+    }
+    get_film_by_id(id_movie : number){
+        console.log("je suis bien dans service film by id");
+        console.log("id_movie = ", id_movie);
+        return this.http.get<any>('http://localhost:8080/api_getfilm_id/'+id_movie);
     }
 }

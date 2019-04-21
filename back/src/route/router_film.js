@@ -41,7 +41,7 @@ router.post('/create', (req, res) => {
 
 
   router.get('/getComs/:id', (req, res) => {
-    console.log(" dans router getcoms = ");
+    console.log(" dans router getcoms ");
     var id_film = req.params.id;
     console.log("id film dans router film = ",id_film)
     Com.find({id_film: id_film}, function(err, com){
@@ -52,7 +52,7 @@ router.post('/create', (req, res) => {
         }
         else
         {
-          console.log("ok com getted  = ", com);
+          //console.log("ok com getted  = ", com);
           res.status(201).json({com});
         }
     });

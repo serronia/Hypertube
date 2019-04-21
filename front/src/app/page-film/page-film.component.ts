@@ -112,8 +112,22 @@ export class PageFilmComponent implements OnInit {
       console.log("l'image disparait !");
       document.getElementById("image_before").style.display ='none';
       /*appeleer ta fonction qui telechqrge et qui te donne la src*/
-      
+      var user = JSON.parse(localStorage.getItem("currentUser"));
+      this.filmService.get_film_by_id(this.id)
+      .subscribe(
+        data => 
+        {
+            console.log("get detail ok = ", data);
+          //  location.reload();
+        },
+        error => {
+            console.log("get detail error = ", error);
+            console.log(error.error);
+            this.error = error.error;
+            this.loading = false;
+        });
       this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/download");
+      //this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/back/streams/Reign Of The Supermen (2019) [BluRay] [720p] [YTS.AM]/Reign.Of.The.Supermen.2019.720p.BluRay.x264-[YTS.AM].mp4");
     }
 
 }
