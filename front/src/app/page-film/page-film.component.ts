@@ -126,7 +126,7 @@ export class PageFilmComponent implements OnInit {
             this.error = error.error;
             this.loading = false;
         });
-      this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/download");
+      this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/10462");
       //this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/back/streams/Reign Of The Supermen (2019) [BluRay] [720p] [YTS.AM]/Reign.Of.The.Supermen.2019.720p.BluRay.x264-[YTS.AM].mp4");
     }
 

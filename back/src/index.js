@@ -16,7 +16,7 @@ const GoogleRoute = require('./util/Googleauth');
 const GithubRoute = require('./util/GitOauth');
 const userRoute = require('./route/router_user');
 const filmRoute = require('./route/router_film');
-const downloadRoute = require('./download');
+//const downloadRoute = require('./download');
 
 //const torrentRoute = require('./route/router-torrent');
 
@@ -51,7 +51,7 @@ app.use('/film/', filmRoute);
 app.use('/auth/42/', IntraRoute);
 app.use('/auth/google/', GoogleRoute);
 app.use('/auth/github/', GithubRoute);
-app.use('/download', downloadRoute);
+//app.use('/download', downloadRoute);
 
 /*app.post('*', function(req, res, next) {
 	res.send('what??', 404);
