@@ -45,7 +45,7 @@ const opts = {
     tmp: 'streams',          // Root folder for the files storage.
     // Defaults to '/tmp' or temp folder specific to your OS.
     // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-    // path: '/tmp/my-file', // Where to save the files. Overrides `tmp`.
+     path: 'streams/', // Where to save the files. Overrides `tmp`.
     // verify: true,         // Verify previously stored data before starting
     // Defaults to true
     // dht: true,            // Whether or not to use DHT to initialize the swarm.
@@ -69,6 +69,12 @@ const downloadTorrent = (magnet) => {
                 console.log('filename: da', file.name);
 
                 const stream = file.createReadStream();
+
+//                console.log("----------------------------------------------------------------------------------------------------------");
+  //              console.log(stream);
+    //            console.log("----------------------------------------------------------------------------------------------------------");
+
+
                 resolve({200: stream});
 
                 // const writer = fs.createWriteStream(filePath);
