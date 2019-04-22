@@ -110,8 +110,22 @@ export class PageFilmComponent implements OnInit {
       console.log("l'image disparait !");
       document.getElementById("image_before").style.display ='none';
       /*appeleer ta fonction qui telechqrge et qui te donne la src*/
-      
-      this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/download");
+      var user = JSON.parse(localStorage.getItem("currentUser"));
+      // this.filmService.get_film_by_id(this.id)
+      // .subscribe(
+      //   data => 
+      //   {
+      //       console.log("get detail ok = ", data);
+      //     //  location.reload();
+      //   },
+      //   error => {
+      //       console.log("get detail error = ", error);
+      //       console.log(error.error);
+      //       this.error = error.error;
+      //       this.loading = false;
+      //   });
+      //this.src_video =  this.sanitization.bypassSecurityTrustUrl("assets/funny.mp4");
+      this.src_video =  this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/"+this.id);
     }
 
 }
