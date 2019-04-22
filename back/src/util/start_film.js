@@ -14,14 +14,14 @@ module.exports = {
                 download(data).then(final_data => {
 
                     console.log("ntm-------------------------------------------------------------------------------")
-                    console.log(final_data[200]._engine.torrent.files[1].path);
+                    // console.log(final_data[200]._engine.torrent.files[1].path);
+                    console.log(final_data);
                     console.log("ntm fin-------------------------------------------------------------------------------")
                     str = JSON.stringify({
-                    //    magnet: data,
-                        stp: final_data,
                         alors: "ca fonctionne"
                     })
-                    res.status(200).json(str);
+                    console.log("le res s'envoi ?")
+                    res.status(206).json(str);
                 });
             });
         })
