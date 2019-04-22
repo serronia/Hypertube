@@ -127,6 +127,7 @@ module.exports = {
                                     synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
                                     duree:  data.data.movies[i].runtime  ,
                                     rating:  data.data.movies[i].rating  ,
+                                    imdb_code: data.data.movies[i].imdb_code,
                                     id:  data.data.movies[i].id});
                                 tab[k]=JSON.parse(str);
                                 k++;
@@ -134,8 +135,36 @@ module.exports = {
                             i++;
                         }
                     }
-                    res.status(200).json(tab);
+                    return tab;
                 }
+            })
+            .then(tab =>{
+                fetch('http://www.omdbapi.com/?apikey=b52706c0&s='+req.query.search)
+                    .then((result) => result.json())
+                    .then(async data2 => {
+                        console.log("data 2 = ", data2.Search.length);
+                        i = 0;
+                        j=0;
+                        let exist = false;
+                        let last = tab.length;
+
+                        while(j < data2.Search.length)
+                        {
+                            while(i < tab.length)
+                            {
+                                if(tab[i].imdb_code == data2.Search[j].imdbID)
+                                {
+                                    tab[i].year = data2.Search[j].Year;
+                                }
+                                else{
+
+                                }
+                                i++;
+                            }
+                            j++;
+                        }
+                        res.status(200).json(tab);
+                    });
             })
     }
  
