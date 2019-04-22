@@ -91,10 +91,29 @@ const downloadTorrent = (magnet) => {
     return new Promise((resolve, reject) => {
         const Download = TorrentStream(magnet, opts);
         Download.on('ready', () => {
-            Download.files.forEach(function (file) {
-                console.log('filename: da', file.name);
 
-                const stream = file.createReadStream();
+            // console.log("dffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
+            // console.log(Download.files[1]);
+            // console.log("FINdffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
+            file = Download.files[1];
+        //    Download.files.forEach(function (file) {
+                // console.log('filename: da', file.name);
+                console.log('filename: da', file.path);
+
+                try{
+                // if (file.path && file.path != "")
+                if (fs.existsSync("/stream/"+file.path)) 
+                var stream = fs.createReadStream("/streams/"+file.path);
+                else
+                var stream = file.createReadStream();
+                } catch(err) {
+                    console.log("c'est pas bon, c'est meme faux")
+                // var stream = file.createReadStream();
+                }
+                // if (file.path && file.path != "")
+                // var stream = fs.createReadStream("streams/"+file.path);
+                // else
+                // var stream = file.createReadStream();
 
 //                console.log("----------------------------------------------------------------------------------------------------------");
   //              console.log(stream);
@@ -104,7 +123,7 @@ const downloadTorrent = (magnet) => {
                 resolve({200: stream});
 
                 // const writer = fs.createWriteStream(filePath);
-            });
+        //    });
         });
 
         Download.on('download', () => {
