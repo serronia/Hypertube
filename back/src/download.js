@@ -1,6 +1,6 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
-
+const pump = require('pump');
 const movieList = require('./model/Movie');
 // const FfmpegCommand = require('fluent-ffmpeg');
 //
@@ -38,14 +38,14 @@ const movieList = require('./model/Movie');
 // app.listen(4000);
 
 // const magnet = 'magnet:?xt=urn:btih:1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0&dn=Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969'
-const magnet = 'magnet:?xt=urn:btih:3F282BA4754263BC746C684EB73A8C7E1D49D160&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337&tr=udp://tracker.intenetriors.net:13'
+//const magnet = 'magnet:?xt=urn:btih:3F282BA4754263BC746C684EB73A8C7E1D49D160&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337&tr=udp://tracker.intenetriors.net:13'
 const opts = {
     // connections: 100,     // Max amount of peers to be connected to.
     // uploads: 10,          // Number of upload slots.
-    tmp: 'streams',          // Root folder for the files storage.
+   // tmp: './streams',          // Root folder for the files storage.
     // Defaults to '/tmp' or temp folder specific to your OS.
     // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-     path: 'streams/', // Where to save the files. Overrides `tmp`.
+     path: './streams/', // Where to save the files. Overrides `tmp`.
     // verify: true,         // Verify previously stored data before starting
     // Defaults to true
     // dht: true,            // Whether or not to use DHT to initialize the swarm.
@@ -61,55 +61,47 @@ const opts = {
     // storage: myStorage()  // Use a custom storage backend rather than the default disk-backed one
 };
 
-const downloadTorrent = (magnet) => {
-    return new Promise((resolve, reject) => {
-        const Download = TorrentStream(magnet, opts);
-        Download.on('ready', () => {
+const downloadTorrent = (magnet, res) => {
+    // return new Promise((resolve, reject) => {
+    //     const Download = TorrentStream(magnet, opts);
+    //     Download.on('ready', () => {
 
-            // console.log("dffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
-            // console.log(Download.files[1]);
-            // console.log("FINdffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
-            file = Download.files[1];
-        //    Download.files.forEach(function (file) {
-                // console.log('filename: da', file.name);
-                console.log('filename: da', file.path);
+    //         file = Download.files[1];
+    //             console.log('filename: da', file.path);
+    //             try{
+    //             if (fs.existsSync("/stream/"+file.path)) 
+    //             var stream = fs.createReadStream("/streams/"+file.path);
+    //             else
+    //             var stream = file.createReadStream();
+    //             } catch(err) {
+    //                 console.log("c'est pas bon, c'est meme faux")
+    //             }
+    //             resolve({200: stream});
+    //     });
+        // Download.on('download', () => {
+        //     console.log(Download.swarm.downloaded);
+        // });
 
-                try{
-                // if (file.path && file.path != "")
-                if (fs.existsSync("/stream/"+file.path)) 
-                var stream = fs.createReadStream("/streams/"+file.path);
-                else
-                var stream = file.createReadStream();
-                } catch(err) {
-                    console.log("c'est pas bon, c'est meme faux")
-                // var stream = file.createReadStream();
-                }
-                // if (file.path && file.path != "")
-                // var stream = fs.createReadStream("streams/"+file.path);
-                // else
-                // var stream = file.createReadStream();
+        // Download.on('idle', () => {
+        //     // resolve({200: 'OK'});
+        //     Download.destroy();
+        //     movieList.findOrCreate({})
+        // });
 
-//                console.log("----------------------------------------------------------------------------------------------------------");
-  //              console.log(stream);
-    //            console.log("----------------------------------------------------------------------------------------------------------");
+        let engine = TorrentStream(magnet);
 
+    engine.on('ready', () => {
+        let file = engine.files[0];
+        let stream = file.createReadStream();
 
-                resolve({200: stream});
+        console.log(file.path);
+        pump(stream, res);
+    });
 
-                // const writer = fs.createWriteStream(filePath);
-        //    });
-        });
-
-        Download.on('download', () => {
-            console.log(Download.swarm.downloaded);
-        });
-
-        Download.on('idle', () => {
-            // resolve({200: 'OK'});
-            Download.destroy();
-            movieList.findOrCreate({})
-        });
+    engine.on('download', () => {
+        console.log(engine.swarm.downloaded);
     })
+// })
 };
 
 module.exports = downloadTorrent;

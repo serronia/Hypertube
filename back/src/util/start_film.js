@@ -11,7 +11,7 @@ module.exports = {
             console.log(data.hash);
             magnet.magnet_creation(data.hash).then(data => {
                 console.log("le magnet recup vaut =>", data);
-                download(data).then(final_data => {
+                download(data, res).then(final_data => {
 
                     console.log("ntm-------------------------------------------------------------------------------")
                     // console.log(final_data[200]._engine.torrent.files[1].path);
