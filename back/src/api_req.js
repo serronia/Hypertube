@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
-
+var sortByProperty = function (property) {
+    return function (x, y) {
+        return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+    };
+};
 module.exports = {
     api_req: function (req, res) {
         let i = 0;
@@ -81,6 +85,33 @@ module.exports = {
             })
     },
 
+    api_by_id_omdb: function (req, res, id) {
+        fetch("http://www.omdbapi.com/?apikey=b52706c0&i="+id+"&plot=full")
+            .then((res) => res.json())
+            .then(async data => {
+                cast_form = data.Actors.split(',');
+                cast_final= new Array();
+                str2="";
+                for (let index = 0; index < cast_form.length; index++) {
+                    str2 = JSON.stringify({name: cast_form[index], character_name: ""});
+                    cast_final[index]= JSON.parse(str2);
+                }
+                    str = JSON.stringify({ name: data.Title,
+                            year:  data.Year  ,
+                            genres:  data.Genre  ,
+                            affiche:  data.Poster  ,
+                            duree:  data.Runtime  ,
+                            rating:  data.imdbRating  ,
+                            langue:  data.Language,
+                            description:  data.Plot,
+                            background_image:  data.Poster,
+                            cast : cast_final,
+                            id:  data.imdbID});
+                    str=JSON.parse(str);
+                res.status(200).json(str);
+            })
+    },
+
     api_research: function (req, res) {
         let i = 0;
         let j = 20; //nombre de film par page
@@ -99,7 +130,8 @@ module.exports = {
             requete = requete + "&genre=" + req.query.genre;
         }
         if (req.query.note_min)
-            requete = requete + "&minimum_rating=" + req.query.note_min;       
+            requete = requete + "&minimum_rating=" + req.query.note_min;
+
         fetch(requete)
             .then((res) => res.json())
             .then(async data => {
@@ -136,34 +168,65 @@ module.exports = {
                         }
                     }
                     return tab;
+                    //res.status(200).json(tab);
                 }
             })
             .then(tab =>{
                 fetch('http://www.omdbapi.com/?apikey=b52706c0&s='+req.query.search)
                     .then((result) => result.json())
                     .then(async data2 => {
-                        console.log("data 2 = ", data2.Search.length);
                         i = 0;
                         j=0;
+                        k=0;
                         let exist = false;
                         let last = tab.length;
-
-                        while(j < data2.Search.length)
+                        newtab = new Array();
+                        if(data2.Response == 'True')
                         {
-                            while(i < tab.length)
+                            while(j < data2.Search.length)
                             {
-                                if(tab[i].imdb_code == data2.Search[j].imdbID)
+                                while(i < tab.length)
                                 {
-                                    tab[i].year = data2.Search[j].Year;
+                                    if(tab[i].imdb_code == data2.Search[j].imdbID)
+                                    {
+                                        tab[i].year = data2.Search[j].Year;
+                                        exist = true
+                                    }
+                                    i++;
                                 }
-                                else{
-
+                                if (exist == false){
+                                    var unseen = JSON.stringify({ name: data2.Search[j].Title,
+                                        year:  data2.Search[j].Year ,
+                                        genres:  "ND" ,
+                                        affiche:  data2.Search[j].Poster  ,
+                                        synopsis: "".substr(0, 119) + "..."  ,
+                                        duree:  "ND" ,
+                                        rating:  "ND"  ,
+                                        imdb_code: data2.Search[j].imdbID,
+                                        id: data2.Search[j].imdbID});
+                                    newtab[k] = JSON.parse(unseen);
+                                    k = k +1;
                                 }
-                                i++;
+                                exist = false;
+                                j++;
+                                i=0;
                             }
-                            j++;
+                            if (req.query.page <= page_max)
+                                tab = tab.concat(newtab);
                         }
-                        res.status(200).json(tab);
+                        else{
+                            return tab;
+                        }
+                        return tab;
+                    }).then(resul => {
+                        if (req.query.tri != 'title')
+                        {
+                            resul.sort(sortByProperty(req.query.tri));
+                        }
+                        else{
+                            resul.sort(sortByProperty('name'));
+                        }
+                        res.status(200).json(resul);
                     });
             })
     }

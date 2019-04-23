@@ -79,7 +79,6 @@ export class RegisterComponent implements OnInit {
       if (this.registerfrom.invalid) {
           return;
       }
-    console.log("------------avatar = ", this.selected)
     if (this.selected == "")
       this.selected = 'assets/default.png';
 		this.loading = true;

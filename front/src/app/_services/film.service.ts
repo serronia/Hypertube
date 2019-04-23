@@ -21,10 +21,14 @@ export class FilmService {
         const Param = new HttpParams().set("tri", tri).set("genre", genre).set("note_min", note_min).set("year_min", year_min).set("year_max", year_max).set("page", nb.toString());
         return this.http.get('http://localhost:8080/api/', {params: Param})
     }
+
     getDetailFilm(id: number) {
         return this.http.get('http://localhost:8080/api_by_id/'+id);
     }
 
+    getDetailFilmOMbd(id: string) {
+        return this.http.get('http://localhost:8080/api_by_id_omdb/'+id);
+    }
     addCom(id_film: number, id_user: string, com: string) {
        
         return this.http.post<any>(`http://localhost:8080/film/create`, { id_film, id_user, com})

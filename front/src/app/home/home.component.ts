@@ -36,12 +36,12 @@ export class HomeComponent{
   {
     if (research != "")
     {
-      this.films = new Array(); //on vide films
-      this.i=0;                 //on remet i a 0
-      this.j=0;                 //on remet j a 0 pour qu'a chaque mot ou entree on remplace les results
+      this.films = new Array();  //on vide films
+      this.i=0;                  //on remet i a 0
+      this.j=0;                  //on remet j a 0 pour qu'a chaque mot ou entree on remplace les results
       this.movies$ = new Array();//on vide movie$ pour qu'a chaque mot ou entree on remplace les results
-      this.k=1;                 //on remet k a 1
-      this.key_word = research; //on stock les mots cle
+      this.k=1;                  //on remet k a 1
+      this.key_word = research;  //on stock les mots cle
       this.recherche = true;     //on passe en mode recherche
       this.itsok = false;
       if (event.keyCode == 13 || event.keyCode==32 || event=="")
@@ -195,6 +195,7 @@ export class HomeComponent{
     if(this.recherche)
     {
       this.j=0;
+      this.p = 1;
       this.search("", this.key_word);
     }      
     else
