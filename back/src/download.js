@@ -1,12 +1,10 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
-const Mongoose = require('Mongoose');
-const MovieList = require('./model/ViewedMovie');
-const Express = require('Express');
-const Router = Express.Router();
-
-const database = process.env.C_MONGO;
-Mongoose.connect(database);
+const pump = require('pump');
+const movieList = require('./model/Movie');
+// const FfmpegCommand = require('fluent-ffmpeg');
+//
+// const command = new FfmpegCommand();
 
 // var express = require('express'),
 //     ffmpeg = require('../index');
@@ -45,9 +43,10 @@ const opts = {
     tmp: 'stream',          // Root folder for the files storage.
     // connections: 100,     // Max amount of peers to be connected to.
     // uploads: 10,          // Number of upload slots.
+   // tmp: './streams',          // Root folder for the files storage.
     // Defaults to '/tmp' or temp folder specific to your OS.
     // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-     path: 'stream/', // Where to save the files. Overrides `tmp`.
+     path: './streams/', // Where to save the files. Overrides `tmp`.
     // verify: true,         // Verify previously stored data before starting
     // Defaults to true
     // dht: true,            // Whether or not to use DHT to initialize the swarm.
@@ -63,79 +62,47 @@ const opts = {
     // storage: myStorage()  // Use a custom storage backend rather than the default disk-backed one
 };
 
-const insertFilmDB = (userID, filmID) => {
-    return new Promise((resolve, reject) => {
-        let movie = new MovieList({
-            User_ID: userID,
-            Movie_ID: filmID,
-            Date_vue: Date.now()
-        });
+const downloadTorrent = (magnet, res) => {
+    // return new Promise((resolve, reject) => {
+    //     const Download = TorrentStream(magnet, opts);
+    //     Download.on('ready', () => {
 
-        MovieList.findOne({User_ID: userID, Movie_ID: filmID}).then(doc => {
-            if (doc) {
-                resolve('already exist');
-            } else {
-                movie.save(error => {
-                    if (error) {
-                        reject("viewed movie not saved, error : ", error);
-                    } else {
-                        resolve('viewed movies saved.');
-                    }
-                });
-            }
-        });
+    //         file = Download.files[1];
+    //             console.log('filename: da', file.path);
+    //             try{
+    //             if (fs.existsSync("/stream/"+file.path)) 
+    //             var stream = fs.createReadStream("/streams/"+file.path);
+    //             else
+    //             var stream = file.createReadStream();
+    //             } catch(err) {
+    //                 console.log("c'est pas bon, c'est meme faux")
+    //             }
+    //             resolve({200: stream});
+    //     });
+        // Download.on('download', () => {
+        //     console.log(Download.swarm.downloaded);
+        // });
+
+        // Download.on('idle', () => {
+        //     // resolve({200: 'OK'});
+        //     Download.destroy();
+        //     movieList.findOrCreate({})
+        // });
+
+        let engine = TorrentStream(magnet);
+
+    engine.on('ready', () => {
+        let file = engine.files[0];
+        let stream = file.createReadStream();
+
+        console.log(file.path);
+        pump(stream, res);
+    });
+
+    engine.on('download', () => {
+        console.log(engine.swarm.downloaded);
     })
-};
-
-const downloadTorrent = (magnet) => {
-    return new Promise((resolve, reject) => {
-        const Download = TorrentStream(magnet, opts);
-        Download.on('ready', () => {
-
-            // console.log("dffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
-            // console.log(Download.files[1]);
-            // console.log("FINdffaegraergaesrgaeshrwsyjtrsthrsthrshrshtsryjetyjetyjndtyjdtjydtyjdtyjdtyjdtyjdtyjdtyjdjty");
-            file = Download.files[1];
-        //    Download.files.forEach(function (file) {
-                // console.log('filename: da', file.name);
-                console.log('filename: da', file.path);
-
-                try{
-                // if (file.path && file.path != "")
-                if (fs.existsSync("/stream/"+file.path)) 
-                var stream = fs.createReadStream("/streams/"+file.path);
-                else
-                var stream = file.createReadStream();
-                } catch(err) {
-                    console.log("c'est pas bon, c'est meme faux")
-                // var stream = file.createReadStream();
-                }
-                // if (file.path && file.path != "")
-                // var stream = fs.createReadStream("streams/"+file.path);
-                // else
-                // var stream = file.createReadStream();
-
-//                console.log("----------------------------------------------------------------------------------------------------------");
-  //              console.log(stream);
-    //            console.log("----------------------------------------------------------------------------------------------------------");
-
-
-                resolve({200: stream});
-
-                // const writer = fs.createWriteStream(filePath);
-        //    });
-        });
-
-        Download.on('download', () => {
-            console.log(Download.swarm.downloaded);
-        });
-
-        Download.on('idle', () => {
-            // resolve({200: 'OK'});
-            Download.destroy();
-            //MovieList.findOrCreate({});
-        });
-    })
+// })
 };
 
 module.exports = downloadTorrent;

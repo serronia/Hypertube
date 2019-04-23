@@ -33,6 +33,7 @@
     "passport-github": "latest",
     "passport-google-oauth20": "latest",
     "passport-local": "latest",
+    "pump": "^3.0.0",
     "request": "latest",
     "sha512": "latest",
     "generate-password": "latest",
