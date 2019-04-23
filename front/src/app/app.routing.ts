@@ -45,7 +45,8 @@ const appRoutes: Routes = [
 	},
 	{ 
 		path: 'film/:id',
-		component: PageFilmComponent
+		component: PageFilmComponent,
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'reset_password',

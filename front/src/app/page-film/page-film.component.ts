@@ -26,6 +26,7 @@ export class PageFilmComponent implements OnInit {
   error = '';
   coms = new Array();
   i = 0;
+  id_tmp: string;
   src_video: SafeUrl;
   src_subtitles: SafeUrl ;
 
@@ -37,13 +38,16 @@ export class PageFilmComponent implements OnInit {
    } 
 
   ngOnInit() {
-    this.id = parseInt(this.route.snapshot.paramMap.get("id"));
-
+    var regex1 = RegExp('^tt');
     this.PostCom = this.formBuilder.group({
       com: ['', Validators.required]
     });
+    if (regex1.test(this.route.snapshot.paramMap.get("id")))
+    {
 
-    this.filmService.getDetailFilm(this.id)
+      this.id_tmp  = this.route.snapshot.paramMap.get("id");
+      this.id = parseInt(this.id_tmp.split('t')[2]);
+      this.filmService.getDetailFilmOMbd(this.route.snapshot.paramMap.get("id"))
       .subscribe(
       data => 
       {
@@ -63,6 +67,31 @@ export class PageFilmComponent implements OnInit {
       error => {
           console.log("get film error = ", error);
       });
+    }
+    else{
+      this.id = parseInt(this.route.snapshot.paramMap.get("id"));
+      this.filmService.getDetailFilm(this.id)
+      .subscribe(
+      data => 
+      {
+          var data2 = JSON.parse(JSON.stringify(data));
+          this.title = data2.name;
+          this.affiche = this.sanitization.bypassSecurityTrustUrl(data2.affiche);
+          this.year  = data2.year;
+          this.duration = data2.duree;
+          this.genre = data2.genres;
+          this.langue = data2.langue;
+          this.description = data2.description;
+          this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data2.background_image})`);
+          this.note = data2.rating;
+          this.cast = data2.cast;
+
+      },
+      error => {
+          console.log("get film error = ", error);
+      });
+    }
+
 
       this.filmService.getComs(this.id)
       .subscribe(
@@ -102,7 +131,6 @@ export class PageFilmComponent implements OnInit {
       },
       error => {
           console.log("add com error = ", error);
-          console.log(error.error);
           this.error = error.error;
           this.loading = false;
       });

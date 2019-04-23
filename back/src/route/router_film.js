@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
 
 /**************************************************************/
 router.post('/create', (req, res) => {
-    console.log("body = ", req.body)
     var id_film = req.body.id_film;
     var id_user = req.body.id_user;
     var comm = req.body.com;
@@ -25,7 +24,6 @@ router.post('/create', (req, res) => {
         com: comm,
         date: date
     });
-    console.log("com dans ruter film = ", com)
     com.save(error => {
         if (error)
         {
@@ -41,11 +39,8 @@ router.post('/create', (req, res) => {
 
 
   router.get('/getComs/:id', (req, res) => {
-    console.log(" dans router getcoms ");
     var id_film = req.params.id;
-    console.log("id film dans router film = ",id_film)
     Com.find({id_film: id_film}, function(err, com){
-        //console.log("com dns get com = ", com);
         if(err){
             console.log("Something wrong when geting com!");
             res.status(400).send("Something wrong when geting com!");

@@ -29,6 +29,9 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 import { ResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 
 import {VgCoreModule} from 'videogular2/core';
@@ -49,6 +52,9 @@ import {VgBufferingModule} from 'videogular2/buffering';
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule
     InfiniteScrollModule,
     VgCoreModule,
     VgControlsModule,

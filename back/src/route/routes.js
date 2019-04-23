@@ -58,14 +58,22 @@ router.get('/reset_password', (req, res) => {
 });
 
 
-
-router.get('/api/:k', (req, res) => {
-	api.api_req(req, res, req.params.k);
+router.get('/api', (req, res) => {
+	api.api_req(req, res, req.params.param);
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {
 	api.api_by_id(req, res, req.params.p1);
 	})
+
+router.get('/api_by_id_omdb/:p1', (req, res) => {
+	api.api_by_id_omdb(req, res, req.params.p1);
+	})
+
+router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
+	api.api_research(req, res, req.params.param);
+});
+
 	
 router.get('/magnet', (req, res) => {
 	res.send("l\'api va s\'afficher la =>");

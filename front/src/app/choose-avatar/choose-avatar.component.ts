@@ -41,17 +41,11 @@ export class ChooseAvatarComponent implements OnInit {
   ngOnInit() {
   }
 
-  choix_image = function(src:string) {
-    console.log("cliclic");
-    console.log("src choisie = ", src)
-  }
-
 /*----------------------------------------------------------------------*/
   toggleOptions: Array<String> = ["assets/default.png", "assets/2.png", "assets/3.png", "assets/4.png", "assets/5.png", "assets/6.png"];
 
   selectionChanged(item) {
     this.selected = item.value;
-    console.log("Selected value: " + item.value);
   }
   change(){
     if(this.selected != "")
@@ -69,7 +63,6 @@ export class ChooseAvatarComponent implements OnInit {
           this.error = error.error;
       });
     }
-    console.log(this.selected)
   }
 /*----------------------------------------------------------------------*/
 }
