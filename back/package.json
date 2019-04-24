@@ -43,6 +43,7 @@
     "sha512": "latest",
     "torrent-stream": "latest",
     "vg": "^0.3.3",
-    "videogular2": "^6.4.0"
+    "videogular2": "^6.4.0",
+    "yifysubtitles": "^2.1.2"
   }
 }

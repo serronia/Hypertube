@@ -264,7 +264,7 @@ module.exports = {
                             // background_image: data.data.movie.background_image,
                             // cast: data.data.movie.cast,
                         });
-                        // console.log("ALEEEEEEEEEER");
+                        //  console.log("////////***********ALEEEEEEEEEER", data.data.movie.imdb_code);
                         str = JSON.parse(str);
                         resolve(str);
                         //return (str);

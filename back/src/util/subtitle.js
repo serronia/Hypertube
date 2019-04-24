@@ -26,7 +26,7 @@ OS.search({
 
 const yifysubtitles = require('yifysubtitles');
  
-yifysubtitles('tt1156398', {path: '/tmp', langs: ['en', 'fr', 'zh']})
+yifysubtitles(imdb, {path: '/tmp', langs: ['en', 'fr', 'es']})
     .then(res => {
         console.log(res);
 /*

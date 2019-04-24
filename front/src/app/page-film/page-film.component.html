@@ -27,29 +27,9 @@
               </vg-controls>
         <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
           <source *ngIf="src_video" [src]="src_video" type="video/mp4">
+          <track *ngIf="src_subtitle" [src]="src_subtile" type="subtitle" srclang="en">
         </video>
       </vg-player>
-
-
-      <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-      <!-- <vg-time-display vgProperty="left" vgFormat="hh:mm:ss"></vg-time-display> -->
-      <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-track-selector></vg-track-selector>
-      <vg-mute></vg-mute>
-      <vg-volume></vg-volume>
-
-      <vg-fullscreen></vg-fullscreen>
-    </vg-controls>
-
-
-    <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
-      <source *ngIf="src_video" [src]="src_video" type="video/mp4">
-    </video>
-  </vg-player>
 
 
 

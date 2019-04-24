@@ -4,6 +4,7 @@ var magnet = require('../util/magnet');
 var download = require('../download');
 const router = express.Router()
 
+
 module.exports = {
     flux_video: function (req, res, id_movie) {
         console.log("mdr j'ai reussi a venir sur flux_video, gg!");
@@ -15,6 +16,7 @@ module.exports = {
 
                     console.log("ntm-------------------------------------------------------------------------------")
                     // console.log(final_data[200]._engine.torrent.files[1].path);
+                    // console.log("////////***********ALEEEEEEEEEER", data.data.movie.imdb_code);
                     console.log(final_data);
                     console.log("ntm fin-------------------------------------------------------------------------------")
                     str = JSON.stringify({
@@ -25,6 +27,7 @@ module.exports = {
                     res.status(206).json(str);
                 });
             });
-        })
+        });
     },
+
 };

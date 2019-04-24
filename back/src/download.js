@@ -6,6 +6,7 @@ const movieList = require('./model/Movie');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 ffmpeg.setFfmpegPath(ffmpegPath);
+const yifysubtitles = require('yifysubtitles');
 
 const opts = {
     tmp: 'stream',          // Root folder for the files storage.
@@ -63,13 +64,22 @@ const downloadTorrent = (magnet, res) => {
     // });
 
     let engine = TorrentStream(magnet, opts);
-
+    
     engine.on('ready', () => {
         engine.files.sort((a, b) => b.length - a.length);
 
         let file = engine.files[0];
 
         let stream = file.createReadStream();
+
+        console.log("////////***********ALEEEEEEEEEER", res );
+
+        
+ 
+    /*yifysubtitles('tt4157728', {path: '/stream/subtitles', langs: ['en', 'fr']})
+    .then(res => {
+        console.log("////////***********ALEEEEEEEEEER",res);})
+        .catch(err => console.log(err));*/
 
         let conversion = ffmpeg(stream)
             .withVideoCodec("libvpx")

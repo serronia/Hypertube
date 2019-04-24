@@ -72,6 +72,7 @@ router.get('/magnet', (req, res) => {
 
 router.get('/api_by_id_omdb/:p1', (req, res) => {
 	api.api_by_id_omdb(req, res, req.params.p1);
+	
 	})
 
 router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
@@ -82,5 +83,6 @@ router.get('/api_getfilm_id/:id_movie', (req, res) => {
 	//res.send("l\'api va s\'afficher la =>"+ req.params.id_movie);
 	console.log("coucou je suis bien sur la bonne route");
 	flux.flux_video(req, res, req.params.id_movie);
+	
 })
 module.exports = router;
