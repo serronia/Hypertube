@@ -23,3 +23,26 @@ OS.search({
         throw 'no subtitle found';
     }
 }).catch(console.error);
+
+const yifysubtitles = require('yifysubtitles');
+ 
+yifysubtitles('tt1156398', {path: '/tmp', langs: ['en', 'fr', 'zh']})
+    .then(res => {
+        console.log(res);
+/*
+=>
+res [ { lang: 'english',
+    langShort: 'en',
+    path: '/tmp/Zombieland.2009.720p.BrRip.x264-YIFY.vtt',
+    fileName: 'Zombieland.2009.720p.BrRip.x264-YIFY.vtt' },
+  { lang: 'french',
+    langShort: 'fr',
+    path: '/tmp/Zombieland.2009.720p.BrRip.x264-YIFY.www.subsynchro.com.vtt',
+    fileName: 'Zombieland.2009.720p.BrRip.x264-YIFY.www.subsynchro.com.vtt' },
+  { lang: 'chinese',
+    langShort: 'zh',
+    path: '/tmp/Zombieland.720p.BluRay.x264-CROSSBOW.cht.vtt',
+    fileName: 'Zombieland.720p.BluRay.x264-CROSSBOW.cht.vtt' } ]
+*/
+    })
+    .catch(err => console.log(err));

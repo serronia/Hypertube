@@ -27,8 +27,4 @@ module.exports = {
             });
         })
     },
-                    // console.log(final_data[200]._engine.torrent.files[1].path);
-                    console.log(final_data);
-                    console.log("ntm fin-------------------------------------------------------------------------------")
-
 };

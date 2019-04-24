@@ -116,10 +116,13 @@ router.post('/create', (req, res) => {
             {
               res.status(400).send("Format error, please re-read your input");
             }
+        
+            }).catch(err => {
+                if (err)
+                    res.status(400).send("Username or mail already exist");
+                });
         }
-    }).catch(err => {
-        if (err)
-            res.status(400).send("Username or mail already exist");
+    }
     });
 });
 
@@ -210,6 +213,7 @@ router.post('/modify_log', (req, res) => {
           }
       });
     }
+  }
 });
 
 router.post('/modify_avatar', (req, res) => {
