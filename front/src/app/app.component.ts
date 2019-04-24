@@ -3,6 +3,7 @@ import { Component, Renderer2, ElementRef } from '@angular/core';
 
 import { AuthenticationService } from './_services';
 import { User } from './_models';
+import 'hammerjs';
 
 @Component({
   selector: 'app-root',
