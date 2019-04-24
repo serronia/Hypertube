@@ -241,8 +241,7 @@ module.exports = {
             fetch("https://yts.am/api/v2/movie_details.json?movie_id=" + id_movie + "&with_cast=true")
                 .then((res) => res.json())
                 .then(async data => {
-                    if(data)
-                    {
+                    if (data) {
                         if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
                             // console.log("hash =>", data.data.movie.torrents[0].hash);
                             hash = data.data.movie.torrents[0].hash;
@@ -273,7 +272,7 @@ module.exports = {
                         //return ("lol");
                     }
                     else
-                        reject({status: 400, message: "error no film found"})
+                        reject({ status: 400, message: "error no film found" })
                 })
 
         })

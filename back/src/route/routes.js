@@ -65,6 +65,10 @@ router.get('/api', (req, res) => {
 router.get('/api_by_id/:p1', (req, res) => {
 	api.api_by_id(req, res, req.params.p1);
 	})
+router.get('/magnet', (req, res) => {
+	res.send("l\'api va s\'afficher la =>");
+	player.magnet_creation(req, res, 1);
+})
 
 router.get('/api_by_id_omdb/:p1', (req, res) => {
 	api.api_by_id_omdb(req, res, req.params.p1);
@@ -74,19 +78,9 @@ router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
 	api.api_research(req, res, req.params.param);
 });
 
-	
-router.get('/magnet', (req, res) => {
-	res.send("l\'api va s\'afficher la =>");
-	player.magnet_creation(req, res, 1);
-})
 router.get('/api_getfilm_id/:id_movie', (req, res) => {
 	//res.send("l\'api va s\'afficher la =>"+ req.params.id_movie);
 	console.log("coucou je suis bien sur la bonne route");
 	flux.flux_video(req, res, req.params.id_movie);
 })
-
-//router.get("/download"){
-
-//}
-
 module.exports = router;
