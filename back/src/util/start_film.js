@@ -12,6 +12,7 @@ module.exports = {
             console.log(data.hash);
             magnet.magnet_creation(data.hash).then(data => {
                 console.log("le magnet recup vaut =>", data);
+                
                 download(data, res).then(final_data => {
 
                     console.log("ntm-------------------------------------------------------------------------------")

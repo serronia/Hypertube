@@ -77,6 +77,7 @@ module.exports = {
                     description: data.data.movie.description_full,
                     background_image: data.data.movie.background_image,
                     cast: data.data.movie.cast,
+                    imdb_code: data.data.movie.imdb_code,
                     id: data.data.movie.id
                 });
                 str = JSON.parse(str);

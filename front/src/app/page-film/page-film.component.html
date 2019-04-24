@@ -19,7 +19,7 @@
                   <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
                   <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
           
-                  <vg-track-selector></vg-track-selector>
+                  <vg-track-selector vgFor="singleVideo"></vg-track-selector>
                   <vg-mute></vg-mute>
                   <vg-volume></vg-volume>
           
@@ -27,7 +27,7 @@
               </vg-controls>
         <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
           <source *ngIf="src_video" [src]="src_video" type="video/mp4">
-          <track *ngIf="src_subtitle" [src]="src_subtile" type="subtitle" srclang="en">
+          <track kind="subtitles" [label]="subs.langue" [src]="subs.path" [srclang]="subs.langShort">
         </video>
       </vg-player>
 

@@ -29,6 +29,11 @@ export class PageFilmComponent implements OnInit {
   id_tmp: string;
   src_video: SafeUrl;
   src_subtitles: SafeUrl ;
+  subs = JSON.parse(JSON.stringify({
+    path: "",
+    langue:"",
+    langShort: ""}
+  ));
 
   constructor(private filmService : FilmService, 
               private route: ActivatedRoute,
@@ -85,6 +90,7 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data2.background_image})`);
           this.note = data2.rating;
           this.cast = data2.cast;
+          this.id_tmp  = data2.imdb_code;
 
       },
       error => {
@@ -156,14 +162,39 @@ export class PageFilmComponent implements OnInit {
 
     var regex1 = RegExp('^tt');
     console.log("this.id_tmp dans NGINIT",this.id_tmp);
-    if (regex1.test(this.id_tmp)) {
+    /*if (regex1.test(this.id_tmp)) {
       console.log("premier if")
       this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
+      console.log("this. src_video = ",this.src_video);
     }
     else{
       console.log("deuxieme if")
       this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
-    }
+      console.log("this. src_video = ",this.src_video);
+    }*/
+    //this.src_subtitles = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/subtitle/"+this.id_tmp);
+    this.filmService.getsub(this.id_tmp)
+    .subscribe(
+        data => 
+        {
+          let i =0;
+            console.log("get  sub ok = ", data);
+            // for (let da in data)
+            // {
+            this.subs.path = this.sanitization.bypassSecurityTrustUrl(data[0].path);
+            this.subs.langue = data[0].lang;
+            this.subs.langShort = data[0].langShort;
+            //   i++;
+            // }
+            console.log("this. sub = ",this.subs);
+            //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
+        },
+        error => {
+            console.log("get detail error = ", error);
+            console.log(error.error);
+            this.error = error.error;
+            this.loading = false;
+        });
   }
 
 }

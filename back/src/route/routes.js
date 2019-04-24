@@ -9,6 +9,7 @@ var api = require('../api_req');
 var flux = require('../util/start_film')
 var player = require('../util/magnet');
 var watch = require("../download");
+var sub = require("../util/subtitle");
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -63,6 +64,7 @@ router.get('/api', (req, res) => {
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {
+	console.log("id film = ",req.params.p1 )
 	api.api_by_id(req, res, req.params.p1);
 	})
 router.get('/magnet', (req, res) => {
@@ -84,5 +86,11 @@ router.get('/api_getfilm_id/:id_movie', (req, res) => {
 	console.log("coucou je suis bien sur la bonne route");
 	flux.flux_video(req, res, req.params.id_movie);
 	
+});
+router.get('/subtitle/:id_movie_imdb', (req, res) => {
+	console.log("Je suis dans Subtitle route");
+	console.log("id_imdb = ", req.params.id_movie_imdb);
+	sub.get_subtitle(req, res, req.params.id_movie_imdb, "fr");
 })
+
 module.exports = router;

@@ -1,15 +1,11 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
 const pump = require('pump');
-const movieList = require('./model/Movie');
-
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 ffmpeg.setFfmpegPath(ffmpegPath);
-const yifysubtitles = require('yifysubtitles');
 
 const opts = {
-    tmp: 'stream',          // Root folder for the files storage.
     // connections: 100,     // Max amount of peers to be connected to.
     // uploads: 10,          // Number of upload slots.
     // tmp: './streams',          // Root folder for the files storage.
@@ -64,22 +60,13 @@ const downloadTorrent = (magnet, res) => {
     // });
 
     let engine = TorrentStream(magnet, opts);
-    
+
     engine.on('ready', () => {
         engine.files.sort((a, b) => b.length - a.length);
 
         let file = engine.files[0];
 
         let stream = file.createReadStream();
-
-        console.log("////////***********ALEEEEEEEEEER", res );
-
-        
- 
-    /*yifysubtitles('tt4157728', {path: '/stream/subtitles', langs: ['en', 'fr']})
-    .then(res => {
-        console.log("////////***********ALEEEEEEEEEER",res);})
-        .catch(err => console.log(err));*/
 
         let conversion = ffmpeg(stream)
             .withVideoCodec("libvpx")
@@ -109,36 +96,6 @@ const downloadTorrent = (magnet, res) => {
 
 module.exports = downloadTorrent;
 
-/*Router.get('/', (req, res) => {
-    // const Download = TorrentStream(magnet, opts);
-    //
-    // Download.on('ready', () => {
-    //     insertFilmDB(15, 275)
-    //         .then(result => {
-    //             console.log(result);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    //
-    //     Download.files.forEach(function (file) {
-    //         console.log('filename:', file.name);
-    //         let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4');
-    //         // let stream = file.createReadStream();
-    //         // let filePath = stream._engine.path + '/' + file.name;
-    //         // let writer = fs.createWriteStream(filePath);
-    //         stream.pipe(res);
-    //     });
-    // });
-    //
-    // Download.on('download', () => {
-    //     console.log(Download.swarm.downloaded);
-    // });
-    //
-    // Download.on('idle', () => {
-    //     Download.destroy();
-    // });
-
 // downloadTorrent(magnet)
 
 //     .then(res => {
@@ -146,12 +103,3 @@ module.exports = downloadTorrent;
 //     }).catch(err => {
 //     console.log(err)
 // });
-let stream = downloadTorrent;
-    //let stream = fs.createReadStream('streams/torrent-stream/1d82c75adef98fc3f44bc39f2a9c8f94dfb6e6b0/Thor.Ragnarok.2017.720p.TS.x264.DUBLADO-LAPUMiAFiLMES.COM.mp4');
-    // let stream = file.createReadStream();
-    // let filePath = stream._engine.path + '/' + file.name;
-    // let writer = fs.createWriteStream(filePath);
-    stream.pipe(res);
-});*/
-
-//module.exports =  Router;

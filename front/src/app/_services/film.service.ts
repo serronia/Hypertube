@@ -57,4 +57,9 @@ export class FilmService {
         console.log("id_movie = ", id_movie);
         return this.http.get<any>('http://localhost:8080/api_getfilm_id/'+id_movie);
     }
+    getsub(id_imdb : string){
+        console.log("je suis bien dans service film get sub");
+        console.log("id_movie = ", id_imdb);
+        return this.http.get("http://localhost:8080/subtitle/"+id_imdb);
+    }
 }
