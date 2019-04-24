@@ -44,6 +44,7 @@ export class PageFilmComponent implements OnInit {
     {
 
       this.id_tmp  = this.route.snapshot.paramMap.get("id");
+      console.log("this.id_tmp dans NGINIT",this.id_tmp);
       this.id = parseInt(this.id_tmp.split('t')[2]);
       this.filmService.getDetailFilmOMbd(this.route.snapshot.paramMap.get("id"))
       .subscribe(
@@ -149,7 +150,18 @@ export class PageFilmComponent implements OnInit {
     //       this.loading = false;
     //   });
     //this.src_video =  this.sanitization.bypassSecurityTrustUrl("assets/funny.mp4");
-    this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
+    // if (this.id_tmp == "")
+
+    var regex1 = RegExp('^tt');
+    console.log("this.id_tmp dans NGINIT",this.id_tmp);
+    if (regex1.test(this.id_tmp)) {
+      console.log("premier if")
+      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
+    }
+    else{
+      console.log("deuxieme if")
+      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
+    }
   }
 
 }
