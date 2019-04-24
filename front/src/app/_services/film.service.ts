@@ -52,4 +52,9 @@ export class FilmService {
             return this.http.get('http://localhost:8080/research', {params: Param});
         }
     }
+    get_film_by_id(id_movie : number){
+        console.log("je suis bien dans service film by id");
+        console.log("id_movie = ", id_movie);
+        return this.http.get<any>('http://localhost:8080/api_getfilm_id/'+id_movie);
+    }
 }

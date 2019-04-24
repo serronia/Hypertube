@@ -14,17 +14,20 @@
   "author": "shthevak",
   "license": "UNLICENCED",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.17",
     "bcrypt": "latest",
     "cookie-session": "latest",
     "cors": "latest",
+    "cron": "^1.7.0",
     "express": "^4.16.3",
     "express-logging": "^1.1.1",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
     "file-system": "2.2.2",
+    "fluent-ffmpeg": "^2.1.2",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "^4.7.0",
-    "mongoose-findorcreate": "latest",
+    "mongoose": "^4.13.18",
+    "mongoose-findorcreate": "^3.0.0",
     "node-fetch": "^2.3.0",
     "nodemailer": "latest",
     "nodemon": "^1.14.7",
@@ -33,8 +36,11 @@
     "passport-github": "latest",
     "passport-google-oauth20": "latest",
     "passport-local": "latest",
+    "pump": "^3.0.0",
     "request": "latest",
     "sha512": "latest",
-    "torrent-stream": "latest"
+    "torrent-stream": "latest",
+    "vg": "^0.3.3",
+    "videogular2": "^6.4.0"
   }
 }

@@ -33,7 +33,11 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
 
-
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
+//import {SingleMediaPlayer} from './single-media-player';
 
 @NgModule({
   imports: [
@@ -47,6 +51,10 @@ import {MatSliderModule} from '@angular/material/slider';
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
     InfiniteScrollModule,
     MatRadioModule,
     MatSelectModule,
@@ -67,11 +75,15 @@ import {MatSliderModule} from '@angular/material/slider';
     FormLogsComponent,
     ChooseAvatarComponent,
     CommentaireComponent,
-    ProfilComponent
+    ProfilComponent,
+//    SingleMediaPlayer
   ],
   providers: [
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+//    SingleMediaPlayer
+]
 })
 export class AppModule { }

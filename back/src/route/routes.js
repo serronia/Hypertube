@@ -6,6 +6,9 @@ const User = require('../model/User');
 const Com = require('../model/Com');
 const bodyParser = require('body-parser');
 var api = require('../api_req');
+var flux = require('../util/start_film')
+var player = require('../util/magnet');
+var watch = require("../download");
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -67,4 +70,9 @@ router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
 	api.api_research(req, res, req.params.param);
 });
 
+router.get('/api_getfilm_id/:id_movie', (req, res) => {
+	//res.send("l\'api va s\'afficher la =>"+ req.params.id_movie);
+	console.log("coucou je suis bien sur la bonne route");
+	flux.flux_video(req, res, req.params.id_movie);
+})
 module.exports = router;

@@ -47,7 +47,7 @@ router.post('/create', (req, res) => {
         }
         else
         {
-          console.log("ok com getted  = ", com);
+          //console.log("ok com getted  = ", com);
           res.status(201).json({com});
         }
     });

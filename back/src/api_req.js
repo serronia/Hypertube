@@ -66,21 +66,23 @@ module.exports = {
     },
 
     api_by_id: function (req, res, id) {
-        fetch("https://yts.am/api/v2/movie_details.json?movie_id="+id+"&with_cast=true")
+        fetch("https://yts.am/api/v2/movie_details.json?movie_id=" + id + "&with_cast=true")
             .then((res) => res.json())
             .then(async data => {
-                    str = JSON.stringify({ name: data.data.movie.title,
-                            year:  data.data.movie.year  ,
-                            genres:  data.data.movie.genres  ,
-                            affiche:  data.data.movie.large_cover_image  ,
-                            duree:  data.data.movie.runtime  ,
-                            rating:  data.data.movie.rating  ,
-                            langue:  data.data.movie.language,
-                            description:  data.data.movie.description_full,
-                            background_image:  data.data.movie.background_image,
-                            cast : data.data.movie.cast,
-                            id:  data.data.movie.id});
-                    str=JSON.parse(str);
+                str = JSON.stringify({
+                    name: data.data.movie.title,
+                    year: data.data.movie.year,
+                    genres: data.data.movie.genres,
+                    affiche: data.data.movie.large_cover_image,
+                    duree: data.data.movie.runtime,
+                    rating: data.data.movie.rating,
+                    langue: data.data.movie.language,
+                    description: data.data.movie.description_full,
+                    background_image: data.data.movie.background_image,
+                    cast: data.data.movie.cast,
+                    id: data.data.movie.id
+                });
+                str = JSON.parse(str);
                 res.status(200).json(str);
             })
     },
@@ -231,4 +233,48 @@ module.exports = {
             })
     }
  
+
+    },
+
+    film_by_id: function (id_movie) {
+        return new Promise((resolve, reject) => {
+            fetch("https://yts.am/api/v2/movie_details.json?movie_id=" + id_movie + "&with_cast=true")
+                .then((res) => res.json())
+                .then(async data => {
+                    if (data) {
+                        if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
+                            // console.log("hash =>", data.data.movie.torrents[0].hash);
+                            hash = data.data.movie.torrents[0].hash;
+                        }
+                        else {
+                            // console.log("hash =>", data.data.movie.torrents[1].hash);
+                            hash = data.data.movie.torrents[1].hash;
+                        }
+                        str = JSON.stringify({
+                            hash: hash,
+                            duree: data.data.movie.runtime,
+                            id: data.data.movie.id //,
+                            // name: data.data.movie.title,
+                            // year: data.data.movie.year,
+                            // genres: data.data.movie.genres,
+                            // affiche: data.data.movie.large_cover_image,
+                            // rating: data.data.movie.rating,
+                            // langue: data.data.movie.language,
+                            // description: data.data.movie.description_full,
+                            // background_image: data.data.movie.background_image,
+                            // cast: data.data.movie.cast,
+                        });
+                        // console.log("ALEEEEEEEEEER");
+                        str = JSON.parse(str);
+                        resolve(str);
+                        //return (str);
+                        //res.status(200).json(str);
+                        //return ("lol");
+                    }
+                    else
+                        reject({ status: 400, message: "error no film found" })
+                })
+
+        })
+    },
 };
