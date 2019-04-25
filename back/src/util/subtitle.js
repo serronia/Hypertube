@@ -44,7 +44,7 @@ module.exports = {
         const basePath = './streams/subtitles';
         yifysubtitles(imdb_code, {path: basePath, langs: langue})
         .then(subs => {
-            console.log("sub = ", subs);
+            
             let i = 0;
             for(let element in subs)
             {
@@ -56,12 +56,19 @@ module.exports = {
                 i++;
             }
             res.status(200).json(subs);
+            console.log("sub = ", subs);
         })
         .catch(err => {
             console.log(err);
             res.status(400).json({'message': err});
         });
     },
+
+    get_subtitle_path: function(req, res, sub_path) {
+        console.log(sub_path);
+        //let path = './streams/subtitles/' + req.params.id_movie_imdb + '-' + req.params.lg + '.vtt';
+	    fs.createReadStream(sub_path);
+    }
     /*get_pipe_sub: function(req, res, langue) {
         console.log("Dans pipe");
 

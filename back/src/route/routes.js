@@ -93,10 +93,10 @@ router.get('/subtitle/:id_movie_imdb', (req, res) => {
 	sub.get_subtitle(req, res, req.params.id_movie_imdb, ["en", "fr", "es"]);
 })
 
-router.get('/subtitle_path/:id_movie_imdb/:lg', (req, res) => {
+router.get('/subtitle_path/:path', (req, res) => {
 	console.log("Je suis dans Subtitle [path] route");
 	console.log("id_imdb sub= ", req.params);
-	//sub.get_subtitle_path(req, res, req.params.id_movie_imdb, req.params.lg);
+	sub.get_subtitle_path(req, res, req.params.path);
 })
 
 module.exports = router;

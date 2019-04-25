@@ -26,6 +26,7 @@ export class PageFilmComponent implements OnInit {
   error = '';
   coms = new Array();
   i = 0;
+  sub_path :string;
   id_tmp: string;
   src_video: SafeUrl;
   src_subtitles: SafeUrl ;
@@ -172,28 +173,24 @@ export class PageFilmComponent implements OnInit {
       this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
       console.log("this. src_video = ",this.src_video);
     }*/
-    //this.src_subtitles = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/subtitle/"+this.id_tmp);
     this.filmService.getsub(this.id_tmp)
     .subscribe(
         data => 
         {
-          if (data)
+
+          let i =0;
+          console.log("get  sub ok = ", data);
+          for (let da in data)
           {
-            //inserer appel fction pipe;
-            
-          }
-          //let i =0;
-            console.log("get  sub ok = ", data);
-            // for (let da in data)
-            // {
-            this.subs.path = this.sanitization.bypassSecurityTrustResourceUrl(data[0].path);
+            //this.subs.path = this.sanitization.bypassSecurityTrustResourceUrl(data[0].path);
+            this.subs.path = this.sanitization.bypassSecurityTrustUrl(data[0].path);
             this.subs.langue = data[0].lang;
             this.subs.langShort = data[0].langShort;
-            //   i++;
-            // }
-            console.log("/*********////*/*/*/*",this.subs.langShort)
-            
-            //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
+            i++;
+          }
+          console.log("/*********////*/*/*/*",this.subs.langShort)
+          
+          //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
         },
         error => {
             console.log("get detail error = ", error);
@@ -203,5 +200,13 @@ export class PageFilmComponent implements OnInit {
         });
     // console.log("this. sub = ",this.src_subtitles);
   }
-
+  selectTrack(sub_path : string){
+    console.log("path dans change = ", sub_path);
+    this.sub_path = sub_path;
+  }
+  on_play()
+  {
+    console.log("yeaaaaaaahhh dans play");
+    this.filmService.get_sub_path(this.sub_path);
+  }
 }

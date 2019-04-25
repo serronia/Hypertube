@@ -62,4 +62,10 @@ export class FilmService {
         console.log("id_movie = ", id_imdb);
         return this.http.get<any>('http://localhost:8080/subtitle/'+id_imdb);
     }
+    get_sub_path(path: string)
+    {        
+        console.log("je suis bien dans service film get sub path");
+        console.log("path = ", path);
+        return this.http.get<any>('http://localhost:8080/subtitle_path/'+path);
+    }
 }
