@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 const yifysubtitles = require('yifysubtitles');
+const fs = require('fs');
 
 // const OpenSubtitles = require('opensubtitles-api');
 // const OS = new OpenSubtitles('OSTestUserAgent');
@@ -40,14 +41,32 @@ module.exports = {
         console.log("dans subtitle.js");
         console.log("dans subtitle.js      id_imdb = ", imdb_code);
         //yifysubtitles('tt4157728', {path: './streams/subtitles', langs: ['en', 'fr', 'es']})
-        yifysubtitles(imdb_code, {path: './streams/subtitles', langs: ['en', langue]})
-        .then(sub => {
-            console.log("//*******************",sub);
-            res.status(200).json(sub);
+        const basePath = './streams/subtitles';
+        yifysubtitles(imdb_code, {path: basePath, langs: langue})
+        .then(subs => {
+            console.log("sub = ", subs);
+            let i = 0;
+            for(let element in subs)
+            {
+                const pathRet = `${basePath}/${imdb_code}-${subs[i].langShort}.${subs[i].path.split('.').pop()}`
+                fs.rename(subs[i].path, pathRet, e => {
+                    if (e) console.log(e);
+                })
+                subs[i].path = pathRet;
+                i++;
+            }
+            res.status(200).json(subs);
         })
         .catch(err => {
             console.log(err);
             res.status(400).json({'message': err});
         });
-    }
+    },
+    /*get_pipe_sub: function(req, res, langue) {
+        console.log("Dans pipe");
+
+        path = './streams/subtitles/';
+
+    }*/
+
 }

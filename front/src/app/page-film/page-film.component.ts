@@ -177,16 +177,22 @@ export class PageFilmComponent implements OnInit {
     .subscribe(
         data => 
         {
-          let i =0;
+          if (data)
+          {
+            //inserer appel fction pipe;
+            
+          }
+          //let i =0;
             console.log("get  sub ok = ", data);
             // for (let da in data)
             // {
-            this.subs.path = this.sanitization.bypassSecurityTrustUrl(data[0].path);
+            this.subs.path = this.sanitization.bypassSecurityTrustResourceUrl(data[0].path);
             this.subs.langue = data[0].lang;
             this.subs.langShort = data[0].langShort;
             //   i++;
             // }
-            console.log("this. sub = ",this.subs);
+            console.log("/*********////*/*/*/*",this.subs.langShort)
+            
             //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
         },
         error => {
@@ -195,6 +201,7 @@ export class PageFilmComponent implements OnInit {
             this.error = error.error;
             this.loading = false;
         });
+    // console.log("this. sub = ",this.src_subtitles);
   }
 
 }

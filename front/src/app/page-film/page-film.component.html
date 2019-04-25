@@ -27,7 +27,7 @@
               </vg-controls>
         <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
           <source *ngIf="src_video" [src]="src_video" type="video/mp4">
-          <track kind="subtitles" [label]="subs.langue" [src]="subs.path" [srclang]="subs.langShort">
+          <track [label]='subs.langue' kind="subtitles" [srclang]='subs.langShort' [src]="subs.path">
         </video>
       </vg-player>
 

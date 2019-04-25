@@ -89,8 +89,14 @@ router.get('/api_getfilm_id/:id_movie', (req, res) => {
 });
 router.get('/subtitle/:id_movie_imdb', (req, res) => {
 	console.log("Je suis dans Subtitle route");
-	console.log("id_imdb = ", req.params.id_movie_imdb);
-	sub.get_subtitle(req, res, req.params.id_movie_imdb, "fr");
+	console.log("id_imdb = ", req.params);
+	sub.get_subtitle(req, res, req.params.id_movie_imdb, ["en", "fr", "es"]);
+})
+
+router.get('/subtitle_path/:id_movie_imdb/:lg', (req, res) => {
+	console.log("Je suis dans Subtitle [path] route");
+	console.log("id_imdb sub= ", req.params);
+	//sub.get_subtitle_path(req, res, req.params.id_movie_imdb, req.params.lg);
 })
 
 module.exports = router;
