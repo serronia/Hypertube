@@ -32,7 +32,6 @@ export class SettingsComponent implements OnInit {
     .subscribe(
     data => 
     {
-        console.log("get user OK = ", data);
         this.firstname = data.firstname;
         this.lastname = data.lastname;
         this.mail = data.email;

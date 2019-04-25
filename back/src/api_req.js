@@ -231,9 +231,6 @@ module.exports = {
                         res.status(200).json(resul);
                     });
             })
-    }
- 
-
     },
 
     film_by_id: function (id_movie) {

@@ -26,7 +26,6 @@ export class ProfilComponent implements OnInit {
     .subscribe(
     data => 
     {
-        console.log("get user OK = ", data);
         this.firstname = data.firstname;
         this.language = data.language;
         this.lastname = data.lastname;

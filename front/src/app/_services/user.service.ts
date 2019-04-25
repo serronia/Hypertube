@@ -20,7 +20,6 @@ export class UserService {
     getUser(id: string){
         return this.http.get<any>(`http://localhost:8080/users/`+id, {})
             .pipe(map(res => {
-                console.log("res get user = ", res);
                 return res;
             }));
     }

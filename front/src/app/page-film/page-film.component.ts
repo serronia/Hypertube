@@ -59,11 +59,13 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
+          console.log("affiche = ", this.affiche);
+          console.log("background = ", this.background);
 
         },
         error => {
           console.log("get film error = ", error);
-      });
+      }); 
     }
     else{
       this.id = parseInt(this.route.snapshot.paramMap.get("id"));
@@ -79,9 +81,11 @@ export class PageFilmComponent implements OnInit {
           this.genre = data2.genres;
           this.langue = data2.langue;
           this.description = data2.description;
-          this.background = this.sanitization.bypassSecurityTrustStyle(`url(${data2.background_image})`);
+          this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
+          console.log("affiche = ", this.affiche);
+          console.log("background = ", this.background);
 
       },
       error => {
@@ -131,25 +135,22 @@ export class PageFilmComponent implements OnInit {
   }
 
   onclick() {
-    console.log("l'image disparait !");
-    document.getElementById("image_before").style.display = 'none';
-    /*appeleer ta fonction qui telechqrge et qui te donne la src*/
+    var regex1 = RegExp('^tt');
     var user = JSON.parse(localStorage.getItem("currentUser"));
-    // this.filmService.get_film_by_id(this.id)
-    // .subscribe(
-    //   data => 
-    //   {
-    //       console.log("get detail ok = ", data);
-    //     //  location.reload();
-    //   },
-    //   error => {
-    //       console.log("get detail error = ", error);
-    //       console.log(error.error);
-    //       this.error = error.error;
-    //       this.loading = false;
-    //   });
-    //this.src_video =  this.sanitization.bypassSecurityTrustUrl("assets/funny.mp4");
-    this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
+    if (regex1.test(this.id_tmp)) {
+      console.log("premier if")
+      //this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
+      this.background = this.sanitization.bypassSecurityTrustUrl('/assets/sorry.png');
+      console.log("this. src_video = ",this.src_video);
+    }
+    else{
+      console.log("deuxieme if")
+      console.log("l'image disparait !");
+      document.getElementById("image_before").style.display = 'none';
+      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
+      console.log("this. src_video = ",this.src_video);
+
+    }
   }
 
 }
