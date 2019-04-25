@@ -67,7 +67,8 @@ module.exports = {
     get_subtitle_path: function(req, res, sub_path) {
         console.log(sub_path);
         //let path = './streams/subtitles/' + req.params.id_movie_imdb + '-' + req.params.lg + '.vtt';
-	    fs.createReadStream(sub_path);
+        res.setHeader("Content-Type", "text/vtt");
+	    fs.createReadStream(sub_path).pipe(res);
     }
     /*get_pipe_sub: function(req, res, langue) {
         console.log("Dans pipe");
