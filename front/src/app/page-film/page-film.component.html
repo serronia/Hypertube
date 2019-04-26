@@ -6,13 +6,9 @@
         <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" [src]="background" (click)="onclick()" />
               <vg-overlay-play></vg-overlay-play>
               <vg-buffering></vg-buffering>
-          
-                 
-          
-              <vg-controls *ngIf="dl_ok">
+              <vg-controls *ngIf="dl_ok" [vgAutohide]="true" [vgAutohideTime]="1.5">
                   <vg-play-pause></vg-play-pause>
-               
-          
+
                   <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
                   <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
           

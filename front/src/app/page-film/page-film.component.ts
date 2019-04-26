@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer, SafeHtml, SafeUrl, SafeStyle } from '@angular/platform-browser';
-import { FilmService } from '../_services';
+import { FilmService , UserService} from '../_services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -34,7 +34,7 @@ export class PageFilmComponent implements OnInit {
   //subs = new Array();
   sub_en = new Array();
   sub_pref = new Array();
-  user_pref = "French";
+  user_pref ="";
   dl_ok = false;
   /*subs = JSON.parse(JSON.stringify({
     path: "",
@@ -43,6 +43,7 @@ export class PageFilmComponent implements OnInit {
   ));*/
 
   constructor(private filmService : FilmService, 
+              private userService: UserService,
               private route: ActivatedRoute,
               private sanitization:DomSanitizer,
              // private subtitlesService: SubtitlesService,
@@ -54,6 +55,19 @@ export class PageFilmComponent implements OnInit {
     this.PostCom = this.formBuilder.group({
       com: ['', Validators.required]
     });
+
+    var user = JSON.parse(localStorage.getItem("currentUser"));
+    this.userService.getUser(user.id)
+    .subscribe(
+    data => 
+    {
+        this.user_pref = data.language;
+        console.log("langue pref = ", this.user_pref);
+    },
+    error => {
+        console.log("get user error = ", error);
+    });
+    
 
     var regex1 = RegExp('^tt');
     if (regex1.test(this.route.snapshot.paramMap.get("id")))
@@ -186,8 +200,8 @@ export class PageFilmComponent implements OnInit {
             {
               var track = document.createElement("track");
               track.kind = "subtitles";
-              track.label = "english";
-              track.srclang = "en";
+              track.label = this.user_pref;
+              track.srclang = this.user_pref.substr(0,2);
               track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
               singleVideo.appendChild(track);
             }
