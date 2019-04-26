@@ -243,14 +243,23 @@ module.exports = {
                 .then((res) => res.json())
                 .then(async data => {
                     if (data) {
-                        if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
-                            // console.log("hash =>", data.data.movie.torrents[0].hash);
+                        if (data.data.movie.torrents.length > 1)
+                        {
+                            if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
+                                // console.log("hash =>", data.data.movie.torrents[0].hash);
+                                hash = data.data.movie.torrents[0].hash;
+                            }
+                            else {
+                                // console.log("hash =>", data.data.movie.torrents[1].hash);
+                                hash = data.data.movie.torrents[1].hash;
+                            }
+                        }
+                        else
+                        {
                             hash = data.data.movie.torrents[0].hash;
+
                         }
-                        else {
-                            // console.log("hash =>", data.data.movie.torrents[1].hash);
-                            hash = data.data.movie.torrents[1].hash;
-                        }
+                        
                         str = JSON.stringify({
                             hash: hash,
                             duree: data.data.movie.runtime,

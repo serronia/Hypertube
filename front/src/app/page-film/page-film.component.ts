@@ -198,14 +198,23 @@ export class PageFilmComponent implements OnInit {
               track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
               singleVideo.appendChild(track);
             }
-            if(data[i].lang == this.user_pref)
+            else if(data[i].lang == this.user_pref)
             {
               var track = document.createElement("track");
               track.kind = "subtitles";
               track.label = this.user_pref;
-              track.srclang = this.user_pref.substr(0,2);
+              track.srclang = data[i].langShort;
               track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
               singleVideo.appendChild(track);
+            }
+            else{
+              var track = document.createElement("track");
+              track.kind = "subtitles";
+              track.label = data[i].lang;
+              track.srclang = data[i].langShort;
+              track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
+              singleVideo.appendChild(track);
+              console.log("tack = ", track)
             }
             i++;
           }
