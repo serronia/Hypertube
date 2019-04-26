@@ -37,7 +37,7 @@ module.exports = {
     get_subtitle_path: function(req, res, sub_path) {
         const basePath = './subtitles/';
         let path = basePath + sub_path
-        
+        res.writeHead(200, {'Content-Type': 'text/vtt'});
         let stream = fs.createReadStream(path);
         pump(stream, res);
     }
