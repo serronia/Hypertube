@@ -9,6 +9,7 @@ import { PageFilmComponent } from './page-film/page-film.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfilComponent } from './profil-other/profil-other.component';
+import { ResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 
 
 const appRoutes: Routes = [
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
 		path: 'film/:id',
 		component: PageFilmComponent,
 		canActivate: [AuthGuard]
+	},
+	{
+		path: 'reset_password',
+		component: ResetPasswordComponent
 	},
 	{
 		path: '**',

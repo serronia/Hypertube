@@ -1,39 +1,35 @@
 <div class="contener col-lg-12 col-md-12 col-sm-12">
-  <h2 id="film-title">{{title}}</h2>
+    <h2 id="film-title">{{title}}</h2>
 
-
-  <vg-player>
-    <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" [src]="background" (click)="onclick()" />
-    <vg-overlay-play></vg-overlay-play>
-    <vg-buffering></vg-buffering>
-
-    <!-- <vg-scrub-bar [vgSlider]="false">
-                  <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                  <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-              </vg-scrub-bar> -->
-
-    <vg-controls>
-      <vg-play-pause></vg-play-pause>
-
-
-      <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-      <!-- <vg-time-display vgProperty="left" vgFormat="hh:mm:ss"></vg-time-display> -->
-      <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-track-selector></vg-track-selector>
-      <vg-mute></vg-mute>
-      <vg-volume></vg-volume>
-
-      <vg-fullscreen></vg-fullscreen>
-    </vg-controls>
-    
-    <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
-      <source *ngIf="src_video" [src]="src_video" type="video/mp4">
-    </video>
-  </vg-player>
+      
+      <vg-player >
+          <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" (click)="onclick()"/>
+              <vg-overlay-play></vg-overlay-play>
+              <vg-buffering></vg-buffering>
+          
+                 
+          
+              <vg-controls>
+                  <vg-play-pause (click)="on_play()"></vg-play-pause>
+               
+          
+                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+                  <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+          
+                  <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+          
+                  <vg-track-selector vgFor="singleVideo" (change)="selectTrack($event.target.value)"></vg-track-selector>
+                  <vg-mute></vg-mute>
+                  <vg-volume></vg-volume>
+          
+                  <vg-fullscreen></vg-fullscreen>
+              </vg-controls>
+        <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin poster="/assets/Darkpotter.png">
+          <source *ngIf="src_video" [src]="src_video" type="video/mp4">
+          <track [label]='subs.langue' kind="subtitles" [srclang]='subs.langShort' [src]="subs.path">
+        </video>
+      </vg-player>
 
 
 

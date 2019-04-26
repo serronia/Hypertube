@@ -26,14 +26,22 @@ export class PageFilmComponent implements OnInit {
   error = '';
   coms = new Array();
   i = 0;
+  sub_path :string;
   id_tmp: string;
   src_video: SafeUrl;
+  src_subtitles: SafeUrl ;
+  subs = JSON.parse(JSON.stringify({
+    path: "",
+    langue:"",
+    langShort: ""}
+  ));
 
-  constructor(private filmService: FilmService,
-    private route: ActivatedRoute,
-    private sanitization: DomSanitizer,
-    private formBuilder: FormBuilder) {
-  }
+  constructor(private filmService : FilmService, 
+              private route: ActivatedRoute,
+              private sanitization:DomSanitizer,
+             // private subtitlesService: SubtitlesService,
+              private formBuilder: FormBuilder) {
+   } 
 
   ngOnInit() {
     var regex1 = RegExp('^tt');
@@ -44,6 +52,7 @@ export class PageFilmComponent implements OnInit {
     {
 
       this.id_tmp  = this.route.snapshot.paramMap.get("id");
+      console.log("this.id_tmp dans NGINIT",this.id_tmp);
       this.id = parseInt(this.id_tmp.split('t')[2]);
       this.filmService.getDetailFilmOMbd(this.route.snapshot.paramMap.get("id"))
       .subscribe(
@@ -59,13 +68,11 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
-          console.log("affiche = ", this.affiche);
-          console.log("background = ", this.background);
 
         },
         error => {
           console.log("get film error = ", error);
-      }); 
+      });
     }
     else{
       this.id = parseInt(this.route.snapshot.paramMap.get("id"));
@@ -84,8 +91,7 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
-          console.log("affiche = ", this.affiche);
-          console.log("background = ", this.background);
+          this.id_tmp  = data2.imdb_code;
 
       },
       error => {
@@ -135,22 +141,72 @@ export class PageFilmComponent implements OnInit {
   }
 
   onclick() {
-    var regex1 = RegExp('^tt');
+    console.log("l'image disparait !");
+    document.getElementById("image_before").style.display = 'none';
+    /*appeleer ta fonction qui telechqrge et qui te donne la src*/
     var user = JSON.parse(localStorage.getItem("currentUser"));
-    if (regex1.test(this.id_tmp)) {
+    // this.filmService.get_film_by_id(this.id)
+    // .subscribe(
+    //   data => 
+    //   {
+    //       console.log("get detail ok = ", data);
+    //     //  location.reload();
+    //   },
+    //   error => {
+    //       console.log("get detail error = ", error);
+    //       console.log(error.error);
+    //       this.error = error.error;
+    //       this.loading = false;
+    //   });
+    //this.src_video =  this.sanitization.bypassSecurityTrustUrl("assets/funny.mp4");
+    // if (this.id_tmp == "")
+
+    var regex1 = RegExp('^tt');
+    console.log("this.id_tmp dans NGINIT",this.id_tmp);
+    /*if (regex1.test(this.id_tmp)) {
       console.log("premier if")
-      //this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
-      this.background = this.sanitization.bypassSecurityTrustUrl('/assets/sorry.png');
+      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
       console.log("this. src_video = ",this.src_video);
     }
     else{
       console.log("deuxieme if")
-      console.log("l'image disparait !");
-      document.getElementById("image_before").style.display = 'none';
       this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
       console.log("this. src_video = ",this.src_video);
+    }*/
+    this.filmService.getsub(this.id_tmp)
+    .subscribe(
+        data => 
+        {
 
-    }
+          let i =0;
+          console.log("get  sub ok = ", data);
+          for (let da in data)
+          {
+            //this.subs.path = this.sanitization.bypassSecurityTrustResourceUrl(data[0].path);
+            this.subs.path = this.sanitization.bypassSecurityTrustUrl(data[0].path);
+            this.subs.langue = data[0].lang;
+            this.subs.langShort = data[0].langShort;
+            i++;
+          }
+          console.log("/*********////*/*/*/*",this.subs.langShort)
+          
+          //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
+        },
+        error => {
+            console.log("get detail error = ", error);
+            console.log(error.error);
+            this.error = error.error;
+            this.loading = false;
+        });
+    // console.log("this. sub = ",this.src_subtitles);
   }
-
+  selectTrack(sub_path : string){
+    console.log("path dans change = ", sub_path);
+    this.sub_path = sub_path;
+  }
+  on_play()
+  {
+    console.log("yeaaaaaaahhh dans play");
+    this.filmService.get_sub_path(this.sub_path);
+  }
 }

@@ -1,8 +1,6 @@
 const TorrentStream = require('torrent-stream');
 const fs = require('fs');
 const pump = require('pump');
-const movieList = require('./model/Movie');
-
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 ffmpeg.setFfmpegPath(ffmpegPath);

@@ -9,6 +9,7 @@ var api = require('../api_req');
 var flux = require('../util/start_film')
 var player = require('../util/magnet');
 var watch = require("../download");
+var sub = require("../util/subtitle");
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);
@@ -52,6 +53,10 @@ router.get('/users/:id', (req, res) => {
 });
 /*************************************************/
 
+router.get('/reset_password', (req, res) => {
+	console.log("mail sent");
+	reset.forgotPassword(req, res)
+});
 
 
 router.get('/api', (req, res) => {
@@ -59,11 +64,17 @@ router.get('/api', (req, res) => {
 	})
 
 router.get('/api_by_id/:p1', (req, res) => {
+	console.log("id film = ",req.params.p1 )
 	api.api_by_id(req, res, req.params.p1);
 	})
+router.get('/magnet', (req, res) => {
+	res.send("l\'api va s\'afficher la =>");
+	player.magnet_creation(req, res, 1);
+})
 
 router.get('/api_by_id_omdb/:p1', (req, res) => {
 	api.api_by_id_omdb(req, res, req.params.p1);
+	
 	})
 
 router.get('/research', /*Jwthandle.verify,*/ (req, res) => {
@@ -74,5 +85,18 @@ router.get('/api_getfilm_id/:id_movie', (req, res) => {
 	//res.send("l\'api va s\'afficher la =>"+ req.params.id_movie);
 	console.log("coucou je suis bien sur la bonne route");
 	flux.flux_video(req, res, req.params.id_movie);
+	
+});
+router.get('/subtitle/:id_movie_imdb', (req, res) => {
+	console.log("Je suis dans Subtitle route");
+	console.log("id_imdb = ", req.params);
+	sub.get_subtitle(req, res, req.params.id_movie_imdb, ["en", "fr", "es"]);
 })
+
+router.get('/subtitle_path/:path', (req, res) => {
+	console.log("Je suis dans Subtitle [path] route");
+	console.log("id_imdb sub= ", req.params);
+	sub.get_subtitle_path(req, res, req.params.path);
+})
+
 module.exports = router;
