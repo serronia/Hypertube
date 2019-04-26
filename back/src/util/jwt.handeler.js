@@ -1,5 +1,7 @@
 const fs   = require('fs');
 const jwt   = require('jsonwebtoken');
+const send_mail = require('nodemailer');
+const User = require('../model/User');
 
 var privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
@@ -28,4 +30,6 @@ verify: function (req,res, next){
 		next();
 	});
    },
+   
+
 }

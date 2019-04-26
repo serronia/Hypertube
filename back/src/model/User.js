@@ -13,7 +13,6 @@ var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         match: /[^@]+@[^@]+\.[\w]{1,255}/,
-        lowercase: true,
         required: true
     },
     password: {

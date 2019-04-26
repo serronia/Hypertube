@@ -29,6 +29,7 @@ export class FilmService {
     getDetailFilmOMbd(id: string) {
         return this.http.get('http://localhost:8080/api_by_id_omdb/'+id);
     }
+
     addCom(id_film: number, id_user: string, com: string) {
        
         return this.http.post<any>(`http://localhost:8080/film/create`, { id_film, id_user, com})
@@ -56,5 +57,17 @@ export class FilmService {
         console.log("je suis bien dans service film by id");
         console.log("id_movie = ", id_movie);
         return this.http.get<any>('http://localhost:8080/api_getfilm_id/'+id_movie);
+    }
+
+    getsub(id_imdb : string){
+        console.log("je suis bien dans service film get sub");
+        console.log("id_movie = ", id_imdb);
+        return this.http.get<any>('http://localhost:8080/subtitle/'+id_imdb);
+    }
+
+    getViewed(id_movie: number, id_user: string)
+    {
+        const Param = new HttpParams().set("id_movie", id_movie.toString()).set("id_user", id_user);
+        return this.http.get('http://localhost:8080/film/getViewed', {params: Param});
     }
 }

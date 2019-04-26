@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const database = process.env.C_MONGO;
 const Com = require('../model/Com');
+const Viewed = require('../model/ViewedMovie');
 
 mongoose.connect(database);
 
@@ -51,8 +52,23 @@ router.post('/create', (req, res) => {
           res.status(201).json({com});
         }
     });
+});
 
-  });
+    router.get('/getViewed', (req, res) => {
+        var id_film = req.query.id_movie;
+        var id_user = req.query.id_user;
+
+        Viewed.findOne({Movie_ID: id_film, User_ID: id_user}, function(err, viewed){
+            if(err){
+                console.log("Something wrong when geting viewed movie!");
+                res.status(400).json({'message': err});
+            }
+            else
+            {
+              res.status(201).json({viewed});
+            }
+        });
+    });
   
 
 

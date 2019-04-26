@@ -1,39 +1,30 @@
 <div class="contener col-lg-12 col-md-12 col-sm-12">
-  <h2 id="film-title">{{title}}</h2>
+    <h2 id="film-title">{{title}}</h2>
 
+      
+      <vg-player>
+        <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" [src]="background" (click)="onclick()" />
+              <vg-overlay-play></vg-overlay-play>
+              <vg-buffering></vg-buffering>
+              <vg-controls *ngIf="dl_ok" [vgAutohide]="true" [vgAutohideTime]="1.5">
+                  <vg-play-pause></vg-play-pause>
 
-  <vg-player>
-    <img class="player col-lg-12 col-md-12 col-sm-12" id="image_before" *ngIf="background" [src]="background" (click)="onclick()" />
-    <vg-overlay-play></vg-overlay-play>
-    <vg-buffering></vg-buffering>
-
-    <!-- <vg-scrub-bar [vgSlider]="false">
-                  <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                  <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-              </vg-scrub-bar> -->
-
-    <vg-controls>
-      <vg-play-pause></vg-play-pause>
-
-
-      <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-      <!-- <vg-time-display vgProperty="left" vgFormat="hh:mm:ss"></vg-time-display> -->
-      <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
-
-      <vg-track-selector></vg-track-selector>
-      <vg-mute></vg-mute>
-      <vg-volume></vg-volume>
-
-      <vg-fullscreen></vg-fullscreen>
-    </vg-controls>
-    
-    <video [vgMedia]="media" #media id="singleVideo" preload="auto" crossorigin>
-      <source *ngIf="src_video" [src]="src_video" type="video/mp4">
-    </video>
-  </vg-player>
+                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+                  <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+          
+                  <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+          
+                  <vg-track-selector vgFor="singleVideo"></vg-track-selector>
+                  <vg-mute></vg-mute>
+                  <vg-volume></vg-volume>
+          
+                  <vg-fullscreen></vg-fullscreen>
+              </vg-controls>
+        <video [vgMedia]="media" #media preload="auto" id="singleVideo" crossorigin>
+          <source *ngIf="src_video" [src]="src_video" type="video/mp4">
+         </video>
+      </vg-player>
 
 
 

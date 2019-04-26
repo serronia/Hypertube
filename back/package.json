@@ -25,12 +25,14 @@
     "express-validator": "^5.3.1",
     "file-system": "2.2.2",
     "fluent-ffmpeg": "^2.1.2",
+    "generate-password": "latest",
     "jsonwebtoken": "8.5.1",
     "mongoose": "^4.13.18",
     "mongoose-findorcreate": "^3.0.0",
     "node-fetch": "^2.3.0",
     "nodemailer": "latest",
     "nodemon": "^1.14.7",
+    "opensubtitles-api": "latest",
     "passport": "^0.4.0",
     "passport-42": "latest",
     "passport-github": "latest",
@@ -41,6 +43,7 @@
     "sha512": "latest",
     "torrent-stream": "latest",
     "vg": "^0.3.3",
-    "videogular2": "^6.4.0"
+    "videogular2": "^6.4.0",
+    "yifysubtitles": "^2.1.2"
   }
 }

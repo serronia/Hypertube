@@ -37,23 +37,25 @@ module.exports = {
                     j = data.data.movie_count;
                     page_max = 1;
                 }
-                else{
-                    page_max = data.data.movie_count/20;
+                else {
+                    page_max = data.data.movie_count / 20;
                 }
-                if (req.query.page <= page_max)
-                {
+                if (req.query.page <= page_max) {
+                    //let last_id = data.data.movies[0].id
                     while (i < j) {
-                        if((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <=  year_max))
-                        {
-                            str = JSON.stringify({ name:   data.data.movies[i].title,
-                                year:  data.data.movies[i].year  ,
-                                genres:  data.data.movies[i].genres  ,
-                                affiche:  data.data.movies[i].large_cover_image  ,
-                                synopsis: data.data.movies[i].synopsis.substr(0, 119) + "..."  ,
-                                duree:  data.data.movies[i].runtime  ,
-                                rating:  data.data.movies[i].rating  ,
-                                id:  data.data.movies[i].id});
-                            tab[k]=JSON.parse(str);
+                        if(i != 0){last_id = data.data.movies[i-1].id;}else{last_id = 0}
+                        if ((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max) && (data.data.movies[i].id != last_id )) {
+                            str = JSON.stringify({
+                                name: data.data.movies[i].title,
+                                year: data.data.movies[i].year,
+                                genres: data.data.movies[i].genres,
+                                affiche: data.data.movies[i].large_cover_image,
+                                synopsis: data.data.movies[i].synopsis.substr(0, 119) + "...",
+                                duree: data.data.movies[i].runtime,
+                                rating: data.data.movies[i].rating,
+                                id: data.data.movies[i].id
+                            });
+                            tab[k] = JSON.parse(str);
                             k++;
                         }
                         i++;
@@ -61,7 +63,7 @@ module.exports = {
                 }
 
                 res.status(200).json(tab);
-                
+
             })
     },
 
@@ -80,36 +82,10 @@ module.exports = {
                     description: data.data.movie.description_full,
                     background_image: data.data.movie.background_image,
                     cast: data.data.movie.cast,
+                    imdb_code: data.data.movie.imdb_code,
                     id: data.data.movie.id
                 });
                 str = JSON.parse(str);
-                res.status(200).json(str);
-            })
-    },
-
-    api_by_id_omdb: function (req, res, id) {
-        fetch("http://www.omdbapi.com/?apikey=b52706c0&i="+id+"&plot=full")
-            .then((res) => res.json())
-            .then(async data => {
-                cast_form = data.Actors.split(',');
-                cast_final= new Array();
-                str2="";
-                for (let index = 0; index < cast_form.length; index++) {
-                    str2 = JSON.stringify({name: cast_form[index], character_name: ""});
-                    cast_final[index]= JSON.parse(str2);
-                }
-                    str = JSON.stringify({ name: data.Title,
-                            year:  data.Year  ,
-                            genres:  data.Genre  ,
-                            affiche:  data.Poster  ,
-                            duree:  data.Runtime  ,
-                            rating:  data.imdbRating  ,
-                            langue:  data.Language,
-                            description:  data.Plot,
-                            background_image:  data.Poster,
-                            cast : cast_final,
-                            id:  data.imdbID});
-                    str=JSON.parse(str);
                 res.status(200).json(str);
             })
     },
@@ -233,20 +209,57 @@ module.exports = {
             })
     },
 
+
+    api_by_id_omdb: function (req, res, id) {
+        fetch("http://www.omdbapi.com/?apikey=b52706c0&i="+id+"&plot=full")
+            .then((res) => res.json())
+            .then(async data => {
+                cast_form = data.Actors.split(',');
+                cast_final= new Array();
+                str2="";
+                for (let index = 0; index < cast_form.length; index++) {
+                    str2 = JSON.stringify({name: cast_form[index], character_name: ""});
+                    cast_final[index]= JSON.parse(str2);
+                }
+                    str = JSON.stringify({ name: data.Title,
+                            year:  data.Year  ,
+                            genres:  data.Genre  ,
+                            affiche:  data.Poster  ,
+                            duree:  data.Runtime  ,
+                            rating:  data.imdbRating  ,
+                            langue:  data.Language,
+                            description:  data.Plot,
+                            background_image:  data.Poster,
+                            cast : cast_final,
+                            id:  data.imdbID});
+                    str=JSON.parse(str);
+                res.status(200).json(str);
+            })
+    },
+
     film_by_id: function (id_movie) {
         return new Promise((resolve, reject) => {
             fetch("https://yts.am/api/v2/movie_details.json?movie_id=" + id_movie + "&with_cast=true")
                 .then((res) => res.json())
                 .then(async data => {
                     if (data) {
-                        if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
-                            // console.log("hash =>", data.data.movie.torrents[0].hash);
+                        if (data.data.movie.torrents.length > 1)
+                        {
+                            if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
+                                // console.log("hash =>", data.data.movie.torrents[0].hash);
+                                hash = data.data.movie.torrents[0].hash;
+                            }
+                            else {
+                                // console.log("hash =>", data.data.movie.torrents[1].hash);
+                                hash = data.data.movie.torrents[1].hash;
+                            }
+                        }
+                        else
+                        {
                             hash = data.data.movie.torrents[0].hash;
+
                         }
-                        else {
-                            // console.log("hash =>", data.data.movie.torrents[1].hash);
-                            hash = data.data.movie.torrents[1].hash;
-                        }
+                        
                         str = JSON.stringify({
                             hash: hash,
                             duree: data.data.movie.runtime,
@@ -261,7 +274,6 @@ module.exports = {
                             // background_image: data.data.movie.background_image,
                             // cast: data.data.movie.cast,
                         });
-                        // console.log("ALEEEEEEEEEER");
                         str = JSON.parse(str);
                         resolve(str);
                         //return (str);

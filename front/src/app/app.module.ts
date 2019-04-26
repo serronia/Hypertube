@@ -32,6 +32,7 @@ import { ProfilComponent } from './profil-other/profil-other.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
+import { ResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 
 import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
@@ -51,6 +52,10 @@ import {VgBufferingModule} from 'videogular2/buffering';
     MatButtonToggleModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    InfiniteScrollModule,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
@@ -76,6 +81,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     ChooseAvatarComponent,
     CommentaireComponent,
     ProfilComponent,
+    ResetPasswordComponent
 //    SingleMediaPlayer
   ],
   providers: [
