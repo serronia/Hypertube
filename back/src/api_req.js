@@ -263,7 +263,6 @@ module.exports = {
                             // background_image: data.data.movie.background_image,
                             // cast: data.data.movie.cast,
                         });
-                        // console.log("ALEEEEEEEEEER");
                         str = JSON.parse(str);
                         resolve(str);
                         //return (str);

@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer, SafeHtml, SafeUrl, SafeStyle } from '@angular/platform-browser';
 import { FilmService , UserService} from '../_services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+//import { userInfo } from 'os';
 
 @Component({
   templateUrl: './page-film.component.html',
@@ -164,6 +165,7 @@ export class PageFilmComponent implements OnInit {
   }
 
   onclick() {
+    var user = JSON.parse(localStorage.getItem("currentUser"));
     var regex1 = RegExp('^tt');
     if (regex1.test(this.id_tmp)) {
       console.log("premier if")
@@ -174,7 +176,7 @@ export class PageFilmComponent implements OnInit {
       console.log("deuxieme if")
       console.log("l'image disparait !");
       document.getElementById("image_before").style.display = 'none';
-      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
+      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id+"/"+user.id);
       console.log("this. src_video = ",this.src_video);
     }
     console.log("id_imdb = ",this.id_imdb);

@@ -283,7 +283,6 @@ router.post('/forgotPassword', (req, res) => {
                 });
                 console.log("OK pass updated !! :)");
                 res.status(201).json({message: 'OK pass updated !! :)'});
-                console.log(pass);
             }
         });
 });

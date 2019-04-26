@@ -29,6 +29,7 @@ export class FilmService {
     getDetailFilmOMbd(id: string) {
         return this.http.get('http://localhost:8080/api_by_id_omdb/'+id);
     }
+
     addCom(id_film: number, id_user: string, com: string) {
        
         return this.http.post<any>(`http://localhost:8080/film/create`, { id_film, id_user, com})
@@ -64,10 +65,9 @@ export class FilmService {
         return this.http.get<any>('http://localhost:8080/subtitle/'+id_imdb);
     }
 
-    /*get_sub_path(path: string)
-    {        
-        console.log("je suis bien dans service film get sub path");
-        console.log("path = ", path);
-        return this.http.get<any>('http://localhost:8080/subtitle_path/'+path);
-    }*/
+    getViewed(id_movie: number, id_user: string)
+    {
+        const Param = new HttpParams().set("id_movie", id_movie.toString()).set("id_user", id_user);
+        return this.http.get('http://localhost:8080/film/getViewed', {params: Param});
+    }
 }
