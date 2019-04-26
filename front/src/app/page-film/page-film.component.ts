@@ -28,13 +28,19 @@ export class PageFilmComponent implements OnInit {
   i = 0;
   sub_path :string;
   id_tmp: string;
+  id_imdb: string;
   src_video: SafeUrl;
   src_subtitles: SafeUrl ;
-  subs = JSON.parse(JSON.stringify({
+  //subs = new Array();
+  sub_en = new Array();
+  sub_pref = new Array();
+  user_pref = "French";
+  dl_ok = false;
+  /*subs = JSON.parse(JSON.stringify({
     path: "",
     langue:"",
     langShort: ""}
-  ));
+  ));*/
 
   constructor(private filmService : FilmService, 
               private route: ActivatedRoute,
@@ -43,16 +49,17 @@ export class PageFilmComponent implements OnInit {
               private formBuilder: FormBuilder) {
    } 
 
-  ngOnInit() {
-    var regex1 = RegExp('^tt');
+   ngOnInit() {
+    
     this.PostCom = this.formBuilder.group({
       com: ['', Validators.required]
     });
+
+    var regex1 = RegExp('^tt');
     if (regex1.test(this.route.snapshot.paramMap.get("id")))
     {
 
       this.id_tmp  = this.route.snapshot.paramMap.get("id");
-      console.log("this.id_tmp dans NGINIT",this.id_tmp);
       this.id = parseInt(this.id_tmp.split('t')[2]);
       this.filmService.getDetailFilmOMbd(this.route.snapshot.paramMap.get("id"))
       .subscribe(
@@ -68,11 +75,13 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
+          console.log("affiche = ", this.affiche);
+          console.log("background = ", this.background);
 
         },
         error => {
           console.log("get film error = ", error);
-      });
+      }); 
     }
     else{
       this.id = parseInt(this.route.snapshot.paramMap.get("id"));
@@ -91,7 +100,9 @@ export class PageFilmComponent implements OnInit {
           this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
           this.note = data2.rating;
           this.cast = data2.cast;
-          this.id_tmp  = data2.imdb_code;
+          this.id_imdb  = data2.imdb_code;
+          console.log("affiche = ", this.affiche);
+          console.log("background = ", this.background);
 
       },
       error => {
@@ -99,20 +110,18 @@ export class PageFilmComponent implements OnInit {
       });
     }
 
-
-      this.filmService.getComs(this.id)
-      .subscribe(
-        res => {
-          this.i = 0;
-          for (let da in res.com) {
-            this.coms[this.i] = res.com[this.i];
-            this.i = this.i + 1;
-          }
-        },
-        error => {
-          console.log("get coms error = ", error);
-        });
-
+    this.filmService.getComs(this.id)
+    .subscribe(
+      res => {
+        this.i = 0;
+        for (let da in res.com) {
+          this.coms[this.i] = res.com[this.i];
+          this.i = this.i + 1;
+        }
+      },
+      error => {
+        console.log("get coms error = ", error);
+      });
   }
 
   get f() { return this.PostCom.controls; }
@@ -141,56 +150,50 @@ export class PageFilmComponent implements OnInit {
   }
 
   onclick() {
-    console.log("l'image disparait !");
-    document.getElementById("image_before").style.display = 'none';
-    /*appeleer ta fonction qui telechqrge et qui te donne la src*/
-    var user = JSON.parse(localStorage.getItem("currentUser"));
-    // this.filmService.get_film_by_id(this.id)
-    // .subscribe(
-    //   data => 
-    //   {
-    //       console.log("get detail ok = ", data);
-    //     //  location.reload();
-    //   },
-    //   error => {
-    //       console.log("get detail error = ", error);
-    //       console.log(error.error);
-    //       this.error = error.error;
-    //       this.loading = false;
-    //   });
-    //this.src_video =  this.sanitization.bypassSecurityTrustUrl("assets/funny.mp4");
-    // if (this.id_tmp == "")
-
     var regex1 = RegExp('^tt');
-    console.log("this.id_tmp dans NGINIT",this.id_tmp);
-    /*if (regex1.test(this.id_tmp)) {
+    if (regex1.test(this.id_tmp)) {
       console.log("premier if")
-      this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id_tmp);
+      this.background = this.sanitization.bypassSecurityTrustUrl('/assets/sorry.png');
       console.log("this. src_video = ",this.src_video);
     }
     else{
       console.log("deuxieme if")
+      console.log("l'image disparait !");
+      document.getElementById("image_before").style.display = 'none';
       this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id);
       console.log("this. src_video = ",this.src_video);
-    }*/
-    this.filmService.getsub(this.id_tmp)
+    }
+    console.log("id_imdb = ",this.id_imdb);
+    this.filmService.getsub(this.id_imdb)
     .subscribe(
         data => 
         {
-
+          var singleVideo = document.getElementById("singleVideo");
           let i =0;
           console.log("get  sub ok = ", data);
           for (let da in data)
           {
-            //this.subs.path = this.sanitization.bypassSecurityTrustResourceUrl(data[0].path);
-            this.subs.path = this.sanitization.bypassSecurityTrustUrl(data[0].path);
-            this.subs.langue = data[0].lang;
-            this.subs.langShort = data[0].langShort;
+            if (data[i].lang == "english")
+            {
+              var track = document.createElement("track");
+              track.kind = "subtitles";
+              track.label = "english";
+              track.srclang = "en";
+              track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
+              singleVideo.appendChild(track);
+            }
+            if(data[i].lang == this.user_pref)
+            {
+              var track = document.createElement("track");
+              track.kind = "subtitles";
+              track.label = "english";
+              track.srclang = "en";
+              track.src = 'http://localhost:8080/subtitle_path/'+data[i].path;
+              singleVideo.appendChild(track);
+            }
             i++;
           }
-          console.log("/*********////*/*/*/*",this.subs.langShort)
-          
-          //this.subs = this.sanitization.bypassSecurityTrustUrl(this.sub_tmp);*/
+          this.dl_ok = true;
         },
         error => {
             console.log("get detail error = ", error);
@@ -198,15 +201,5 @@ export class PageFilmComponent implements OnInit {
             this.error = error.error;
             this.loading = false;
         });
-    // console.log("this. sub = ",this.src_subtitles);
-  }
-  selectTrack(sub_path : string){
-    console.log("path dans change = ", sub_path);
-    this.sub_path = sub_path;
-  }
-  on_play()
-  {
-    console.log("yeaaaaaaahhh dans play");
-    this.filmService.get_sub_path(this.sub_path);
   }
 }

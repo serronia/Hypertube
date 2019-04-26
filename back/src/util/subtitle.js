@@ -3,38 +3,7 @@ const router = express.Router();
 const fetch = require('node-fetch');
 const yifysubtitles = require('yifysubtitles');
 const fs = require('fs');
-
-// const OpenSubtitles = require('opensubtitles-api');
-// const OS = new OpenSubtitles('OSTestUserAgent');
-// OS.search({
-//     imdbid: 'tt0314979',
-//     sublanguageid: 'fre',
-//     extensions: ['srt', 'vtt'],
-//     gzip: true
-// }).then(subtitles => {
-//     if (subtitles.fr) {
-//         console.log('Subtitle found:', subtitles);
-//         require('request')({
-//             url: subtitles.fr.url,
-//             encoding: null
-//         }, (error, response, data) => {
-//             if (error) throw error;
-//             require('zlib').unzip(data, (error, buffer) => {
-//                 if (error) throw error;
-//                 const subtitle_content = buffer.toString(subtitles.fr.encoding);
-//                 console.log('Subtitle content:', subtitle_content);
-//             });
-//         });
-//     } else {
-//         throw 'no subtitle found';
-//     }
-// }).catch(console.error);
- 
-// yifysubtitles(imdb, {path: '/tmp', langs: ['en', 'fr', 'es']})
-//     .then(res => {
-//         console.log(res);
-//     })
-//     .catch(err => console.log(err));
+const pump = require('pump');
 
 module.exports = {
     get_subtitle: function (req, res, imdb_code, langue) {
@@ -48,11 +17,12 @@ module.exports = {
             let i = 0;
             for(let element in subs)
             {
-                const pathRet = `${basePath}/${imdb_code}-${subs[i].langShort}.${subs[i].path.split('.').pop()}`
+                const pathRet = `${basePath}/${imdb_code}-${subs[i].langShort}.${subs[i].path.split('.').pop()}`;
+                path_name = `${imdb_code}-${subs[i].langShort}.${subs[i].path.split('.').pop()}`;
                 fs.rename(subs[i].path, pathRet, e => {
                     if (e) console.log(e);
                 })
-                subs[i].path = pathRet;
+                subs[i].path = path_name;
                 i++;
             }
             res.status(200).json(subs);
@@ -65,16 +35,13 @@ module.exports = {
     },
 
     get_subtitle_path: function(req, res, sub_path) {
-        console.log(sub_path);
-        //let path = './streams/subtitles/' + req.params.id_movie_imdb + '-' + req.params.lg + '.vtt';
-        res.setHeader("Content-Type", "text/vtt");
-	    fs.createReadStream(sub_path).pipe(res);
+        console.log("------ dans get sub_path  = ",sub_path);
+        const basePath = './streams/subtitles/';
+        let path = basePath + sub_path
+        console.log("------ dans get FINAL path  = ",path);
+        
+        let stream = fs.createReadStream(path);
+        pump(stream, res);
     }
-    /*get_pipe_sub: function(req, res, langue) {
-        console.log("Dans pipe");
-
-        path = './streams/subtitles/';
-
-    }*/
 
 }
