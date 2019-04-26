@@ -41,8 +41,10 @@ module.exports = {
                     page_max = data.data.movie_count / 20;
                 }
                 if (req.query.page <= page_max) {
+                    //let last_id = data.data.movies[0].id
                     while (i < j) {
-                        if ((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max)) {
+                        if(i != 0){last_id = data.data.movies[i-1].id;}else{last_id = 0}
+                        if ((data.data.movies[i].year >= year_min) && (data.data.movies[i].year <= year_max) && (data.data.movies[i].id != last_id )) {
                             str = JSON.stringify({
                                 name: data.data.movies[i].title,
                                 year: data.data.movies[i].year,
