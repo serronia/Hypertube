@@ -27,7 +27,6 @@ export class CommentaireComponent implements OnInit {
     .subscribe(
     data => 
     {
-        console.log("get user OK = ", data);
         this.login_user = data.username;
         this.avatar_user = this.sanitization.bypassSecurityTrustUrl(data.picture);
     },

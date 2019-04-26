@@ -26,15 +26,12 @@ export class SettingsComponent implements OnInit {
               private sanitization:DomSanitizer){}
 
   ngOnInit() {
-    console.log("localStorage = ",localStorage);
     var user = JSON.parse(localStorage.getItem("currentUser"));
-    console.log("urentuser json .id= ",  user.id);
     this.username = user.username;
     this.userService.getUser(user.id)
     .subscribe(
     data => 
     {
-        console.log("get user OK = ", data);
         this.firstname = data.firstname;
         this.lastname = data.lastname;
         this.mail = data.email;

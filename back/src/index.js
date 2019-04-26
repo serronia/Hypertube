@@ -19,10 +19,17 @@ const filmRoute = require('./route/router_film');
 
 //const torrentRoute = require('./route/router-torrent');
 
-
 const url = 'mongodb://localhost:27017/Hypertube';
 
 const cookieSession = require('cookie-session');
+
+const exec = require('child_process').exec;
+const CronJob = require('cron').CronJob;
+
+new CronJob('0 0 * * * *', () => {
+    exec('find ./streams/ -name "*" -type f -atime +30 -delete');
+    exec('find ./streams/ -type d -empty -delete');
+}, null, true, 'America/Los_Angeles');
 
 app.use(cookieSession({
 	maxAge: 24 * 60 *60 *1000,
