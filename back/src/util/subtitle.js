@@ -33,7 +33,6 @@ module.exports = {
                 console.log("sub = ", subs);
             })
             .catch(err => {
-                console.log(err);
                 res.status(400).json({'message': err});
             });
     },
