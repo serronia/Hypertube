@@ -1,8 +1,6 @@
-const express = require('express');
-let api = require('../api_req');
-let magnet = require('../util/magnet');
-let download = require('../download');
-const router = express.Router()
+const api = require('../api_req');
+const magnet = require('../util/magnet');
+const download = require('../download');
 
 module.exports = {
     flux_video: function (req, res, id_user, id_movie) {
@@ -10,15 +8,8 @@ module.exports = {
             console.log(data.hash);
             magnet.magnet_creation(data.hash).then(data => {
                 console.log("le magnet recup vaut =>", data);
-                download(data, res, id_movie, id_user).then(final_data => {
-                    console.log(final_data);
-                    str = JSON.stringify({
-                        alors: "ca fonctionne"
-                    })
-                    res.status(206).json(str);
-                });
+                download(data, res, id_movie, id_user)
             });
         })
     },
-
 };
