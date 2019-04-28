@@ -123,7 +123,8 @@ router.post('/create', (req, res) => {
         if (err)
             res.status(400).send("Username or mail already exist");
     });
-});
+  });
+
 
 
 router.post('/modify_info', (req, res) => {

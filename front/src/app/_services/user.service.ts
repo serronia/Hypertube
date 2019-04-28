@@ -12,8 +12,11 @@ export class UserService {
     }
 
     register(username: string, firstname: string, lastname: string,password: string, password2: string, mail: string, avatar: string) {
+        console.log("dans user service register");
         return this.http.post<any>(`http://localhost:8080/user/create`, { username, firstname, lastname, password, password2, mail, avatar })
             .pipe(map(res => {
+                console.log("dans user service register fini");
+                return res;
             }));
     }
 
