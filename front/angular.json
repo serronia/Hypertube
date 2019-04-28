@@ -23,8 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/videogular2/fonts/videogular.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true

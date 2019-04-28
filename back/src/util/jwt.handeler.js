@@ -1,5 +1,7 @@
 const fs   = require('fs');
 const jwt   = require('jsonwebtoken');
+const send_mail = require('nodemailer');
+const User = require('../model/User');
 
 var privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
@@ -16,7 +18,6 @@ module.exports = {
 
 verify: function (req,res, next){
 	var token = req.headers["authorization"];
-console.log(token);
  	  var verif_opt = {
       issuer: "back",
       subject: "back",
@@ -29,4 +30,6 @@ console.log(token);
 		next();
 	});
    },
+   
+
 }
