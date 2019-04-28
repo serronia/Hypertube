@@ -214,10 +214,10 @@ export class PageFilmComponent implements OnInit {
                     this.dl_ok = true;
                 },
                 error => {
-                    console.log("get detail error = ", error);
-                    console.log(error.error);
+                    console.log("get subtitle error = ", error);
                     this.error = error.error;
                     this.loading = false;
+                    this.dl_ok = true;
                 });
     }
 }

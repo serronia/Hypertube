@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 
-
 const routes = require('./route/routes');
 const IntraRoute = require('./util/42Oauth');
 const GoogleRoute = require('./util/Googleauth');
@@ -33,19 +32,19 @@ new CronJob('0 0 * * * *', () => {
 }, null, true, 'America/Los_Angeles');
 
 app.use(cookieSession({
-	maxAge: 24 * 60 *60 *1000,
-	keys: ['jsfkjsdbfksdb']
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: ['jsfkjsdbfksdb']
 }));
 
 app.use(expressValidator());
 app.use(cors());
 
 mongoose.set('useCreateIndex', true)
-mongoose.connect(url, { useNewUrlParser: true }).then(() => {
-  console.log("Database connected")
+mongoose.connect(url, {useNewUrlParser: true}).then(() => {
+    console.log("Database connected")
 }).catch(err => {
-  console.error("Connecting to error =>" + err);
-})
+    console.error("Connecting to error =>" + err);
+});
 
 /**initialize passport */
 app.use(passport.initialize());
@@ -65,8 +64,8 @@ app.use('/auth/github/', GithubRoute);
 });*/
 
 
-
-passport.deserializeUser(function(id, done) {});
+passport.deserializeUser(function (id, done) {
+});
 
 /**parti Torrent */
 
@@ -75,8 +74,8 @@ app.use('/', express.static('public'));
 //app.use('/torrent/', torrentRoute);
 
 
-http.listen(port, function(){
-	console.log('server listening on port : ' + port);
+http.listen(port, function () {
+    console.log('server listening on port : ' + port);
 });
 
 module.exports = app;

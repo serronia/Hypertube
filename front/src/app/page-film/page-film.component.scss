@@ -14,49 +14,50 @@
 //     background-position: center;
 // }
 
-.player{
-    display: flex;
-    position: absolute;
-    z-index: 1230;
-    height: 100%;
-    padding: 0;
+.player {
+  display: flex;
+  position: absolute;
+  z-index: 1230;
+  height: 100%;
+  padding: 0;
 }
 
-.info_film{
-    padding-top: 25px; 
+.info_film {
+  padding-top: 25px;
 }
 
 
-.info_film  p{
-    padding: 10px;
-    color: white;
+.info_film p {
+  padding: 10px;
+  color: white;
 }
 
-.infos{
-    color: #b96e6e;
-    text-decoration: none;
+.infos {
+  color: #b96e6e;
+  text-decoration: none;
 }
 
-.commentaire{
-    display: flex;
-    color: white;
-    height: 200px;
-    margin: 20px;
-    align-items: center;
-    justify-content: center;
+.commentaire {
+  display: flex;
+  color: white;
+  height: 200px;
+  margin: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
-#film-title{
-    color: white;
-    text-align: center;
-    text-decoration: underline;
-}
-textarea{
-	background-color: #caace854;
-	color: aliceblue;
+#film-title {
+  color: white;
+  text-align: center;
+  text-decoration: underline;
 }
 
-textarea:focus{
-	background-color: #caace854;
-	color: aliceblue;
+textarea {
+  background-color: #caace854;
+  color: aliceblue;
+}
+
+textarea:focus {
+  background-color: #caace854;
+  color: aliceblue;
 }

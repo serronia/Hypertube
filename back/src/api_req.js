@@ -125,13 +125,13 @@ module.exports = {
                 } else {
                     year_min = req.query.year_min
                 }
-                ;
+
                 if ((req.query.year_max == 'null') || (req.query.year_min == "")) {
                     year_max = 10000;
                 } else {
                     year_max = req.query.year_max
                 }
-                ;
+
                 if (data.data.movie_count) {
                     if (data.data.movie_count < 20) {
                         j = data.data.movie_count;
@@ -207,16 +207,13 @@ module.exports = {
                         }
                         return tab;
                     }).then(resul => {
-                        if(resul)
-                        {
-                            if (req.query.tri != 'title')
-                            {
-                                resul.sort(sortByProperty(req.query.tri));
-                            }
-                            else {
-                                resul.sort(sortByProperty('name'));
-                            }
+                    if (resul) {
+                        if (req.query.tri != 'title') {
+                            resul.sort(sortByProperty(req.query.tri));
+                        } else {
+                            resul.sort(sortByProperty('name'));
                         }
+                    }
                     res.status(200).json(resul);
                 });
             })
