@@ -64,7 +64,8 @@ import {VgBufferingModule} from 'videogular2/buffering';
         InfiniteScrollModule,
         MatRadioModule,
         MatSelectModule,
-        MatSliderModule
+        MatSliderModule,
+        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
     ],
     declarations: [
         AppComponent,

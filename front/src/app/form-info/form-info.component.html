@@ -2,7 +2,7 @@
     <div class="form-group col-lg-6" id="left">
         <label for="firstname">Firstname</label>
         <input type="text" pattern="[A-Za-z]+" formControlName="firstname" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" value={{firstname}}/>
+               [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" [(ngModel)]="firstname"/>
         <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
             <div *ngIf="f.firstname.errors.required">Firstname is required</div>
             <div *ngIf="f.firstname.errors">Wrong Format</div>
@@ -11,7 +11,7 @@
     <div class="form-group col-lg-6" id="right">
         <label for="lastname">Lastname</label>
         <input type="text" pattern="[A-Za-z]+" formControlName="lastname" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" value={{lastname}}/>
+               [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" [(ngModel)]="lastname"/>
         <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
             <div *ngIf="f.lastname.errors.required">Lastname is required</div>
             <div *ngIf="f.lastname.errors">Wrong Format</div>
@@ -20,7 +20,7 @@
     <div class="form-group col-lg-12" id="all">
         <label for="mail">Mail</label>
         <input type="mail" pattern="[^@]+@[^@]+\.[\w]{1,255}" formControlName="mail" class="form-control"
-               [ngClass]="{ 'is-invalid': submitted && f.mail.errors }" value={{mail}}/>
+               [ngClass]="{ 'is-invalid': submitted && f.mail.errors }" [(ngModel)]="mail"/>
         <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
             <div *ngIf="f.mail.errors.required">Mail is required</div>
             <div *ngIf="f.mail.errors">Wrong Format</div>
