@@ -12,7 +12,6 @@ module.exports = {
         let j = 20; //nombre de film par page
         let k = 0;
         let tab = new Array();
-        console.log("api_rep hit on api function");
         requete = "https://yts.am/api/v2/list_movies.json?sort_by=year&limit=" + j + "&quality=1080p&page=" + req.query.page;
         if (req.query.note_min)
             requete = requete + "&minimum_rating=" + req.query.note_min;
@@ -257,10 +256,8 @@ module.exports = {
                     if (data) {
                         if (data.data.movie.torrents.length > 1) {
                             if (data.data.movie.torrents[0].seeds > data.data.movie.torrents[1].seeds) {
-                                // console.log("hash =>", data.data.movie.torrents[0].hash);
                                 hash = data.data.movie.torrents[0].hash;
                             } else {
-                                // console.log("hash =>", data.data.movie.torrents[1].hash);
                                 hash = data.data.movie.torrents[1].hash;
                             }
                         } else {

@@ -7,9 +7,6 @@ const pump = require('pump');
 
 module.exports = {
     get_subtitle: function (req, res, imdb_code, langue) {
-        console.log("dans subtitle.js");
-        console.log("dans subtitle.js      id_imdb = ", imdb_code);
-        //yifysubtitles('tt4157728', {path: './streams/subtitles', langs: ['en', 'fr', 'es']})
 
         const basePath = './subtitles';
         if (!fs.existsSync(basePath)) {
@@ -30,10 +27,8 @@ module.exports = {
                     i++;
                 }
                 res.status(200).json(subs);
-                console.log("sub = ", subs);
             })
             .catch(err => {
-                console.log(err);
                 res.status(400).json({'message': err});
             });
     },

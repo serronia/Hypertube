@@ -51,13 +51,10 @@ export class FormInfoComponent implements OnInit {
         this.userService.modifyInfo(this.f.firstname.value, this.f.lastname.value, this.f.mail.value, this.f.language.value, this.mail)
             .subscribe(
                 data => {
-                    console.log("modify Info ok = ", data);
                     location.reload();
 
                 },
                 error => {
-                    console.log("modify Info error = ", error);
-                    console.log(error.error);
                     this.error = error.error;
                     this.loading = false;
                 });

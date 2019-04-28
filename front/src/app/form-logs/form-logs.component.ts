@@ -49,13 +49,10 @@ export class FormLogsComponent implements OnInit {
         this.userService.modifyLog(this.f.username.value, this.f.password.value, this.f.password2.value, this.username)
             .subscribe(
                 data => {
-                    console.log("modify Log ok = ", data);
                     this.authenticationService.logout();
 
                 },
                 error => {
-                    console.log("modify Log error = ", error);
-                    console.log(error.error);
                     this.error = error.error;
                     this.loading = false;
                 });

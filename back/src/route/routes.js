@@ -54,7 +54,6 @@ router.get('/users/:id', (req, res) => {
 /*************************************************/
 
 router.get('/reset_password', (req, res) => {
-    console.log("mail sent");
     reset.forgotPassword(req, res)
 });
 
@@ -64,7 +63,6 @@ router.get('/api', (req, res) => {
 });
 
 router.get('/api_by_id/:p1', (req, res) => {
-    console.log("id film = ", req.params.p1);
     api.api_by_id(req, res, req.params.p1);
 });
 router.get('/magnet', (req, res) => {
@@ -86,12 +84,10 @@ router.get('/api_getfilm_id/:id_movie/:id_user', (req, res) => {
 
 });
 router.get('/subtitle/:id_movie_imdb', (req, res) => {
-    console.log("id_imdb = ", req.params.id_movie_imdb);
     sub.get_subtitle(req, res, req.params.id_movie_imdb, ["en", "fr", "es", "it", "de"]);
 });
 
 router.get('/subtitle_path/:path', (req, res) => {
-    console.log("id_imdb sub= ", req.params);
     sub.get_subtitle_path(req, res, req.params.path);
 });
 

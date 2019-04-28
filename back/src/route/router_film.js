@@ -39,10 +39,8 @@ router.get('/getComs/:id', (req, res) => {
     let id_film = req.params.id;
     Com.find({id_film: id_film}, function (err, com) {
         if (err) {
-            console.log("Something wrong when geting com!");
             res.status(400).send("Something wrong when geting com!");
         } else {
-            //console.log("ok com getted  = ", com);
             res.status(201).json({com});
         }
     });
@@ -54,7 +52,6 @@ router.get('/getViewed', (req, res) => {
 
     Viewed.findOne({Movie_ID: id_film, User_ID: id_user}, function (err, viewed) {
         if (err) {
-            console.log("Something wrong when geting viewed movie!");
             res.status(400).json({'message': err});
         } else {
             res.status(201).json({viewed});

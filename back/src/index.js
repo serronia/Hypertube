@@ -39,7 +39,7 @@ app.use(cookieSession({
 app.use(expressValidator());
 app.use(cors());
 
-mongoose.set('useCreateIndex', true)
+mongoose.set('useCreateIndex', true);
 mongoose.connect(url, {useNewUrlParser: true}).then(() => {
     console.log("Database connected")
 }).catch(err => {

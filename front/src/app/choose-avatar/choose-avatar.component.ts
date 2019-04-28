@@ -42,12 +42,9 @@ export class ChooseAvatarComponent implements OnInit {
             this.userService.modifyAvatar(this.selected)
                 .subscribe(
                     data => {
-                        console.log("modify Avatar ok = ", data);
                         location.reload();
                     },
                     error => {
-                        console.log("modify Avatar error = ", error);
-                        console.log(error.error);
                         this.error = error.error;
                     });
         }

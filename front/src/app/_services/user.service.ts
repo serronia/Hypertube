@@ -13,7 +13,6 @@ export class UserService {
     }
 
     register(username: string, firstname: string, lastname: string, password: string, password2: string, mail: string, avatar: string) {
-        console.log("dans user service register");
         return this.http.post<any>(`http://localhost:8080/user/create`, {
             username,
             firstname,
@@ -24,7 +23,6 @@ export class UserService {
             avatar
         })
             .pipe(map(res => {
-                console.log("dans user service register fini");
                 return res;
             }));
     }
@@ -48,7 +46,6 @@ export class UserService {
             id
         })
             .pipe(map(res => {
-                console.log("res modify Info  = ", res);
                 return res;
             }));
     }
@@ -64,7 +61,6 @@ export class UserService {
             id
         })
             .pipe(map(res => {
-                console.log("res modify Info  = ", res);
                 return res;
             }));
     }
@@ -74,7 +70,6 @@ export class UserService {
         const id = user.id;
         return this.http.post<any>(`http://localhost:8080/user/modify_avatar`, {path, id})
             .pipe(map(res => {
-                console.log("res modify Avatar  = ", res);
                 return res;
             }));
     }
@@ -82,7 +77,6 @@ export class UserService {
     ForgetPass(mail: string) {
         return this.http.post<any>(`http://localhost:8080/user/forgotPassword`, {mail})
             .pipe(map(res => {
-                console.log("res modify Pass  = ", res);
                 return res;
             }));
 

@@ -86,12 +86,10 @@ export class RegisterComponent implements OnInit {
             this.selected = 'assets/default.png';
 
         this.loading = true;
-        console.log("dans on submit avec image = ", this.selected);
 
         this.userService.register(this.f.username.value, this.f.firstname.value, this.f.lastname.value, this.f.password.value, this.f.password2.value, this.f.mail.value, this.selected)
             .subscribe(
                 data => {
-                    console.log("compte crée");
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

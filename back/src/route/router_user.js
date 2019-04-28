@@ -148,10 +148,8 @@ router.post('/modify_info', (req, res) => {
             }, {returnNewDocument: true},
             function (err, doc) {
                 if (err) {
-                    console.log("Something wrong when updating record!");
                     res.status(400).send("Something wrong when updating record!");
                 } else {
-                    console.log("ok user updated !! :)");
                     res.status(201).json({message: 'User modified successfully'});
                 }
             });
@@ -170,10 +168,8 @@ router.post('/modify_info', (req, res) => {
                     }, {returnNewDocument: true},
                     function (err, doc) {
                         if (err) {
-                            console.log("Something wrong when updating record!");
                             res.status(400).send("Something wrong when updating record!");
                         } else {
-                            console.log("ok user updated !! :)");
                             res.status(201).json({message: 'User modified successfully'});
                         }
                     });
@@ -200,10 +196,8 @@ router.post('/modify_log', (req, res) => {
                 {$set: {username: username, password: hash}}, {returnNewDocument: true},
                 function (err, doc) {
                     if (err) {
-                        console.log("Something wrong when updating record!");
                         res.status(400).send("Something wrong when updating!");
                     } else {
-                        console.log("ok user updated !! :)");
                         res.status(201).json({message: 'User modified successfully'});
                     }
                 });
@@ -220,10 +214,8 @@ router.post('/modify_avatar', (req, res) => {
         {$set: {picture: path}}, {returnNewDocument: true},
         function (err, doc) {
             if (err) {
-                console.log("Something wrong when updating avatar!");
                 res.status(400).send("Something wrong when updating avatar!");
             } else {
-                console.log("ok avatar updated !! :)");
                 res.status(201).json({message: 'avatar modified successfully'});
             }
         });
@@ -242,9 +234,7 @@ router.post('/forgotPassword', (req, res) => {
         lowercase: true
 
     });
-    console.log("req.body =", req.body);
     if (!email) {
-        console.log("error");
         return res.status(400).send('Email not found, please verify');
     }
     let hash = bcrypt.hashSync(pass, 10);
@@ -253,7 +243,6 @@ router.post('/forgotPassword', (req, res) => {
         {$set: {password: hash}}, {returnNewDocument: true},
         function (err, doc) {
             if (!doc) {
-                console.log("Email don't exist please verify");
                 res.status(400).send("Email don't exist please verify");
             } else {
                 let transport = send_mail.createTransport({
@@ -274,7 +263,6 @@ router.post('/forgotPassword', (req, res) => {
                 }).catch(err => {
                     console.log(err);
                 });
-                console.log("OK pass updated !! :)");
                 res.status(201).json({message: 'OK pass updated !! :)'});
             }
         });

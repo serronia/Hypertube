@@ -60,7 +60,7 @@ const downloadTorrent = (magnet, res, filmID, userID) => {
     let engine = TorrentStream(magnet, opts);
 
     engine.on('ready', () => {
-        console.log("dans dowload torent AND userID, = ", userID, " filmID  = ", filmID);
+        // console.log("dans dowload torent AND userID, = ", userID, " filmID  = ", filmID);
         insertFilmDB(userID, filmID);
         engine.files.sort((a, b) => b.length - a.length);
 

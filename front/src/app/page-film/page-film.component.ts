@@ -64,7 +64,6 @@ export class PageFilmComponent implements OnInit {
             .subscribe(
                 data => {
                     this.user_pref = data.language;
-                    console.log("langue pref = ", this.user_pref);
                 },
                 error => {
                     console.log("get user error = ", error);
@@ -90,9 +89,6 @@ export class PageFilmComponent implements OnInit {
                         this.background = this.sanitization.bypassSecurityTrustUrl(data2.background_image);
                         this.note = data2.rating;
                         this.cast = data2.cast;
-                        console.log("affiche = ", this.affiche);
-                        console.log("background = ", this.background);
-
                     },
                     error => {
                         console.log("get film error = ", error);
@@ -114,9 +110,6 @@ export class PageFilmComponent implements OnInit {
                         this.note = data2.rating;
                         this.cast = data2.cast;
                         this.id_imdb = data2.imdb_code;
-                        console.log("affiche = ", this.affiche);
-                        console.log("background = ", this.background);
-
                     },
                     error => {
                         console.log("get film error = ", error);
@@ -153,12 +146,10 @@ export class PageFilmComponent implements OnInit {
         this.filmService.addCom(this.id, user.id, this.f.com.value)
             .subscribe(
                 data => {
-                    console.log("add com ok = ", data);
                     location.reload();
 
                 },
                 error => {
-                    console.log("add com error = ", error);
                     this.error = error.error;
                     this.loading = false;
                 });
@@ -168,23 +159,16 @@ export class PageFilmComponent implements OnInit {
         var user = JSON.parse(localStorage.getItem("currentUser"));
         var regex1 = RegExp('^tt');
         if (regex1.test(this.id_tmp)) {
-            console.log("premier if")
             this.background = this.sanitization.bypassSecurityTrustUrl('/assets/sorry.png');
-            console.log("this. src_video = ", this.src_video);
         } else {
-            console.log("deuxieme if")
-            console.log("l'image disparait !");
             document.getElementById("image_before").style.display = 'none';
             this.src_video = this.sanitization.bypassSecurityTrustUrl("http://localhost:8080/api_getfilm_id/" + this.id + "/" + user.id);
-            console.log("this. src_video = ", this.src_video);
         }
-        console.log("id_imdb = ", this.id_imdb);
         this.filmService.getsub(this.id_imdb)
             .subscribe(
                 data => {
                     var singleVideo = document.getElementById("singleVideo");
                     let i = 0;
-                    console.log("get  sub ok = ", data);
                     for (const da in data) {
                         if (data[i].lang == "english") {
                             var track = document.createElement("track");
@@ -207,14 +191,12 @@ export class PageFilmComponent implements OnInit {
                             track.srclang = data[i].langShort;
                             track.src = 'http://localhost:8080/subtitle_path/' + data[i].path;
                             singleVideo.appendChild(track);
-                            console.log("tack = ", track)
                         }
                         i++;
                     }
                     this.dl_ok = true;
                 },
                 error => {
-                    console.log("get subtitle error = ", error);
                     this.error = error.error;
                     this.loading = false;
                     this.dl_ok = true;
