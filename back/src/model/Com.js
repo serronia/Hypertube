@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 
 
-var ComShema = new mongoose.Schema({
+let ComShema = new mongoose.Schema({
     id_user: String,
     id_film: Number,
     com : String,

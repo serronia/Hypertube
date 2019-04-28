@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
-var sortByProperty = function (property) {
+let sortByProperty = function (property) {
     return function (x, y) {
         return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
     };
@@ -11,7 +11,7 @@ module.exports = {
         let i = 0;
         let j = 20; //nombre de film par page
         let k = 0;
-        var tab = new Array();
+        let tab = new Array();
         console.log("api_rep hit on api function");
         requete = "https://yts.am/api/v2/list_movies.json?sort_by=year&limit=" + j + "&quality=1080p&page=" + req.query.page;
         if (req.query.note_min)
@@ -94,8 +94,8 @@ module.exports = {
         let i = 0;
         let j = 20; //nombre de film par page
         let k=0;
-        var tab = new Array();
-        var requete="https://yts.am/api/v2/list_movies.json?query_term="+req.query.search+"&limit=20&page="+req.query.page;
+        let tab = new Array();
+        let requete="https://yts.am/api/v2/list_movies.json?query_term="+req.query.search+"&limit=20&page="+req.query.page;
         if (req.query.tri)
         {
             requete = requete + "&sort_by=" + req.query.tri;
@@ -173,7 +173,7 @@ module.exports = {
                                     i++;
                                 }
                                 if (exist == false){
-                                    var unseen = JSON.stringify({ name: data2.Search[j].Title,
+                                    let unseen = JSON.stringify({ name: data2.Search[j].Title,
                                         year:  data2.Search[j].Year ,
                                         genres:  "ND" ,
                                         affiche:  data2.Search[j].Poster  ,

@@ -25,12 +25,12 @@ export class FilmComponent implements OnInit {
 
   ngOnInit() {
     this.affiche = this.sanitization.bypassSecurityTrustStyle(`url(${this.affiche})`);
-    var user = JSON.parse(localStorage.getItem("currentUser"));
+    const user = JSON.parse(localStorage.getItem("currentUser"));
 
     this.filmService.getViewed(this.id, user.id)
     .subscribe(
       data => {
-        var data2 = JSON.parse(JSON.stringify(data));
+        const data2 = JSON.parse(JSON.stringify(data));
         if(data2.viewed)
         {
           this.viewed = true;

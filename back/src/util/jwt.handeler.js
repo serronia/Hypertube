@@ -3,12 +3,12 @@ const jwt   = require('jsonwebtoken');
 const send_mail = require('nodemailer');
 const User = require('../model/User');
 
-var privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
+let privateKEY  = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
 module.exports = {
  sign: function (req, res){
 
- var sign_opt = {
+ let sign_opt = {
     issuer: "back",
     subject: "back", 
     audience: req.body.username
@@ -17,8 +17,8 @@ module.exports = {
 },
 
 verify: function (req,res, next){
-	var token = req.headers["authorization"];
- 	  var verif_opt = {
+	let token = req.headers["authorization"];
+ 	  let verif_opt = {
       issuer: "back",
       subject: "back",
       audience: req.query.username

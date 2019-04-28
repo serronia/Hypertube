@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
 
 /**************************************************************/
 router.post('/create', (req, res) => {
-    var id_film = req.body.id_film;
-    var id_user = req.body.id_user;
-    var comm = req.body.com;
-    var date = new Date(Date.now());
+    let id_film = req.body.id_film;
+    let id_user = req.body.id_user;
+    let comm = req.body.com;
+    let date = new Date(Date.now());
 
     let com = new Com({
         id_film: id_film,
@@ -40,7 +40,7 @@ router.post('/create', (req, res) => {
 
 
   router.get('/getComs/:id', (req, res) => {
-    var id_film = req.params.id;
+    let id_film = req.params.id;
     Com.find({id_film: id_film}, function(err, com){
         if(err){
             console.log("Something wrong when geting com!");
@@ -55,8 +55,8 @@ router.post('/create', (req, res) => {
 });
 
     router.get('/getViewed', (req, res) => {
-        var id_film = req.query.id_movie;
-        var id_user = req.query.id_user;
+        let id_film = req.query.id_movie;
+        let id_user = req.query.id_user;
 
         Viewed.findOne({Movie_ID: id_film, User_ID: id_user}, function(err, viewed){
             if(err){

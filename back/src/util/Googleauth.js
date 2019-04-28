@@ -43,10 +43,10 @@ passport.use(new GoogleStrategy({
 	callbackURL: "http://localhost:8080/auth/google/redirect"
 },
 (accessToken, refreshToken, profile, done) => {
-	var Firstname = profile._json.given_name;
-	var Lastname = profile._json.family_name;
-	var email = profile._json.email;
-	var Username = profile._json.given_name;
+	let Firstname = profile._json.given_name;
+	let Lastname = profile._json.family_name;
+	let email = profile._json.email;
+	let Username = profile._json.given_name;
 
 	User.findOne( {$or: [{username: profile._json.given_name}, {email: profile._json.email }, { googleId: profile.id} ]}).then((currentUser) => {
 		if (currentUser) {
@@ -96,7 +96,7 @@ router.get('/', passport.authenticate('google', {
 router.get('/redirect', passport.authenticate('google', { failureRedirect: "http://localhost:4200/login?error=3" }),
 			(req, res) => {
 				req.body.username = req.user._doc.username;
-				var Token = Jwthandle.sign(req, res);
+				let Token = Jwthandle.sign(req, res);
 				delete(req.body.username);
 				res.status(200).redirect('http://localhost:4200/login'+"?id="+req.user._doc._id+"&username="+req.user._doc.username+"&token="+Token);
 

@@ -1,7 +1,7 @@
 const express = require('express');
-var api = require('../api_req');
-var magnet = require('../util/magnet');
-var download = require('../download');
+let api = require('../api_req');
+let magnet = require('../util/magnet');
+let download = require('../download');
 const router = express.Router()
 
 module.exports = {

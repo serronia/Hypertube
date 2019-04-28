@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const User = require('../model/User');
 const Com = require('../model/Com');
 const bodyParser = require('body-parser');
-var api = require('../api_req');
-var flux = require('../util/start_film')
-var player = require('../util/magnet');
-var watch = require("../download");
-var sub = require("../util/subtitle");
+let api = require('../api_req');
+let flux = require('../util/start_film')
+let player = require('../util/magnet');
+let watch = require("../download");
+let sub = require("../util/subtitle");
 
 const database = process.env.C_MONGO;
 mongoose.connect(database);

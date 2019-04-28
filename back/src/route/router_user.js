@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../model/User');
 const passport = require('passport');
-// const mail = require('./util/mail');
 const LocalStrategy = require('passport-local');
 const Check = require('../util/check');
 const mongoose = require('mongoose');
@@ -13,7 +12,7 @@ const Jwthandle = require('../util/jwt.handeler.js');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
-var privateKEY = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
+let privateKEY = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
 const send_mail = require('nodemailer');
 
@@ -43,14 +42,14 @@ router.get('/drop_user', (req, res) => {
 /*************************************************************/
 
 router.post('/login', (req, res) => {
-    var username = req.body.username;
-    var password = req.body.password;
+    let username = req.body.username;
+    let password = req.body.password;
     Check.getPassw(username)
         .then(
             user => {
                 const user_bdd = user.data._doc;
                 if (bcrypt.compareSync(password, user_bdd.password)) {
-                    var Token = Jwthandle.sign(req, res);
+                    let Token = Jwthandle.sign(req, res);
                     res.status(200).json({
                         id: user_bdd._id,
                         username: username,
@@ -66,7 +65,7 @@ router.post('/login', (req, res) => {
 
 
 router.post('/token', (req, res) => {
-    var verif_opt = {
+    let verif_opt = {
         issuer: "back",
         subject: "back",
         audience: req.body.username
@@ -88,53 +87,53 @@ router.post('/token', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-  var firstname = req.body.firstname;
-  var lastname = req.body.lastname;
-  var mail = req.body.mail;
-  var username = req.body.username;
-  var password = req.body.password;
-  var verif = req.body.password2;
-  var avatar = req.body.avatar;
-   
-  let hash = bcrypt.hashSync(password, 10);
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let mail = req.body.mail;
+    let username = req.body.username;
+    let password = req.body.password;
+    let verif = req.body.password2;
+    let avatar = req.body.avatar;
 
-  Check.checkUserExists(username, mail).then(resp =>{
-    if(resp)
-    {
-      if(password == verif)
-      {
-          let user = new User({
-            lastname: lastname,
-            firstname: firstname,
-            username: username,
-            email: mail,
-            password : hash,
-            picture : avatar
-          });
-          user.save(error => {
-            if (error)
-            {
-              res.status(400).send("Format error, please re-read your input");
-            }
-        
-            }).catch(err => {
-                if (err)
-                    res.status(400).send("Username or mail already exist");
+    let hash = bcrypt.hashSync(password, 10);
+
+    Check.checkUserExists(username, mail).then(resp => {
+        if (resp) {
+            if (password == verif) {
+                let user = new User({
+                    lastname: lastname,
+                    firstname: firstname,
+                    username: username,
+                    email: mail,
+                    password: hash,
+                    picture: avatar
                 });
+                user.save(error => {
+                    if (error) {
+                        res.status(400).send("Format error, please re-read your input");
+                    } else {
+                        res.status(201).json({message: 'User created successfully'});
+                    }
+                });
+            } else {
+                res.status(400).send("Password and confirmation not identical");
+            }
         }
-    }
+    }).catch(err => {
+        if (err)
+            res.status(400).send("Username or mail already exist");
     });
 });
 
 
 router.post('/modify_info', (req, res) => {
     console.log("server hit /modify_info");
-    var post_id = req.body.id;
-    var firstname = req.body.firstname;
-    var lastname = req.body.lastname;
-    var mail = req.body.mail;
-    var language = req.body.language;
-    var oldmail = req.body.oldmail;
+    let post_id = req.body.id;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let mail = req.body.mail;
+    let language = req.body.language;
+    let oldmail = req.body.oldmail;
 
     if (mail == oldmail) {
         User.findOneAndUpdate(
@@ -187,60 +186,54 @@ router.post('/modify_info', (req, res) => {
 });
 
 router.post('/modify_log', (req, res) => {
-  console.log("server hit /modify_log");
-  var post_id = req.body.id;
-  var username = req.body.username;
-  var password = req.body.password;
-  var password2 = req.body.password2;
-  var oldusername =req.body.oldusername;
-  let hash = bcrypt.hashSync(password, 10);
-  if(username == oldusername)
-  {
-    if (password == password2)
-    {
-      User.findOneAndUpdate(
-        {_id: post_id},
-        {$set: {username: username, password: hash}},{returnNewDocument : true}, 
-        function(err, doc){
-          if(err){
-              console.log("Something wrong when updating record!");
-              res.status(400).send("Something wrong when updating!");
-          }
-          else
-          {
-            console.log("ok user updated !! :)");
-            res.status(201).json({message: 'User modified successfully'});
-          }
-      });
+    console.log("server hit /modify_log");
+    let post_id = req.body.id;
+    let username = req.body.username;
+    let password = req.body.password;
+    let password2 = req.body.password2;
+    let oldusername = req.body.oldusername;
+    let hash = bcrypt.hashSync(password, 10);
+    if (username == oldusername) {
+        if (password == password2) {
+            User.findOneAndUpdate(
+                {_id: post_id},
+                {$set: {username: username, password: hash}}, {returnNewDocument: true},
+                function (err, doc) {
+                    if (err) {
+                        console.log("Something wrong when updating record!");
+                        res.status(400).send("Something wrong when updating!");
+                    } else {
+                        console.log("ok user updated !! :)");
+                        res.status(201).json({message: 'User modified successfully'});
+                    }
+                });
+        }
     }
-  }
 });
 
 router.post('/modify_avatar', (req, res) => {
-  console.log("server hit /modify_avatar");
-  var post_id = req.body.id;
-  var path = req.body.path;
-  User.findOneAndUpdate(
-    {_id: post_id},
-    {$set: {picture: path}},{returnNewDocument : true}, 
-    function(err, doc){
-      if(err){
-          console.log("Something wrong when updating avatar!");
-          res.status(400).send("Something wrong when updating avatar!");
-      }
-      else
-      {
-        console.log("ok avatar updated !! :)");
-        res.status(201).json({message: 'avatar modified successfully'});
-      }
-  });
+    console.log("server hit /modify_avatar");
+    let post_id = req.body.id;
+    let path = req.body.path;
+    User.findOneAndUpdate(
+        {_id: post_id},
+        {$set: {picture: path}}, {returnNewDocument: true},
+        function (err, doc) {
+            if (err) {
+                console.log("Something wrong when updating avatar!");
+                res.status(400).send("Something wrong when updating avatar!");
+            } else {
+                console.log("ok avatar updated !! :)");
+                res.status(201).json({message: 'avatar modified successfully'});
+            }
+        });
 });
 
 /******************Reset Password */
 router.post('/forgotPassword', (req, res) => {
-    var generator = require('generate-password');
+    let generator = require('generate-password');
     let email = req.body.mail;
-    var pass = generator.generate({
+    let pass = generator.generate({
         lenght: 8,
         numbers: true,
         symbols: true,
