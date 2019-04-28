@@ -171,7 +171,6 @@ module.exports = {
                         j = 0;
                         k = 0;
                         let exist = false;
-                        // let last = tab.length;
                         newtab = new Array();
                         if (data2.Response == 'True') {
                             while (j < data2.Search.length) {
