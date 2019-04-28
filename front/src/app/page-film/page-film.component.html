@@ -41,7 +41,7 @@
             </p>
             <p id="note">Note = <span class="infos">{{note}}</span></p>
         </div>
-        <img class="col-lg-3 col-md-6 col-sm-12" *ngIf="affiche" [src]="affiche"/>
+        <img id="affiche" class="col-lg-3 col-md-6 col-sm-12" *ngIf="affiche" [src]="affiche" (error)="myFunction()"/>
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12">

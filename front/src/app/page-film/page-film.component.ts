@@ -154,6 +154,10 @@ export class PageFilmComponent implements OnInit {
                     this.loading = false;
                 });
     }
+    myFunction()
+    {
+        this.affiche = '../assets/default_affiche.png';
+    }
 
     onclick() {
         var user = JSON.parse(localStorage.getItem("currentUser"));

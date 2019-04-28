@@ -3,7 +3,7 @@
         <mat-card-title><span *ngIf="viewed" id="vu"><i class="far fa-eye"></i></span><span>{{ title }}</span>
         </mat-card-title>
     </mat-card-header>
-    <a class="affiche col-lg-12 col-md-12 col-sm-12 col-xs-12" href="film/{{id}}" *ngIf="affiche"
+    <a id="affiche" class="affiche col-lg-12 col-md-12 col-sm-12 col-xs-12" href="film/{{id}}" *ngIf="affiche"
        [style.background-image]="affiche"></a>
     <mat-card-content class="example-card col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p class="col-lg-6">annee : {{ year }}</p>
