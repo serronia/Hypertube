@@ -39,12 +39,27 @@ app.use(cookieSession({
 app.use(expressValidator());
 app.use(cors());
 
+// mongoose.set('useCreateIndex', true);
+// mongoose.set('useFindAndModify', false);
+//
+// mongoose.connect(url, {useNewUrlParser: true}).then(() => {
+//     console.log("Database connected")
+// }).catch(err => {
+//     console.error("Connecting to error =>" + err);
+// });
+
+mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-mongoose.connect(url, {useNewUrlParser: true}).then(() => {
-    console.log("Database connected")
-}).catch(err => {
-    console.error("Connecting to error =>" + err);
-});
+app.mongoConnect = () => {
+    mongoose.Promise = global.Promise;
+    mongoose.connect(uri, { useNewUrlParser: true})
+        .then(() => {
+            console.log('mongoDB is connected...')
+        })
+        .catch((err) => {
+            throw err
+        })
+};
 
 /**initialize passport */
 app.use(passport.initialize());

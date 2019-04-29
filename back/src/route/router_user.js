@@ -16,7 +16,7 @@ let privateKEY = fs.readFileSync('./src/util/jwt.private.key', 'utf8');
 
 const send_mail = require('nodemailer');
 
-mongoose.connect(database);
+mongoose.connect(database, {useNewUrlParser: true}); //- starting a db connection
 
 passport.use(new LocalStrategy(
     function (username, password, done) {

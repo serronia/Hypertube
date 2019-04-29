@@ -12,7 +12,7 @@ const player = require('../util/magnet');
 const sub = require("../util/subtitle");
 
 const database = process.env.C_MONGO;
-mongoose.connect(database);
+mongoose.connect(database, {useNewUrlParser: true}); //- starting a db connection
 
 router.use(bodyParser.json());
 

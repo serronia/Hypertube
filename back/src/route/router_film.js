@@ -6,7 +6,7 @@ const database = process.env.C_MONGO;
 const Com = require('../model/Com');
 const Viewed = require('../model/ViewedMovie');
 
-mongoose.connect(database);
+mongoose.connect(database, {useNewUrlParser: true});
 
 router.get('/', (req, res) => {
     res.send('server film listening');

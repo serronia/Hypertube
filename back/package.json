@@ -27,7 +27,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "generate-password": "latest",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "^4.13.18",
+    "mongoose": "^5.4.16",
     "mongoose-findorcreate": "^3.0.0",
     "node-fetch": "^2.3.0",
     "nodemailer": "latest",

@@ -73,15 +73,9 @@ passport.use(new GoogleStrategy({
                     "email": email,
                     picture: profile._json.picture,
                     googleId: profile.id
-                });
-                user.save(
-                    function (err) {
-                        if (err) console.error(err);
-                        return done(err, user);
-                    }
-                ).then((user) => {
-                    done(null, newUser);
-                });
+                }).save().then(newUser => {
+                    return done(null, newUser);
+                })
             }
         })
     }
