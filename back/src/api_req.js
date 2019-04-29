@@ -125,7 +125,7 @@ module.exports = {
                     year_min = req.query.year_min
                 }
 
-                if ((req.query.year_max == 'null') || (req.query.year_min == "")) {
+                if ((req.query.year_max == 'null') || (req.query.year_max == "")) {
                     year_max = 10000;
                 } else {
                     year_max = req.query.year_max
