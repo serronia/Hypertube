@@ -18,6 +18,7 @@ import {async} from 'q';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent {
     @Input() contenu: string;
     films = new Array();
@@ -123,7 +124,6 @@ export class HomeComponent {
     }
 
     onScroll() {
-        console.log("scrooll")
         if (!this.recherche) {
             this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
                 .subscribe(
@@ -140,7 +140,7 @@ export class HomeComponent {
                     });
             this.k++;
         } else {
-            this.p = 2;
+            this.p++;
             this.filmService.Research(this.key_word, this.p, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
                 .subscribe(
                     data => {
@@ -154,7 +154,6 @@ export class HomeComponent {
                     error => {
                         console.log('get film error = ', error);
                     });
-            this.p++;
         }
     }
 
