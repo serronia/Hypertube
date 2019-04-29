@@ -50,7 +50,8 @@ const appRoutes: Routes = [
     },
     {
         path: 'reset_password',
-        component: ResetPasswordComponent
+        component: ResetPasswordComponent,
+        canActivate: [GuestGuard]
     },
     {
         path: '**',

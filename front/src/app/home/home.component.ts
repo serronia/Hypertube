@@ -52,6 +52,10 @@ export class HomeComponent {
         } else {
             ist_ok = true;
         }
+        const regex1 = RegExp('[a-zA-Z0-9]+');
+        if (research !== '' && !regex1.test(research)) {
+            ist_ok = false;
+        }
         if (research !== '' && ist_ok) {
             this.films = new Array();   // on vide films
             this.i = 0;                 // on remet i a 0
