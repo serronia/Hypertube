@@ -61,7 +61,6 @@ import {VgBufferingModule} from 'videogular2/buffering';
         VgControlsModule,
         VgOverlayPlayModule,
         VgBufferingModule,
-        InfiniteScrollModule,
         MatRadioModule,
         MatSelectModule,
         MatSliderModule,

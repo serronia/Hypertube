@@ -123,6 +123,7 @@ export class HomeComponent {
     }
 
     onScroll() {
+        console.log("scrooll")
         if (!this.recherche) {
             this.filmService.getFilm(this.k, this.tri, this.genre, this.note_min, this.year_min, this.year_max)
                 .subscribe(
