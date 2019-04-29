@@ -50,11 +50,7 @@ export class LoginComponent implements OnInit {
                         this.router.navigate(['/login']);
                     });
         if (errolog == 1)
-            this.errorauth = "Your github login or mail is already used here";
-        if (errolog == 2)
-            this.errorauth = "Your 42 pseudo or mail is already used here";
-        if (errolog == 3)
-            this.errorauth = "Your Google mail or Name is already used here";
+            this.errorauth = "Connection by tird party failed, possibly because : name or mail already used or email not provided";
     }
 
     // convenience getter for easy access to form fields

@@ -44,6 +44,8 @@ passport.use(new GithubStrategy({
                 } else
                     return done(null, null);
             } else {
+				if (profile._json.email)
+				{
                 new User({
                     lastname: profile._json.name,
                     firstname: profile._json.name,
@@ -55,6 +57,9 @@ passport.use(new GithubStrategy({
                     .save().then(newUser => {
                     return done(null, newUser);
                 })
+			}
+			else
+				return done(null, null);
             }
         });
     }));
