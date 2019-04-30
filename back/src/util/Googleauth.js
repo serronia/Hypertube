@@ -90,7 +90,7 @@ router.get('/', passport.authenticate('google', {
     }
 ));
 
-router.get('/redirect', passport.authenticate('google', {failureRedirect: "http://localhost:4200/login?error=3"}),
+router.get('/redirect', passport.authenticate('google', {failureRedirect: "http://localhost:4200/login?error=1"}),
     (req, res) => {
         req.body.username = req.user._doc.username;
         let Token = Jwthandle.sign(req, res);

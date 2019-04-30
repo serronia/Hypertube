@@ -13,9 +13,6 @@
             <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
             <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
 
-            <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-            <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-
             <vg-track-selector vgFor="singleVideo"></vg-track-selector>
             <vg-mute></vg-mute>
             <vg-volume></vg-volume>
@@ -23,7 +20,7 @@
             <vg-fullscreen></vg-fullscreen>
         </vg-controls>
         <video [vgMedia]="media" #media preload="auto" id="singleVideo" crossorigin>
-            <source *ngIf="src_video" [src]="src_video" type="video/mp4">
+            <source *ngIf="src_video" [src]="src_video">
         </video>
     </vg-player>
 

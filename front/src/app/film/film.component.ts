@@ -25,11 +25,14 @@ export class FilmComponent implements OnInit {
     }
 
     ngOnInit() {
-        var image = new Image();
-        image.onerror = function()
-        {
-            document.getElementById('affiche').style.backgroundImage = `url('../assets/default_affiche.png')`;
-        }
+        const image = new Image();
+        image.onerror = function () {
+            const poster = document.getElementById('affiche');
+
+            if (poster) {
+                poster.style.backgroundImage = `url('../assets/default_affiche.png')`;
+            }
+        };
         image.src = this.affiche.toString();
         this.affiche = this.sanitization.bypassSecurityTrustStyle(`url(${this.affiche})`);
         const user = JSON.parse(localStorage.getItem("currentUser"));

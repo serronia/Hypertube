@@ -7,9 +7,10 @@
     <div class="col-md-12">
         <!-- Nav Bar when logged in -->
         <nav *ngIf="currentUser">
-            <a routerLink="/home" routerLinkActive="active"><i class="fas fa-home"></i></a>
-            <a routerLink="/settings" routerLinkActive="active"><i
-                    class="fas fa-user-cog"></i> {{ currentUser.username }}</a>
+            <!--<a routerLink="/home" routerLinkActive="active"><i class="fas fa-home"></i></a>-->
+            <!--<a routerLink="/settings" routerLinkActive="active"><i class="fas fa-user-cog"></i> {{ currentUser.username }}</a>-->
+            <a href="/home" ><i class="fas fa-home"></i></a>
+            <a href="/settings" ><i class="fas fa-user-cog"></i> {{ currentUser.username }}</a>
             <a (click)="logout()"><i class="fas fa-sign-out-alt"></i> Log out</a>
         </nav>
         <!-- Nav Bar when not logged in -->

@@ -66,7 +66,7 @@ passport.use(new FortyTwoStrategy({
 
 router.get('/', passport.authenticate('42'));
 
-router.get('/redirect', passport.authenticate('42', {failureRedirect: 'http://localhost:4200/login?error=2'}), (req, res) => {
+router.get('/redirect', passport.authenticate('42', {failureRedirect: 'http://localhost:4200/login?error=1'}), (req, res) => {
 		req.body.username = req.user._doc.username;
 		let Token = Jwthandle.sign(req, res);
 		delete (req.body.username);
