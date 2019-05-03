@@ -39,5 +39,5 @@ Hypertube
 |RxJs|https://makina-corpus.com/blog/metier/2017/premiers-pas-avec-rxjs-dans-angular|
 ----
 <p align="right">
-Credits : <a href="https://github.com/modeler3310">guibayle</a> <a href="https://github.com/serronia">jdarko</a>  <a href="https://github.com/kerbault">kerbault</a>  <a href="https://github.com/Otterqueen">mchapard</a>  <a href="https://github.com/Drakauf">shthevak</a>
+Credits </br><a href="https://github.com/modeler3310">guibayle</a> <a href="https://github.com/serronia">jdarko</a>  <a href="https://github.com/kerbault">kerbault</a>  <a href="https://github.com/Otterqueen">mchapard</a>  <a href="https://github.com/Drakauf">shthevak</a>
 
