@@ -6,8 +6,8 @@ const passport = require('passport');
 const Jwthandle = require('../util/jwt.handeler.js');
 
 
-const GITHUB_APP_ID = 'd47ae1de420e380f375e';
-const GITHUB_APP_SECRET = 'b05fa8b220c66358f1021c23c1649a23939f6485';
+const GITHUB_APP_ID = '';
+const GITHUB_APP_SECRET = '';
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
