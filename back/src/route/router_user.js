@@ -248,8 +248,8 @@ router.post('/forgotPassword', (req, res) => {
                 let transport = send_mail.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: 'hypertubeprojet@gmail.com',
-                        pass: 'Hypertube-101'
+                        user: '',
+                        pass: ''
                     }
                 });
                 let mailOption = {
