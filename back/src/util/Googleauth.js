@@ -8,8 +8,8 @@ const Jwthandle = require('../util/jwt.handeler.js');
 const bcrypt = require('bcrypt');
 const Check = require('../util/check');
 
-const GOOGLE_APP_ID = '669911811352-bdsbd20jmanch9e915t6ig1atn7c6lu2.apps.googleusercontent.com';
-const GOOGLE_APP_SECRET = 'CdYCIdfJZ32cP6COig1dcchm';
+const GOOGLE_APP_ID = '';
+const GOOGLE_APP_SECRET = '';
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
